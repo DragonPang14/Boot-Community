@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import space.springboot.community.dto.AccessTokenDto;
+import space.springboot.community.dto.GitHubUserDto;
 import space.springboot.community.provider.GitHubProvider;
 
 
@@ -29,7 +30,9 @@ public class AuthorizeController {
         accessTokenDto.setClient_secret(client_secret);
         accessTokenDto.setCode(code);
         accessTokenDto.setState(state);
-        gitHubProvider.getAccessToken(accessTokenDto);
+        String accessToken= gitHubProvider.getAccessToken(accessTokenDto);
+        GitHubUserDto gitHubUserDto = gitHubProvider.getUser(accessToken);
+        System.out.println(gitHubUserDto.getName());
         return "index";
     }
 }
