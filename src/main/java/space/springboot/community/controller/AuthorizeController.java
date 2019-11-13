@@ -1,6 +1,7 @@
 package space.springboot.community.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,8 @@ import space.springboot.community.dto.AccessTokenDto;
 import space.springboot.community.dto.GitHubUserDto;
 import space.springboot.community.provider.GitHubProvider;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class AuthorizeController {
@@ -16,13 +19,27 @@ public class AuthorizeController {
     @Autowired
     private GitHubProvider gitHubProvider;
 
-    private static String client_secret = "ed0b52d1c11bf5d5b27d969570dc0b8688051cfc";
-    private static String client_id = "dc364cf81cbdc28a0e43";
-    private static String callbackUrl = "http://localhost:8887/callback";
+    @Value("${github.client.secret}")
+    private String client_secret;
 
+    @Value("${github.client.id}")
+    private String client_id;
+
+    @Value("${callback.url}")
+    private String callbackUrl;
+
+    /**
+     * @desc github的OAuth回调方法
+     * @param code
+     * @param state
+     * @param model
+     * @return
+     */
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
-                           @RequestParam(name = "state") String state, Model model){
+                           @RequestParam(name = "state") String state,
+                           Model model,
+                           HttpServletRequest request){
 
         AccessTokenDto accessTokenDto = new AccessTokenDto();
         accessTokenDto.setClient_id(client_id);
@@ -31,8 +48,14 @@ public class AuthorizeController {
         accessTokenDto.setCode(code);
         accessTokenDto.setState(state);
         String accessToken= gitHubProvider.getAccessToken(accessTokenDto);
-        GitHubUserDto gitHubUserDto = gitHubProvider.getUser(accessToken);
-        System.out.println(gitHubUserDto.getName());
-        return "index";
+        GitHubUserDto user = gitHubProvider.getUser(accessToken);
+        if(user != null){
+//            登陆成功
+            request.getSession().setAttribute("user",user);
+//            重定向
+            return "redirect:/";
+        }else {
+            return "redirect:/";
+        }
     }
 }

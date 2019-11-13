@@ -20,12 +20,12 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
         </form>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <li class="nav-item" th:if="${session.user == null}">
                 <a href="https://github.com/login/oauth/authorize?client_id=dc364cf81cbdc28a0e43&redirect_uri=http://localhost:8887/callback&scope=user&state=123" class="nav-link">登陆</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    我
+            <li class="nav-item dropdown" th:unless="${session.user == null}">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                    <span th:text="${session.user.name}"></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">消息中心</a>
