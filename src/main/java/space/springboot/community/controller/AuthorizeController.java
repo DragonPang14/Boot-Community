@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import space.springboot.community.dto.AccessTokenDto;
 import space.springboot.community.dto.GitHubUserDto;
+import space.springboot.community.mapper.UserMapper;
+import space.springboot.community.model.User;
 import space.springboot.community.provider.GitHubProvider;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 
 @Controller
@@ -27,6 +30,9 @@ public class AuthorizeController {
 
     @Value("${callback.url}")
     private String callbackUrl;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * @desc github的OAuth回调方法
@@ -48,10 +54,17 @@ public class AuthorizeController {
         accessTokenDto.setCode(code);
         accessTokenDto.setState(state);
         String accessToken= gitHubProvider.getAccessToken(accessTokenDto);
-        GitHubUserDto user = gitHubProvider.getUser(accessToken);
-        if(user != null){
+        GitHubUserDto gitHubUser = gitHubProvider.getUser(accessToken);
+        if(gitHubUser != null){
+            User user = new User();
+            user.setAccountId(String.valueOf(gitHubUser.getId()));
+            user.setName(gitHubUser.getName());
+            user.setToken(UUID.randomUUID().toString());
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insertUser(user);
 //            登陆成功
-            request.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("user",gitHubUser);
 //            重定向
             return "redirect:/";
         }else {
