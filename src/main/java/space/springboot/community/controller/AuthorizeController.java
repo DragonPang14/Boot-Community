@@ -12,7 +12,9 @@ import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
 import space.springboot.community.provider.GitHubProvider;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 
@@ -45,7 +47,8 @@ public class AuthorizeController {
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
                            Model model,
-                           HttpServletRequest request){
+                           HttpServletRequest request,
+                           HttpServletResponse response){
 
         AccessTokenDto accessTokenDto = new AccessTokenDto();
         accessTokenDto.setClient_id(client_id);
@@ -64,7 +67,7 @@ public class AuthorizeController {
             user.setGmtModified(user.getGmtCreate());
             userMapper.insertUser(user);
 //            登陆成功
-            request.getSession().setAttribute("user",gitHubUser);
+            response.addCookie(new Cookie("token",user.getToken()));
 //            重定向
             return "redirect:/";
         }else {
