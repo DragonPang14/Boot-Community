@@ -15,11 +15,17 @@ public class IndexController {
     @Autowired
     private UserMapper userMapper;
 
+
+    /**
+     * @desc 打开首页，获取cookie自动登录
+     * @param request
+     * @return
+     */
     @GetMapping("/")
     public String index(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if(cookie.getName().equals("token")){
+            if("token".equals(cookie.getName())){
                 String token = cookie.getValue();
                 User user = userMapper.findByToken(token);
                 if(user != null){
