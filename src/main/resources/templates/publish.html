@@ -2,16 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>发布 - 码农社区</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/zico.min.css">
     <script src="js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<style>
+    .left-bottum {
+        margin-top: 20px;
+    }
+</style>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">码农社区</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -22,10 +28,12 @@
         </form>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" th:if="${session.user == null}">
-                <a href="https://github.com/login/oauth/authorize?client_id=dc364cf81cbdc28a0e43&redirect_uri=http://localhost:8887/callback&scope=user&state=123" class="nav-link">登陆</a>
+                <a href="https://github.com/login/oauth/authorize?client_id=dc364cf81cbdc28a0e43&redirect_uri=http://localhost:8887/callback&scope=user&state=123"
+                   class="nav-link">登陆</a>
             </li>
             <li class="nav-item dropdown" th:unless="${session.user == null}">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     <span th:text="${session.user.name}"></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -39,16 +47,63 @@
     </div>
 </nav>
 <!--发布内容框-->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-12" style="background-color: floralwhite;height: 100px">
-            <button class="btn btn-light"><i class="zi zi_plusSquare"></i>">发布</button>
+<div class="container mt-5">
+    <form action="">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">标题</span>
+                    </div>
+                    <input class="form-control" type="text">
+                </div>
+                <hr>
+                <div class="input-group">
+                    <textarea class="form-control" placeholder="问题补充" rows="10"></textarea>
+                </div>
+                <hr>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">添加标签</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="输入标签，以“，”分隔">
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-light float-right"><i class="zi zi_plusSquare"></i>发布</button>
+                </div>
+            </div>
+            <div class="col-lg-3 ">
+                <div class="left-content">
+                    发帖提示
+                    <hr>
+                    ·主题标题
+                    <br>
+                    请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
+                    <br>
+                    ·正文
+                    <br>
+                    可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
+                    在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
+                    <br>
+                    ·添加标签
+                    <br>
+                    在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
+                    你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
+                </div>
+                <div class="left-bottum">
+                    社区指导原则
+                    <hr>
+                    ·尊重原创
+                    <br>
+                    ·请不要在 V2EX 发布任何盗版下载链接，包括软件、音乐、电影等等。V2EX 是创意工作者的社区，我们尊重原创。
+                    <br>
+                    ·友好互助
+                    <br>
+                    ·保持对陌生人的友善。用知识去帮助别人。
+                </div>
+            </div>
         </div>
-
-        <div class="col-lg-3 " style="background-color: blueviolet;height: 100px">
-
-        </div>
-    </div>
+    </form>
 </div>
 </body>
 
