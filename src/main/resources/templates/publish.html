@@ -48,28 +48,29 @@
 </nav>
 <!--发布内容框-->
 <div class="container mt-5">
-    <form action="">
+    <form action="/doPublish" method="post">
         <div class="row">
             <div class="col-lg-9 col-md-12 col-sm-12 col-12">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">标题</span>
                     </div>
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text" name="title" id="title">
                 </div>
                 <hr>
                 <div class="input-group">
-                    <textarea class="form-control" placeholder="问题补充" rows="10"></textarea>
+                    <textarea class="form-control" placeholder="问题补充" rows="10" name="description"
+                              id="description"></textarea>
                 </div>
                 <hr>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">添加标签</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="输入标签，以“，”分隔">
+                    <input type="text" class="form-control" placeholder="输入标签，以“，”分隔" name="tag" id="tag">
                 </div>
                 <div class="mt-4">
-                    <button class="btn btn-light float-right"><i class="zi zi_plusSquare"></i>发布</button>
+                    <button class="btn btn-light float-right" type="submit"><i class="zi zi_plusSquare"></i>发布</button>
                 </div>
             </div>
             <div class="col-lg-3 ">
