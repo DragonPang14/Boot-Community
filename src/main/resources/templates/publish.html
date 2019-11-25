@@ -72,6 +72,9 @@
                 <div class="mt-4">
                     <button class="btn btn-light float-right" type="submit"><i class="zi zi_plusSquare"></i>发布</button>
                 </div>
+                <div th:if="${error != null}" class="alert alert-warning" role="alert">
+                    <span th:text="${error}"></span>
+                </div>
             </div>
             <div class="col-lg-3 ">
                 <div class="left-content">

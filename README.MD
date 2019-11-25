@@ -10,6 +10,11 @@
 
 被此注释的类可以使用注释来调用，不用new
 
+controller中的参数注释
+
+@CookieValue
+可以直接获取相应name的cookie值
+
 ## Cookies
 
 不能跨域，有过期时间，路径，域名

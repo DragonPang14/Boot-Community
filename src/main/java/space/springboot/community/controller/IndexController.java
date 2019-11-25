@@ -2,6 +2,7 @@ package space.springboot.community.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
@@ -22,17 +23,11 @@ public class IndexController {
      * @return
      */
     @GetMapping("/")
-    public String index(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if("token".equals(cookie.getName())){
-                String token = cookie.getValue();
-                User user = userMapper.findByToken(token);
-                if(user != null){
-                    request.getSession().setAttribute("user",user);
-                }
-                break;
-            }
+    public String index(HttpServletRequest request,
+                        @CookieValue(value = "token" , required = false) String token){
+        if(token != null){
+            User user = userMapper.findByToken(token);
+            request.getSession().setAttribute("user",user);
         }
         return "index";
     }

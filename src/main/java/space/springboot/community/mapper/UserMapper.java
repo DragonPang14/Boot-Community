@@ -11,8 +11,8 @@ import space.springboot.community.model.User;
 @Mapper
 public interface UserMapper {
 
-    @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified) " +
-            "values (#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified})")
+    @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified,avatar_url) " +
+            "values (#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})")
     void insertUser(User user);
 
     @Select("select * from user where token = #{token}")
