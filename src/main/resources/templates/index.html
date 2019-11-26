@@ -65,7 +65,9 @@
                         <span th:text="${question.description}"></span>
                         <br>
                         <span class="text-color-000">
-                        1 个回复 • 2 次浏览 • 1 分钟前
+                        <span th:text="${question.commentCount}"></span> 个回复 • <span
+                                th:text="${question.viewCount}"></span> 次浏览 •
+                            <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                         </span>
                     </div>
                 </li>

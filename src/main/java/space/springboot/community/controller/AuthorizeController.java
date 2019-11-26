@@ -3,7 +3,6 @@ package space.springboot.community.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import space.springboot.community.dto.AccessTokenDto;
@@ -13,7 +12,6 @@ import space.springboot.community.model.User;
 import space.springboot.community.provider.GitHubProvider;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -46,8 +44,6 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           Model model,
-                           HttpServletRequest request,
                            HttpServletResponse response){
 
         AccessTokenDto accessTokenDto = new AccessTokenDto();
@@ -65,7 +61,7 @@ public class AuthorizeController {
             user.setToken(UUID.randomUUID().toString());
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
-            user.setAvatarUrl(gitHubUser.getAvatar_url());
+            user.setAvatarUrl(gitHubUser.getAvatarUrl());
             userMapper.insertUser(user);
 //            登陆成功
             response.addCookie(new Cookie("token",user.getToken()));
