@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/zico.min.css">
     <script src="js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="pagejs/index.js" type="application/javascript"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,14 +25,14 @@
         </form>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" th:if="${session.user != null}">
-                <a href="/publish" class="nav-link">发布</a>
+                <a href="/publish" class="nav-link rounded">发布</a>
             </li>
             <li class="nav-item" th:if="${session.user == null}">
                 <a href="https://github.com/login/oauth/authorize?client_id=dc364cf81cbdc28a0e43&redirect_uri=http://localhost:8887/callback&scope=user&state=123"
                    class="nav-link">登陆</a>
             </li>
             <li class="nav-item" th:if="${session.user != null}">
-                <img th:src="${session.user.avatarUrl}"/>
+                <img th:src="${session.user.avatarUrl}" class="avatar-nav"/>
             </li>
             <li class="nav-item dropdown" th:unless="${session.user == null}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -55,17 +56,20 @@
                 <h3><i class="zi zi_list"></i>&nbsp;发现</h3>
             </div>
             <hr>
-            <div class="media">
-                <img class="avatar mr-3 rounded-5 " src="https://avatars0.githubusercontent.com/u/31274965?v=4" alt="Generic placeholder image">
-                <div class="media-body">
-                    <h5 class="mt-0">Media heading</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-                <br>
-                <div class="text-color-000">
+            <ul class="list-unstyled">
+                <li class="media" th:each="question : ${questions}">
+                    <img class="mr-3 avatar rounded" th:src="${question.user.avatarUrl}"
+                         alt="avater image">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1" th:text="${question.title}"></h5>
+                        <span th:text="${question.description}"></span>
+                        <br>
+                        <span class="text-color-000">
                         1 个回复 • 2 次浏览 • 1 分钟前
-                </div>
-            </div>
+                        </span>
+                    </div>
+                </li>
+            </ul>
         </div>
         <div class="col-lg-3 ">
             <div class="left-content">

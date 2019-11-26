@@ -7,4 +7,10 @@
     font-size: 12px;
     font-weight: normal;
     color: #999;
+    display: block;
+}
+
+.avatar-nav {
+    width: 35px;
+    height: 35px;
 }

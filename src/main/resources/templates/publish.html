@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/zico.min.css">
     <script src="js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="pagejs/publish.js" type="application/javascript"></script>
 </head>
 <style>
     .left-bottum {
@@ -70,7 +71,7 @@
                     <input type="text" class="form-control" placeholder="输入标签，以“，”分隔" name="tag" id="tag">
                 </div>
                 <div class="mt-4">
-                    <button class="btn btn-light float-right" type="submit"><i class="zi zi_plusSquare"></i>发布</button>
+                    <button class="btn btn-light float-right" type="submit" onclick="verifyValue();"><i class="zi zi_plusSquare"></i>发布</button>
                 </div>
                 <div th:if="${error != null}" class="alert alert-warning" role="alert">
                     <span th:text="${error}"></span>
