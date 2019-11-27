@@ -3,6 +3,7 @@ package space.springboot.community.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.mapper.QuestionMapper;
 import space.springboot.community.mapper.UserMapper;
@@ -20,9 +21,13 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
-    public List<QuestionDto> getList() {
-        List<Question> questions = questionMapper.getList();
+    public PaginationDto<QuestionDto> getList(Integer page, Integer size) {
+//        页码偏移量
+        Integer offset = size * ( page - 1);
+        Integer totalCount = questionMapper.totalCount();
+        List<Question> questions = questionMapper.getList(offset,size);
         List<QuestionDto> questionDtos = new ArrayList<>();
+        PaginationDto<QuestionDto> pagination= new PaginationDto<>();
         for (Question question : questions) {
             User user = userMapper.findById(question.getCreator());
             QuestionDto questionDto = new QuestionDto();
@@ -30,6 +35,8 @@ public class QuestionService {
             questionDto.setUser(user);
             questionDtos.add(questionDto);
         }
-        return questionDtos;
+        pagination.setPageList(questionDtos);
+        pagination.setPagination(totalCount,page,size);
+        return pagination;
     }
 }

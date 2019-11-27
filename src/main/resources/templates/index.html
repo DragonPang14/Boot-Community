@@ -57,7 +57,7 @@
             </div>
             <hr>
             <ul class="list-unstyled">
-                <li class="media" th:each="question : ${questions}">
+                <li class="media" th:each="question : ${pagination.pageList}">
                     <img class="mr-3 avatar rounded" th:src="${question.user.avatarUrl}"
                          alt="avater image">
                     <div class="media-body">
