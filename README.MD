@@ -6,14 +6,17 @@
 ## 知识点
 
 @Component
-类似于SpringMVC中的@Service
+类似于SpringMVC中的@Service\
+被此注释的类可以使用@Autowire注释来调用，不用new
 
-被此注释的类可以使用注释来调用，不用new
-
-controller中的参数注释
-
+controller中的参数注释\
 @CookieValue
 可以直接获取相应name的cookie值
+
+## themeleaf使用
+
+th:href往标签添加超链接地址 \
+@{路径(参数 = ${data})}
 
 ## Cookies
 

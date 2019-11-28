@@ -37,7 +37,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request,
                         @CookieValue(value = "token", required = false) String token,
-                        @RequestParam(value = "page") Integer page,
+                        @RequestParam(value = "page", defaultValue = "1") Integer page,
                         @RequestParam(value = "size", defaultValue = "10") Integer size,
                         Model model) {
         if (token != null) {

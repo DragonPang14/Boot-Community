@@ -22,9 +22,15 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
     public PaginationDto<QuestionDto> getList(Integer page, Integer size) {
-//        页码偏移量
-        Integer offset = size * ( page - 1);
         Integer totalCount = questionMapper.totalCount();
+        Integer totalPage = totalCount % 10 == 0?totalCount / 10:(totalCount / 10) + 1;
+        if(page < 1){
+            page = 1;
+        }else if(page > totalPage){
+            page = totalPage;
+        }
+//        偏移量
+        Integer offset = size * ( page - 1);
         List<Question> questions = questionMapper.getList(offset,size);
         List<QuestionDto> questionDtos = new ArrayList<>();
         PaginationDto<QuestionDto> pagination= new PaginationDto<>();
@@ -36,7 +42,7 @@ public class QuestionService {
             questionDtos.add(questionDto);
         }
         pagination.setPageList(questionDtos);
-        pagination.setPagination(totalCount,page,size);
+        pagination.setPagination(totalPage,page,size);
         return pagination;
     }
 }
