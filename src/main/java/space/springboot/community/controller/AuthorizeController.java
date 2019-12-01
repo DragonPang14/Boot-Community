@@ -38,7 +38,6 @@ public class AuthorizeController {
      * @desc github的OAuth回调方法
      * @param code
      * @param state
-     * @param model
      * @return
      */
     @GetMapping("/callback")

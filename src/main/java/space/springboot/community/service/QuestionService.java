@@ -42,7 +42,32 @@ public class QuestionService {
             questionDtos.add(questionDto);
         }
         pagination.setPageList(questionDtos);
-        pagination.setPagination(totalPage,page,size);
+        pagination.setPagination(totalPage,page);
+        return pagination;
+    }
+
+    public PaginationDto<QuestionDto> getListByUserId(Integer userId, Integer page, Integer size) {
+        Integer totalCount = questionMapper.userQuestionCount(userId);
+        Integer totalPage = totalCount % 10 == 0?totalCount / 10:(totalCount / 10) + 1;
+        if(page < 1){
+            page = 1;
+        }else if(page > totalPage){
+            page = totalPage;
+        }
+//        偏移量
+        Integer offset = size * ( page - 1);
+        List<Question> questions = questionMapper.getListByUserId(userId,offset,size);
+        List<QuestionDto> questionDtos = new ArrayList<>();
+        PaginationDto<QuestionDto> pagination= new PaginationDto<>();
+        for (Question question : questions) {
+            User user = userMapper.findById(question.getCreator());
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(question,questionDto);
+            questionDto.setUser(user);
+            questionDtos.add(questionDto);
+        }
+        pagination.setPageList(questionDtos);
+        pagination.setPagination(totalPage,page);
         return pagination;
     }
 }

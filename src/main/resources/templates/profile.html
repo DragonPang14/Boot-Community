@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>码农社区</title>
+    <title th:text="${sectionName}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -17,16 +17,15 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-12">
             <div>
-                <h3><i class="zi zi_list"></i>&nbsp;发现</h3>
+                <h3>&nbsp;<span th:text="${sectionName}"></span></h3>
             </div>
             <hr>
-            <ul class="list-unstyled">
+            <ul class="list-unstyled" >
                 <li class="media" th:each="question : ${pagination.pageList}">
                     <img class="mr-3 avatar rounded" th:src="${question.user.avatarUrl}"
                          alt="avater image">
                     <div class="media-body">
                         <h5 class="mt-0 mb-1" th:text="${question.title}"></h5>
-                        <span th:text="${question.description}"></span>
                         <br>
                         <span class="text-color-000">
                         <span th:text="${question.commentCount}"></span> 个回复 • <span
@@ -39,28 +38,28 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item"  th:if="${pagination.showFirst}">
-                        <a class="page-link" href="#" aria-label="Previous">
+                        <a class="page-link" th:href="@{'/profile/'+${section}(page=${1})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Previous</span>
                         </a>
                     </li>
                     <li class="page-item" th:if="${pagination.showPre}">
-                        <a class="page-link" href="#" aria-label="Previous">
+                        <a class="page-link" th:href="@{'/profile/'+${section}(page=${pagination.currentPage - 1})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                             <span class="sr-only">Previous</span>
                         </a>
                     </li>
                     <li class="page-item" th:each="page : ${pagination.pages}" th:class="${pagination.currentPage == page}?'page-item active':'page-item'">
-                        <a class="page-link" th:href="@{/(page=${page})}" th:text="${page}" ></a>
+                        <a class="page-link" th:href="@{'/profile/'+${section}(page=${page})}" th:text="${page}" ></a>
                     </li>
                     <li class="page-item" th:if="${pagination.showNext}">
-                        <a class="page-link" href="#" aria-label="Next">
+                        <a class="page-link" th:href="@{'/profile/'+${section}(page=${pagination.currentPage + 1})}" aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                             <span class="sr-only">Next</span>
                         </a>
                     </li>
                     <li class="page-item" th:if="${pagination.showLast}">
-                        <a class="page-link" href="#" aria-label="Next">
+                        <a class="page-link" th:href="@{'/profile/'+${section}(page=${pagination.totalPage})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Next</span>
                         </a>
@@ -69,33 +68,16 @@
             </nav>
         </div>
         <div class="col-lg-3 ">
-            <div class="left-content">
-                发帖提示
-                <hr>
-                ·主题标题
-                <br>
-                请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
-                <br>
-                ·正文
-                <br>
-                可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
-                在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
-                <br>
-                ·添加标签
-                <br>
-                在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
-                你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
-            </div>
-            <div class="left-bottum">
-                社区指导原则
-                <hr>
-                ·尊重原创
-                <br>
-                ·请不要在 V2EX 发布任何盗版下载链接，包括软件、音乐、电影等等。V2EX 是创意工作者的社区，我们尊重原创。
-                <br>
-                ·友好互助
-                <br>
-                ·保持对陌生人的友善。用知识去帮助别人。
+            <div class="list-group list-group-flush">
+                <a href="/profile/question" class="list-group-item list-group-item-action"
+                   th:classappend="${section == 'question'}?'active':''">
+                    我的发布
+                </a>
+                <a href="/profile/replies" class="list-group-item list-group-item-action"
+                   th:classappend="${section == 'replies'}?'active':''">最新回复</a>
+                <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+                <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
             </div>
         </div>
     </div>

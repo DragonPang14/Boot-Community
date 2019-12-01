@@ -13,9 +13,11 @@ public class PaginationDto<T> {
     private boolean showNext;
     private boolean showLast;
     private Integer currentPage;
+    private Integer totalPage;
     private List<Integer> pages = new ArrayList<>();
 
-    public void setPagination(Integer totalPage, Integer page, Integer size) {
+    public void setPagination(Integer totalPage, Integer page) {
+        this.totalPage = totalPage;
         currentPage = page;
         pages.add(page);
         /**
