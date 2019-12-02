@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>码农社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/zico.min.css">
+    <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/pagejs/index.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{fragment/nav :: nav}">
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+            <div>
+                <h3><span th:text="${questionDto.title}"></span></h3>
+            </div>
+            <hr>
+        </div>
+        <div class="col-lg-3 ">
+            <div class="left-content">
+                发帖提示
+                <hr>
+                ·主题标题
+                <br>
+                请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
+                <br>
+                ·正文
+                <br>
+                可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
+                在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
+                <br>
+                ·添加标签
+                <br>
+                在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
+                你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

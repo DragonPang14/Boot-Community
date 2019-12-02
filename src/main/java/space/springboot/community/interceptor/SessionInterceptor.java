@@ -20,11 +20,13 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies= request.getCookies();
-        for (Cookie cookie : cookies) {
-            if("token".equals(cookie.getName())){
-                User user = userMapper.findByToken(cookie.getValue());
-                if (user != null){
-                    request.getSession().setAttribute("user",user);
+        if(cookies != null && cookies.length > 0){
+            for (Cookie cookie : cookies) {
+                if("token".equals(cookie.getName())){
+                    User user = userMapper.findByToken(cookie.getValue());
+                    if (user != null){
+                        request.getSession().setAttribute("user",user);
+                    }
                 }
             }
         }
