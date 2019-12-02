@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>码农社区</title>
+    <title th:text="${questionDto.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -19,6 +19,11 @@
             <div>
                 <h3><span th:text="${questionDto.title}"></span></h3>
             </div>
+            <br>
+            <span class="text-color-000">
+                阅读数:<span th:text="${questionDto.viewCount}"></span> |
+                发布于:<span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+            </span>
             <hr>
         </div>
         <div class="col-lg-3 ">
