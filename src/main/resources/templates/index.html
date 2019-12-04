@@ -25,7 +25,7 @@
                     <img class="mr-3 avatar rounded" th:src="${question.user.avatarUrl}"
                          alt="avater image">
                     <div class="media-body">
-                        <h5 class="mt-0 mb-1" th:text="${question.title}"></h5>
+                        <h5 class="mt-0 mb-1"><a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a></h5>
                         <span th:text="${question.description}"></span>
                         <br>
                         <span class="text-color-000">

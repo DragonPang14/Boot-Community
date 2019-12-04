@@ -17,32 +17,28 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-12">
             <div>
-                <h3><span th:text="${questionDto.title}"></span></h3>
+                <h4><span th:text="${questionDto.title}"></span></h4>
             </div>
-            <br>
-            <span class="text-color-000">
-                阅读数:<span th:text="${questionDto.viewCount}"></span> |
-                发布于:<span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
-            </span>
+            <div class="text-color-000">
+                    作者:<span th:text="${questionDto.user.name}"></span>&nbsp;|&nbsp;
+                    阅读数:<span th:text="${questionDto.viewCount}"></span>&nbsp;|&nbsp;
+                    发布于:<span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+            </div>
+            <div class="float-right">
+                <button type="button" class="btn btn-light btn-sm"><i class="zi zi_pencilalt"></i>编辑</button>
+            </div>
             <hr>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${questionDto.description}">
+            </div>
         </div>
         <div class="col-lg-3 ">
-            <div class="left-content">
-                发帖提示
-                <hr>
-                ·主题标题
-                <br>
-                请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
-                <br>
-                ·正文
-                <br>
-                可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
-                在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
-                <br>
-                ·添加标签
-                <br>
-                在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
-                你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
+            <h5>发起人</h5>
+            <br>
+            <div class="media">
+                <img class="mr-3 rounded avatar-nav" th:src="${questionDto.user.avatarUrl}">
+                <div class="media-body">
+                    <h5 class="mt-0" th:text="${questionDto.user.name}"></h5>
+                </div>
             </div>
         </div>
     </div>

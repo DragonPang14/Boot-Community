@@ -73,7 +73,7 @@ public class QuestionService {
 
     public QuestionDto findQuestionById(String id) {
         Question question = questionMapper.findQuestionById(id);
-        QuestionDto questionDto = null;
+        QuestionDto questionDto = new QuestionDto();
         if(question != null){
             User user = userMapper.findById(question.getCreator());
             BeanUtils.copyProperties(question,questionDto);
