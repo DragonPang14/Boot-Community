@@ -24,11 +24,13 @@
                     阅读数:<span th:text="${questionDto.viewCount}"></span>&nbsp;|&nbsp;
                     发布于:<span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
             </div>
-            <div class="float-right">
-                <button type="button" class="btn btn-light btn-sm"><i class="zi zi_pencilalt"></i>编辑</button>
-            </div>
+
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${questionDto.description}">
+            </div>
+            <hr>
+            <div class="ml-auto" th:if="${session.user != null && questionDto.user.id == session.user.id}">
+                <button type="button" class="btn btn-light btn-sm"><i class="zi zi_pencilalt"></i>编辑</button>
             </div>
         </div>
         <div class="col-lg-3 ">

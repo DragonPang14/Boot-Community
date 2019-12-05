@@ -1,9 +1,6 @@
 package space.springboot.community.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import space.springboot.community.model.User;
 
@@ -20,4 +17,10 @@ public interface UserMapper {
 
     @Select("select * from user where id = #{creator}")
     User findById(Integer creator);
+
+    @Update("update user set name = #{name},token = #{token},gmt_modified = #{gmtModified},avatar_url = #{avatarUrl}")
+    void updateUser(User dbUser);
+
+    @Select("select * from user where account_id = #{token}")
+    User findByAccountId(String token);
 }

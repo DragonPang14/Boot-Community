@@ -10,6 +10,7 @@ import space.springboot.community.dto.GitHubUserDto;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
 import space.springboot.community.provider.GitHubProvider;
+import space.springboot.community.service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,7 @@ public class AuthorizeController {
     private String callbackUrl;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     /**
      * @desc github的OAuth回调方法
@@ -58,10 +59,8 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setName(gitHubUser.getName());
             user.setToken(UUID.randomUUID().toString());
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(gitHubUser.getAvatarUrl());
-            userMapper.insertUser(user);
+            userService.insertOrUpdateUser(user);
 //            登陆成功
             response.addCookie(new Cookie("token",user.getToken()));
 //            重定向

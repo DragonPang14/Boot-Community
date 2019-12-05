@@ -9,7 +9,9 @@ import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.service.QuestionService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class IndexController {
@@ -30,6 +32,15 @@ public class IndexController {
                         Model model) {
         PaginationDto<QuestionDto> pagination= questionService.getList(page, size);
         model.addAttribute("pagination", pagination);
+        return "index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("user",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         return "index";
     }
 }
