@@ -5,43 +5,53 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import space.springboot.community.mapper.QuestionMapper;
-import space.springboot.community.mapper.UserMapper;
+import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.model.Question;
 import space.springboot.community.model.User;
+import space.springboot.community.service.QuestionService;
+import space.springboot.community.service.UserService;
 
 @Controller
 public class PublishController {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
 
     @GetMapping("/publish")
     public String publish() {
         return "publish";
     }
 
+    @GetMapping("/publish/{id}")
+    public String editQuestion(@PathVariable(name = "id") String id,
+                               Model model){
+        QuestionDto questionDto = questionService.findQuestionById(id);
+        if (questionDto != null){
+            model.addAttribute("questionDto",questionDto);
+        }
+        return "/publish";
+    }
+
     @PostMapping("/doPublish")
     public String doPublish(Question question,
                             @CookieValue(value = "token", required = false) String token,
                             Model model) {
-        System.out.println("title is :" + question.getTitle());
-
         try {
             if (token == null) {
                 model.addAttribute("error", "用户不存在");
                 return "publish";
             }
-            User user = userMapper.findByToken(token);
+            User user = userService.findByToken(token);
             if (user != null) {
                 question.setCreator(user.getId());
                 question.setGmtCreate(System.currentTimeMillis());
                 question.setGmtModified(question.getGmtCreate());
-                questionMapper.createQuestion(question);
+                questionService.createOrUpdate(question);
             }else{
                 model.addAttribute("error", "用户不存在");
                 return "publish";

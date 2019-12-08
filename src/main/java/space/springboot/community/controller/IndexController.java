@@ -38,9 +38,9 @@ public class IndexController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response){
         request.getSession().removeAttribute("user");
-        Cookie cookie = new Cookie("user",null);
+        Cookie cookie = new Cookie("token",null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        return "index";
+        return "redirect:/";
     }
 }

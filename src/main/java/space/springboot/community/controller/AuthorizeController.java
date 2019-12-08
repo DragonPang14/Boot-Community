@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import space.springboot.community.dto.AccessTokenDto;
 import space.springboot.community.dto.GitHubUserDto;
-import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
 import space.springboot.community.provider.GitHubProvider;
 import space.springboot.community.service.UserService;

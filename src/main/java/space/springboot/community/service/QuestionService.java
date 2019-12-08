@@ -21,64 +21,67 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
     public PaginationDto<QuestionDto> getList(Integer page, Integer size) {
         Integer totalCount = questionMapper.totalCount();
-        Integer totalPage = totalCount % 10 == 0?totalCount / 10:(totalCount / 10) + 1;
-        if(page < 1){
+        Integer totalPage = totalCount % 10 == 0 ? totalCount / 10 : (totalCount / 10) + 1;
+        if (page < 1) {
             page = 1;
-        }else if(page > totalPage){
+        } else if (page > totalPage) {
             page = totalPage;
         }
 //        偏移量
-        Integer offset = size * ( page - 1);
-        List<Question> questions = questionMapper.getList(offset,size);
+        Integer offset = size * (page - 1);
+        List<Question> questions = questionMapper.getList(offset, size);
         List<QuestionDto> questionDtos = new ArrayList<>();
-        PaginationDto<QuestionDto> pagination= new PaginationDto<>();
+        PaginationDto<QuestionDto> pagination = new PaginationDto<>();
         for (Question question : questions) {
             User user = userMapper.findById(question.getCreator());
             QuestionDto questionDto = new QuestionDto();
-            BeanUtils.copyProperties(question,questionDto);
+            BeanUtils.copyProperties(question, questionDto);
             questionDto.setUser(user);
             questionDtos.add(questionDto);
         }
         pagination.setPageList(questionDtos);
-        pagination.setPagination(totalPage,page);
+        pagination.setPagination(totalPage, page);
         return pagination;
     }
 
     public PaginationDto<QuestionDto> getListByUserId(Integer userId, Integer page, Integer size) {
         Integer totalCount = questionMapper.userQuestionCount(userId);
-        Integer totalPage = totalCount % 10 == 0?totalCount / 10:(totalCount / 10) + 1;
-        if(page < 1){
+        Integer totalPage = totalCount % 10 == 0 ? totalCount / 10 : (totalCount / 10) + 1;
+        if (page < 1) {
             page = 1;
-        }else if(page > totalPage){
+        } else if (page > totalPage) {
             page = totalPage;
         }
 //        偏移量
-        Integer offset = size * ( page - 1);
-        List<Question> questions = questionMapper.getListByUserId(userId,offset,size);
+        Integer offset = size * (page - 1);
+        List<Question> questions = questionMapper.getListByUserId(userId, offset, size);
         List<QuestionDto> questionDtos = new ArrayList<>();
-        PaginationDto<QuestionDto> pagination= new PaginationDto<>();
+        PaginationDto<QuestionDto> pagination = new PaginationDto<>();
         for (Question question : questions) {
             User user = userMapper.findById(question.getCreator());
             QuestionDto questionDto = new QuestionDto();
-            BeanUtils.copyProperties(question,questionDto);
+            BeanUtils.copyProperties(question, questionDto);
             questionDto.setUser(user);
             questionDtos.add(questionDto);
         }
         pagination.setPageList(questionDtos);
-        pagination.setPagination(totalPage,page);
+        pagination.setPagination(totalPage, page);
         return pagination;
     }
 
     public QuestionDto findQuestionById(String id) {
         Question question = questionMapper.findQuestionById(id);
         QuestionDto questionDto = new QuestionDto();
-        if(question != null){
-            User user = userMapper.findById(question.getCreator());
-            BeanUtils.copyProperties(question,questionDto);
-            questionDto.setUser(user);
-        }
+        User user = userMapper.findById(question.getCreator());
+        BeanUtils.copyProperties(question, questionDto);
+        questionDto.setUser(user);
         return questionDto;
+    }
+
+    public void createOrUpdate(Question question) {
+
     }
 }

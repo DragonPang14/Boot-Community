@@ -24,16 +24,16 @@
     <form action="/doPublish" method="post">
         <div class="row">
             <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+                <h5>标题:</h5>
+                <span>(简明扼要的描述你的主题)</span>
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">标题</span>
-                    </div>
-                    <input class="form-control" type="text" name="title" id="title">
+                    <input class="form-control" type="text" name="title" id="title" th:value="${questionDto != null?questionDto.title:''}">
                 </div>
                 <hr>
+                <h5>问题补充:</h5>
                 <div class="input-group">
                     <textarea class="form-control" placeholder="问题补充" rows="10" name="description"
-                              id="description"></textarea>
+                              id="description" th:text="${questionDto != null?questionDto.description:''}"></textarea>
                 </div>
                 <hr>
                 <div class="input-group">

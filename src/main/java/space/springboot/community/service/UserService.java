@@ -16,7 +16,7 @@ public class UserService {
      * @param user
      */
     public void insertOrUpdateUser(User user) {
-        User dbUser = userMapper.findByAccountId(user.getToken());
+        User dbUser = userMapper.findByAccountId(user.getAccountId());
         if(dbUser != null){
             dbUser.setAvatarUrl(user.getAvatarUrl());
             dbUser.setToken(user.getToken());
@@ -28,5 +28,10 @@ public class UserService {
             user.setGmtModified(user.getGmtCreate());
             userMapper.insertUser(user);
         }
+    }
+
+    public User findByToken(String token) {
+        User dbUser = userMapper.findByToken(token);
+        return dbUser;
     }
 }
