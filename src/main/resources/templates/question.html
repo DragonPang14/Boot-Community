@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="/css/zico.min.css">
     <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="/pagejs/index.js" type="application/javascript"></script>
-    <script src="/js/question.js" type="application/javascript"></script>
+    <script src="/pagejs/question.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{fragment/nav :: nav}">
@@ -31,7 +30,7 @@
             <hr>
             <input type="hidden" th:value="${questionDto.getId()}" id="question_id">
             <div class="ml-auto" th:if="${session.user != null && questionDto.user.id == session.user.id}">
-                <button type="button" class="btn btn-light btn-sm"><i class="zi zi_pencilalt" onclick="editQuestion()"></i>编辑</button>
+                <button type="button" class="btn btn-light btn-sm" onclick="editQuestion()"><i class="zi zi_pencilalt"></i>编辑</button>
             </div>
         </div>
         <div class="col-lg-3 ">

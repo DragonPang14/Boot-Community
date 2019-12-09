@@ -3,12 +3,12 @@
 <head>
     <title>发布 - 码农社区</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/zico.min.css">
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/jquery-3.3.1.min.js" type="application/javascript"></script>
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="pagejs/publish.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/zico.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/pagejs/publish.js" type="application/javascript"></script>
 </head>
 <style>
     .left-bottum {
@@ -41,6 +41,7 @@
                         <span class="input-group-text">添加标签</span>
                     </div>
                     <input type="text" class="form-control" placeholder="输入标签，以“，”分隔" name="tag" id="tag">
+                    <input type="hidden" class="form-control" name="id" id="id" th:value="${questionDto != null?questionDto.id:''}">
                 </div>
                 <div class="mt-4">
                     <button class="btn btn-light float-right" type="submit" onclick="verifyValue();"><i class="zi zi_plusSquare"></i>发布</button>

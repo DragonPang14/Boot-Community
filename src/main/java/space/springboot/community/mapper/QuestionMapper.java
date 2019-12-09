@@ -1,9 +1,6 @@
 package space.springboot.community.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
@@ -33,4 +30,7 @@ public interface QuestionMapper {
 
     @Select("select * from question where id = #{id}")
     Question findQuestionById(@Param(value = "id") String id);
+
+    @Update("update question set gmt_modified = #{gmtModified},title = #{title},description = #{description} where id = #{id}")
+    void updateQuestion(Question dbQuestion);
 }

@@ -34,7 +34,7 @@ public class PublishController {
         if (questionDto != null){
             model.addAttribute("questionDto",questionDto);
         }
-        return "/publish";
+        return "publish";
     }
 
     @PostMapping("/doPublish")

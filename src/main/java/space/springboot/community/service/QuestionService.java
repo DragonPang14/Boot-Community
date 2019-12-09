@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
+import space.springboot.community.exception.CustomizeErrorCode;
+import space.springboot.community.exception.CustomizeException;
 import space.springboot.community.mapper.QuestionMapper;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.Question;
@@ -74,6 +76,9 @@ public class QuestionService {
 
     public QuestionDto findQuestionById(String id) {
         Question question = questionMapper.findQuestionById(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDto questionDto = new QuestionDto();
         User user = userMapper.findById(question.getCreator());
         BeanUtils.copyProperties(question, questionDto);
@@ -82,6 +87,14 @@ public class QuestionService {
     }
 
     public void createOrUpdate(Question question) {
-
+        Question dbQuestion = questionMapper.findQuestionById(question.getId().toString());
+        if(dbQuestion == null){
+            questionMapper.createQuestion(question);
+        }else {
+            dbQuestion.setGmtModified(question.getGmtCreate());
+            dbQuestion.setTitle(question.getTitle());
+            dbQuestion.setDescription(question.getDescription());
+            questionMapper.updateQuestion(dbQuestion);
+        }
     }
 }
