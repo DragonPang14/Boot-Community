@@ -27,6 +27,7 @@ public class CustomizeErrorHandler implements ErrorController {
         return new ModelAndView("error");
     }
 
+
     private HttpStatus getStatus(HttpServletRequest request) {
         Integer statusCode = (Integer)request.getAttribute("javax.servlet.error.status_code");
         if (statusCode == null) {

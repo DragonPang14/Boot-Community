@@ -1,17 +1,21 @@
 package space.springboot.community.exception;
 
 public enum CustomizeErrorCode implements ICustomizeErrorCode {
-    QUESTION_NOT_FOUND("主题没有找到，再确认下你的地址");
+    QUESTION_NOT_FOUND(2001,"主题没有找到，再确认下你的地址");
 
+    private Integer code;
+    private String Message;
 
-    private String resultMessage;
-
-    CustomizeErrorCode(String resultMessage) {
-        this.resultMessage = resultMessage;
+    CustomizeErrorCode(Integer code, String message) {
+        this.code = code;
+        Message = message;
     }
 
-    @Override
-    public String getResultMessage() {
-        return resultMessage;
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return Message;
     }
 }
