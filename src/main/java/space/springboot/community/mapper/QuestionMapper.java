@@ -29,8 +29,14 @@ public interface QuestionMapper {
     Integer userQuestionCount(@Param(value = "userId") Integer userId);
 
     @Select("select * from question where id = #{id}")
-    Question findQuestionById(@Param(value = "id") String id);
+    Question findQuestionById(@Param(value = "id") Integer id);
 
     @Update("update question set gmt_modified = #{gmtModified},title = #{title},description = #{description} where id = #{id}")
     void updateQuestion(Question dbQuestion);
+
+    @Update("update question set view_count = view_count + #{i} where id = #{id}")
+    void incView(@Param(value = "id") Integer id, @Param(value = "i") int i);
+
+    @Update("update question set comment_count = comment_count + #{i} where id = #{id}")
+    void incComment(@Param(value = "id") Integer parentId,@Param(value = "i") int i);
 }

@@ -74,10 +74,13 @@ public class QuestionService {
         return pagination;
     }
 
-    public QuestionDto findQuestionById(String id) {
+    public QuestionDto findQuestionById(Integer id, int isView) {
         Question question = questionMapper.findQuestionById(id);
-        if(question == null){
+        if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
+        if (isView == 1) {
+            questionMapper.incView(id,1);
         }
         QuestionDto questionDto = new QuestionDto();
         User user = userMapper.findById(question.getCreator());
@@ -87,10 +90,10 @@ public class QuestionService {
     }
 
     public void createOrUpdate(Question question) {
-        Question dbQuestion = questionMapper.findQuestionById(question.getId().toString());
-        if(dbQuestion == null){
+        Question dbQuestion = questionMapper.findQuestionById(question.getId());
+        if (dbQuestion == null) {
             questionMapper.createQuestion(question);
-        }else {
+        } else {
             dbQuestion.setGmtModified(question.getGmtCreate());
             dbQuestion.setTitle(question.getTitle());
             dbQuestion.setDescription(question.getDescription());

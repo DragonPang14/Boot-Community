@@ -7,5 +7,5 @@ public class CommentDto {
 
     private Integer ParentId;
     private String content;
-    private int type;
+    private Integer type;
 }

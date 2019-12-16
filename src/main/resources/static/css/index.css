@@ -14,3 +14,12 @@
     width: 38px;
     height: 38px;
 }
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover{
+    text-decoration: none;
+}
