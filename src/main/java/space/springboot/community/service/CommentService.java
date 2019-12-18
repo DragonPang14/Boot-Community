@@ -2,6 +2,7 @@ package space.springboot.community.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import space.springboot.community.dto.CommentDto;
 import space.springboot.community.dto.ResultDto;
 import space.springboot.community.enums.CommentTypeEnum;
@@ -19,6 +20,7 @@ public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
+    @Transactional
     public ResultDto insertComment(Comment comment) {
         ResultDto resultDto = new ResultDto();
         if(!CommentTypeEnum.isExist(comment.getType())){
