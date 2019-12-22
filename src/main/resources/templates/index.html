@@ -4,7 +4,7 @@
     <title>码农社区</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/zico.min.css">
     <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
@@ -16,60 +16,9 @@
 <div id="wrapper">
     <div class="sep"></div>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-12 col-sm-12 col-12 box ">
-                <div>
-                    <h3><i class="zi zi_list"></i>&nbsp;发现</h3>
-                </div>
-                <hr>
-                <ul class="list-unstyled">
-                    <li class="media question-list-item" th:each="question : ${pagination.pageList}">
-                        <img class="mr-3 avatar rounded" th:src="${question.user.avatarUrl}"
-                             alt="avater image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1"><a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a></h5>
-                            <span class="text-color-000">
-                        <span th:text="${question.commentCount}"></span> 个回复 • <span
-                                    th:text="${question.viewCount}"></span> 次浏览 •
-                            <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
-                        </span>
-                        </div>
-                    </li>
-                </ul>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"  th:if="${pagination.showFirst}">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item" th:if="${pagination.showPre}">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&lt;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item" th:each="page : ${pagination.pages}" th:class="${pagination.currentPage == page}?'page-item active':'page-item'">
-                            <a class="page-link" th:href="@{/(page=${page})}" th:text="${page}" ></a>
-                        </li>
-                        <li class="page-item" th:if="${pagination.showNext}">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&gt;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                        <li class="page-item" th:if="${pagination.showLast}">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="col-lg-3 box box-right">
-                <div class="left-bottum">
+        <div class="box-right">
+            <div class="box ">
+                <div class="cell">
                     发帖提示
                     <hr>
                     ·主题标题
@@ -86,7 +35,10 @@
                     在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
                     你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
                 </div>
-                <div class="left-bottum">
+            </div>
+            <div class="sep"></div>
+            <div class="box">
+                <div class="cell">
                     社区指导原则
                     <hr>
                     ·尊重原创
@@ -98,6 +50,58 @@
                     ·保持对陌生人的友善。用知识去帮助别人。
                 </div>
             </div>
+        </div>
+        <div class="box box-left">
+            <div class="inner-title">
+                <span ><i class="zi zi_list"></i>&nbsp;发现</span>
+            </div>
+            <ul class="list-unstyled">
+                <li class="media question-list-item" th:each="question : ${pagination.pageList}">
+                    <img class="mr-3 avatar rounded" th:src="${question.user.avatarUrl}"
+                         alt="avater image">
+                    <div class="media-body">
+                        <span class="mt-0 mb-1 question-list-title"><a th:href="@{'/question/' + ${question.id}}"
+                                                                       th:text="${question.title}"></a></span>
+                        <span class="text-color-000">
+                        <span th:text="${question.commentCount}"></span> 个回复 • <span
+                                th:text="${question.viewCount}"></span> 次浏览 •
+                            <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:if="${pagination.showFirst}">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${pagination.showPre}">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="page : ${pagination.pages}"
+                        th:class="${pagination.currentPage == page}?'page-item active':'page-item'">
+                        <a class="page-link" th:href="@{/(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li class="page-item" th:if="${pagination.showNext}">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${pagination.showLast}">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

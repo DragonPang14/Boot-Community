@@ -4,7 +4,7 @@
     <title th:text="${questionDto.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/zico.min.css">
     <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
@@ -15,28 +15,9 @@
 </div>
 <div id="wrapper">
     <div class="sep"></div>
-    <div class="container" >
-        <div class="row">
-            <div class="col-lg-8 col-md-12 col-sm-12 col-12 box">
-                <div>
-                    <h4><span th:text="${questionDto.title}"></span></h4>
-                </div>
-                <div class="text-color-000 title-inline">
-                    作者:<span th:text="${questionDto.user.name}"></span>&nbsp;|&nbsp;
-                    阅读数:<span th:text="${questionDto.viewCount}"></span>&nbsp;|&nbsp;
-                    发布于:<span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
-                </div>
-                <div class="title-inline-button title-inline" th:if="${session.user != null && questionDto.user.id == session.user.id}">
-                    <button type="button" class="btn btn-light btn-sm" onclick="editQuestion()"><i class="zi zi_pencilalt"></i>编辑</button>
-                </div>
-                <hr>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${questionDto.description}">
-                </div>
-                <input type="hidden" th:value="${questionDto.getId()}" id="question_id">
-            </div>
-            <div class="col-lg-3 box">
-                <h5>发起人</h5>
-                <br>
+    <div class="container">
+        <div class="box box-right">
+            <div class="cell">
                 <div class="media">
                     <img class="mr-3 rounded avatar-nav" th:src="${questionDto.user.avatarUrl}">
                     <div class="media-body">
@@ -45,6 +26,37 @@
                 </div>
             </div>
         </div>
+        <div class="box-left">
+            <div class="box">
+                <div class="question-header">
+                    <img class="fr avatar-nav" th:src="${questionDto.user.avatarUrl}">
+                    <h1 th:text="${questionDto.title}"></h1>
+                    <div class="text-color-000 title-inline">
+                        作者:<span th:text="${questionDto.user.name}"></span>&nbsp;|&nbsp;
+                        阅读数:<span th:text="${questionDto.viewCount}"></span>&nbsp;|&nbsp;
+                        发布于:<span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                    </div>
+                    <div class="title-inline-button title-inline"
+                         th:if="${session.user != null && questionDto.user.id == session.user.id}">
+                        <button type="button" class="btn btn-light btn-sm" onclick="editQuestion()"><i
+                                class="zi zi_pencilalt"></i>编辑
+                        </button>
+                    </div>
+                </div>
+                <input type="hidden" th:value="${questionDto.getId()}" id="question_id">
+                <div class="cell" th:text="${questionDto.description}">
+                </div>
+            </div>
+            <div class="sep"></div>
+            <div class="box transparent">
+                <span>目前尚无回复</span>
+            </div>
+            <div class="sep"></div>
+            <div class="box">
+
+            </div>
+        </div>
+
     </div>
 </div>
 
