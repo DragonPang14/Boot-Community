@@ -14,7 +14,7 @@
 <div th:insert="~{fragment/nav :: nav}">
 </div>
 <div id="wrapper">
-    <div class="sep"></div>
+    <div class="sep20"></div>
     <div class="container">
         <div class="box box-right">
             <div class="cell">
@@ -31,12 +31,12 @@
                 <div class="question-header">
                     <img class="fr avatar-nav" th:src="${questionDto.user.avatarUrl}">
                     <h1 th:text="${questionDto.title}"></h1>
-                    <div class="text-color-000 title-inline">
+                    <div class="text-color-000 inline">
                         作者:<span th:text="${questionDto.user.name}"></span>&nbsp;|&nbsp;
                         阅读数:<span th:text="${questionDto.viewCount}"></span>&nbsp;|&nbsp;
                         发布于:<span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                     </div>
-                    <div class="title-inline-button title-inline"
+                    <div class="fr inline"
                          th:if="${session.user != null && questionDto.user.id == session.user.id}">
                         <button type="button" class="btn btn-light btn-sm" onclick="editQuestion()"><i
                                 class="zi zi_pencilalt"></i>编辑
@@ -47,17 +47,23 @@
                 <div class="cell" th:text="${questionDto.description}">
                 </div>
             </div>
-            <div class="sep"></div>
+            <div class="sep20"></div>
             <div class="box transparent">
                 <span>目前尚无回复</span>
             </div>
-            <div class="sep"></div>
+            <div class="sep20"></div>
             <div class="box">
                 <div class="cell">
                     添加一条主题回复
                 </div>
                 <div class="cell">
                     <textarea class="form-control" name="content" id="#content" rows="5"></textarea>
+                    <div class="sep10"></div>
+                    <button class="btn btn-light" onclick="">回复</button>
+                    <div class="fr">
+                        <div class="sep5"></div>
+                        <span class="fr gray">请尽量让自己的回复能够对别人有帮助</span>
+                    </div>
                 </div>
             </div>
         </div>

@@ -42,6 +42,10 @@ h1 {
     float: right;
 }
 
+.fl {
+    float: left;
+}
+
 .question-header {
     padding: 10px;
     font-size: 15px;
@@ -77,6 +81,10 @@ h1 {
     margin: 0 310px 0 20px;
 }
 
+.gray {
+    color: #999;
+}
+
 .box-right {
     width: 270px;
     float: right;
@@ -104,8 +112,16 @@ h1 {
     background-repeat: repeat-x,repeat;
 }
 
-.sep{
+.sep20{
     height: 20px;
+}
+
+.sep5 {
+    height: 5px;
+}
+
+.sep10 {
+    height: 10px;
 }
 
 .avatar-nav {
@@ -113,12 +129,8 @@ h1 {
     height: 38px;
 }
 
-.title-inline {
+.inline {
     display: inline-block;
-}
-
-.title-inline-button {
-    float: right;
 }
 
 a {
