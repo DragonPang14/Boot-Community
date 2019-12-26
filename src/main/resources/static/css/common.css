@@ -85,6 +85,10 @@ h1 {
     color: #999;
 }
 
+.gray a{
+    color: #999;
+}
+
 .box-right {
     width: 270px;
     float: right;
