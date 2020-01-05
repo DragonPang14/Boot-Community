@@ -47,10 +47,34 @@
                 <div class="cell" th:text="${questionDto.description}">
                 </div>
             </div>
+            <!--回复-->
             <div class="sep20"></div>
             <div class="box transparent">
                 <span>目前尚无回复</span>
             </div>
+            <div class="box">
+                <div class="cell">
+                    <div class="fr">技术</div>
+                    <span class="gray">有36条回复&nbsp;
+                        <strong>|</strong>
+                    </span>
+                </div>
+                <ul class="list-unstyled">
+                    <li class="media question-list-item" >
+                        <img class="mr-3 avatar rounded" th:src="${questionDto.user.avatarUrl}"
+                             alt="avater image">
+                        <div class="media-body">
+                            <div class="fr thank-area">
+                                <zi class="zi zi_thumbsup gray"></zi>&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <strong th:text="${questionDto.user.name}" class="gray"></strong>
+                            <div class="sep5"></div>
+                            <span class="reply-content">回复一条</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--添加评论区域-->
             <div class="sep20"></div>
             <div class="box">
                 <div class="cell">

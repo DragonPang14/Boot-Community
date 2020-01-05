@@ -116,8 +116,18 @@ h1 {
     background-repeat: repeat-x,repeat;
 }
 
-.sep20{
-    height: 20px;
+
+
+.reply-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #000;
+    word-break: break-word;
+}
+
+.thank-area {
+    display: inline-block;
+    padding: 2px 5px;
 }
 
 .sep5 {
@@ -126,6 +136,10 @@ h1 {
 
 .sep10 {
     height: 10px;
+}
+
+.sep20{
+    height: 20px;
 }
 
 .avatar-nav {
