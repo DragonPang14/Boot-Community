@@ -11,6 +11,9 @@ import space.springboot.community.mapper.QuestionMapper;
 import space.springboot.community.model.Comment;
 import space.springboot.community.model.Question;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CommentService {
 
@@ -41,7 +44,7 @@ public class CommentService {
                 return resultDto;
             }
         }else {
-            Comment dbComment = commentMapper.findCommentById(comment.getParentId());
+            Comment dbComment = commentMapper.findCommentByCommentId(comment.getParentId());
             if (dbComment != null){
                 int commentId = commentMapper.insert(comment);
                 questionMapper.incComment(comment.getParentId(),1);
@@ -54,5 +57,13 @@ public class CommentService {
             }
         }
         return resultDto;
+    }
+
+
+    public List<CommentDto> QuestionComment(Integer id) {
+        List<Comment> comments = commentMapper.findCommentById(id,CommentTypeEnum.QUESTION_TYPE.getType());
+        if (comments.size() == 0){
+            return new ArrayList<>();
+        }
     }
 }
