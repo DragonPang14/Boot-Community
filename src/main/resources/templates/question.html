@@ -49,27 +49,27 @@
             </div>
             <!--回复-->
             <div class="sep20"></div>
-            <div class="box transparent">
+            <div class="box transparent" th:if="${commentDtoList.size() == 0}">
                 <span>目前尚无回复</span>
             </div>
-            <div class="box">
+            <div class="box" th:if="${commentDtoList.size() != 0}">
                 <div class="cell">
                     <div class="fr">技术</div>
-                    <span class="gray">有36条回复&nbsp;
+                    <span class="gray"><span th:text="${commentDtoList.size()}"></span>个评论&nbsp;
                         <strong>|</strong>
                     </span>
                 </div>
                 <ul class="list-unstyled">
-                    <li class="media question-list-item" >
-                        <img class="mr-3 avatar rounded" th:src="${questionDto.user.avatarUrl}"
+                    <li class="media question-list-item" th:each="commentDto : ${commentDtoList}">
+                        <img class="mr-3 avatar rounded" th:src="${commentDto.user.avatarUrl}"
                              alt="avater image">
                         <div class="media-body">
                             <div class="fr thank-area">
                                 <zi class="zi zi_thumbsup gray"></zi>&nbsp;&nbsp;&nbsp;
                             </div>
-                            <strong th:text="${questionDto.user.name}" class="gray"></strong>
+                            <strong th:text="${commentDto.user.name}" class="gray"></strong>
                             <div class="sep5"></div>
-                            <span class="reply-content">回复一条</span>
+                            <span class="reply-content" th:text="${commentDto.content}">一条回复</span>
                         </div>
                     </li>
                 </ul>

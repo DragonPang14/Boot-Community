@@ -1,5 +1,6 @@
 package space.springboot.community.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,11 +9,16 @@ import space.springboot.community.dto.ResultDto;
 import space.springboot.community.enums.CommentTypeEnum;
 import space.springboot.community.mapper.CommentMapper;
 import space.springboot.community.mapper.QuestionMapper;
+import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.Comment;
 import space.springboot.community.model.Question;
+import space.springboot.community.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class CommentService {
@@ -22,6 +28,9 @@ public class CommentService {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Transactional
     public ResultDto insertComment(Comment comment) {
@@ -65,5 +74,19 @@ public class CommentService {
         if (comments.size() == 0){
             return new ArrayList<>();
         }
+        //使用lamdba和stream来过滤评论或评论回复中重复的创建者id
+        Set<Integer> commentCreatorId = comments.stream().map(comment -> comment.getCreator()).collect(Collectors.toSet());
+        List<User> users = commentCreatorId.stream().map(integer -> {
+            User user = userMapper.findById(integer);
+            return user;
+        }).collect(Collectors.toList());
+        Map<Integer,User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(),user -> user));
+        List<CommentDto> commentDtos = comments.stream().map(comment -> {
+            CommentDto commentDto = new CommentDto();
+            BeanUtils.copyProperties(comment,commentDto);
+            commentDto.setUser(userMap.get(comment.getCreator()));
+            return commentDto;
+        }).collect(Collectors.toList());
+        return commentDtos;
     }
 }

@@ -1,7 +1,13 @@
 package space.springboot.community.enums;
 
+/**
+ * @desc 评论类型枚举
+ * @date
+ */
 public enum CommentTypeEnum {
+    //问题评论
     QUESTION_TYPE(1),
+    //评论回复
     COMMENT_TYPE(2);
     private Integer type;
 

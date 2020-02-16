@@ -17,9 +17,11 @@ public interface CommentMapper {
     @Options(keyColumn = "id",useGeneratedKeys = true,keyProperty = "id")
     int insert(Comment comment);
 
-    @Select("select * from comment where id = #{parentId} and type = #{type}")
+    //根据父ID查找评论
+    @Select("select * from comment where parent_id = #{parentId} and type = #{type}")
     List<Comment> findCommentById(@Param(value = "parentId") Integer parentId, @Param(value = "type") Integer type);
 
+    //查找需要回复的评论
     @Select("select * from comment where id = #{parentId} and type = 2")
     Comment findCommentByCommentId(@Param(value = "parentId") Integer parentId);
 }
