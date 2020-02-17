@@ -125,6 +125,10 @@ h1 {
     word-break: break-word;
 }
 
+.comment-reply-list {
+    background-color: #f7f7f9;
+}
+
 .thank-area {
     display: inline-block;
     padding: 2px 5px;

@@ -15,8 +15,11 @@ controller中的参数注释\
 
 ## themeleaf使用
 
-th:href往标签添加超链接地址 \
-@{路径(参数 = ${data})}
+th:href往标签添加超链接地址\
+**@{路径(参数 = ${data})}**
+
+onclick中传递参数\
+**th:onclick = "'javascript:functionName('+${param}+')'"**
 
 ## Cookies
 

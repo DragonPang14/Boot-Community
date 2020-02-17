@@ -28,3 +28,9 @@ function sendComment() {
         }
     });
 }
+
+//评论回复
+function replyComment(commentId) {
+    console.info(commentId);
+    $("#comment-" + commentId).collapse('toggle');
+}

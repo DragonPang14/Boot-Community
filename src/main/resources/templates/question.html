@@ -64,12 +64,34 @@
                         <img class="mr-3 avatar rounded" th:src="${commentDto.user.avatarUrl}"
                              alt="avater image">
                         <div class="media-body">
-                            <div class="fr thank-area">
-                                <zi class="zi zi_thumbsup gray"></zi>&nbsp;&nbsp;&nbsp;
+                            <div class="fr thank-area ">
+                                <span class="gray">
+                                    <a href="#">赞</a>&nbsp;&nbsp;&nbsp;
+                                    <strong>|</strong>&nbsp;&nbsp;&nbsp;
+                                    <a href="#" th:onclick="'javascript:replyComment('+${commentDto.id}+')'">回复</a>
+                                </span>
                             </div>
                             <strong th:text="${commentDto.user.name}" class="gray"></strong>
                             <div class="sep5"></div>
-                            <span class="reply-content" th:text="${commentDto.content}">一条回复</span>
+                            <span class="reply-content" th:text="${commentDto.content}"></span>
+                            <div class="sep5"></div>
+                            <!--评论回复-->
+                            <div th:id="${'comment-'+commentDto.id}" class="comment-reply-list mt-0 collapse">
+                                <div class="media">
+                                    <img class="mr-3 avatar rounded" th:src="${commentDto.user.avatarUrl}"
+                                         alt="avater image">
+                                    <div class="media-body">
+                                        <div class="fr thank-area ">
+                                <span class="gray">赞&nbsp;&nbsp;&nbsp;
+                                    <strong>|</strong>&nbsp;&nbsp;&nbsp;
+                                回复</span>
+                                        </div>
+                                        <strong th:text="${commentDto.user.name}" class="gray"></strong>
+                                        <div class="sep5"></div>
+                                        <span class="reply-content" >评论回复1</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 </ul>
