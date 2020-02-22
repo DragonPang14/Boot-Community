@@ -19,8 +19,8 @@ th:href往标签添加超链接地址\
 **@{路径(参数 = ${data})}**
 
 onclick中传递参数\
-**th:onclick = "'javascript:functionName('+${param}+')'"**
-
+1.**th:onclick = "'javascript:functionName('+${param}+')'"**\
+2.**th:onclick = "functionName([[${param}]])"**
 ## Cookies
 
 不能跨域，有过期时间，路径，域名

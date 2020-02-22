@@ -43,7 +43,6 @@
                         </button>
                     </div>
                 </div>
-                <input type="hidden" th:value="${questionDto.getId()}" id="question_id">
                 <div class="cell" th:text="${questionDto.description}">
                 </div>
             </div>
@@ -55,7 +54,7 @@
             <div class="box" th:if="${commentDtoList.size() != 0}">
                 <div class="cell">
                     <div class="fr">技术</div>
-                    <span class="gray"><span th:text="${commentDtoList.size()}"></span>个评论&nbsp;
+                    <span class="gray"><span th:text="${questionDto.commentCount}"></span>个评论&nbsp;
                         <strong>|</strong>
                     </span>
                 </div>
@@ -68,28 +67,22 @@
                                 <span class="gray">
                                     <a href="#">赞</a>&nbsp;&nbsp;&nbsp;
                                     <strong>|</strong>&nbsp;&nbsp;&nbsp;
-                                    <a href="#" th:onclick="'javascript:replyComment('+${commentDto.id}+')'">回复</a>
+                                    <a href="#" th:onclick="replyComment([[${commentDto.id}]],[[${commentDto.user.name}]])">回复</a>
                                 </span>
                             </div>
                             <strong th:text="${commentDto.user.name}" class="gray"></strong>
                             <div class="sep5"></div>
                             <span class="reply-content" th:text="${commentDto.content}"></span>
                             <div class="sep5"></div>
-                            <!--评论回复-->
-                            <div th:id="${'comment-'+commentDto.id}" class="comment-reply-list mt-0 collapse">
-                                <div class="media">
-                                    <img class="mr-3 avatar rounded" th:src="${commentDto.user.avatarUrl}"
-                                         alt="avater image">
-                                    <div class="media-body">
-                                        <div class="fr thank-area ">
-                                <span class="gray">赞&nbsp;&nbsp;&nbsp;
-                                    <strong>|</strong>&nbsp;&nbsp;&nbsp;
-                                回复</span>
-                                        </div>
-                                        <strong th:text="${commentDto.user.name}" class="gray"></strong>
-                                        <div class="sep5"></div>
-                                        <span class="reply-content" >评论回复1</span>
-                                    </div>
+                            <!--评论的回复-->
+                            <div th:id="${'comments-'+commentDto.id}" class="comment-reply-list mt-0 collapse">
+                                <!--js添加-->
+                            </div>
+                            <!--评论回复框-->
+                            <div class="input-group collapse" th:id="${'comments-reply-'+commentDto.id}">
+                                <input class="form-control" th:id="${'comments-reply-input-'+commentDto.id}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" th:onclick="sendComment([[${questionDto.id}]],[[${commentDto.id}]],2)">回复</button>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +98,7 @@
                 <div class="cell">
                     <textarea class="form-control" name="content" id="content" rows="5"></textarea>
                     <div class="sep10"></div>
-                    <button class="btn btn-light" onclick="sendComment()">回复</button>
+                    <button class="btn btn-light" th:onclick="sendComment([[${questionDto.id}]],[[${questionDto.id}]],1)">回复</button>
                     <div class="fr">
                         <div class="sep5"></div>
                         <span class="fr gray">请尽量让自己的回复能够对别人有帮助</span>

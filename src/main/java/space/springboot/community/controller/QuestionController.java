@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import space.springboot.community.dto.CommentDto;
 import space.springboot.community.dto.QuestionDto;
+import space.springboot.community.enums.CommentTypeEnum;
 import space.springboot.community.service.CommentService;
 import space.springboot.community.service.QuestionService;
 
@@ -25,7 +26,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id") Integer id,
                            Model model){
         QuestionDto questionDto = questionService.findQuestionById(id,1);
-        List<CommentDto> commentDtoList = commentService.QuestionComment(id);
+        List<CommentDto> commentDtoList = commentService.getComments(id, CommentTypeEnum.QUESTION_TYPE.getType());
         model.addAttribute("questionDto",questionDto);
         model.addAttribute("commentDtoList",commentDtoList);
         return "question";

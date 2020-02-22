@@ -33,44 +33,45 @@ public class CommentService {
     private UserMapper userMapper;
 
     @Transactional
-    public ResultDto insertComment(Comment comment) {
+    public ResultDto insertComment(Integer questionId, Comment comment) {
         ResultDto resultDto = new ResultDto();
         if(!CommentTypeEnum.isExist(comment.getType())){
             resultDto.setCode(2001);
             resultDto.setMsg("回复类型错误");
             return resultDto;
         }
-        if(comment.getType() == CommentTypeEnum.QUESTION_TYPE.getType()){
-            Question question = questionMapper.findQuestionById(comment.getParentId());
-            if (question != null){
-                int commentId = commentMapper.insert(comment);
-                questionMapper.incComment(comment.getParentId(),1);
-                resultDto.setCode(100);
-                resultDto.setObj(comment);
-            }else {
+        boolean haveFlag = false;
+        CommentDto commentDto = new CommentDto();
+        if(comment.getType() == CommentTypeEnum.QUESTION_TYPE.getType() ){
+            //判断是否找得到评论的主题
+            haveFlag = questionMapper.findQuestionById(comment.getParentId()) != null;
+        }else {
+            //判断是否招的到回复的评论
+            haveFlag = commentMapper.findCommentByCommentId(comment.getParentId(),CommentTypeEnum.QUESTION_TYPE.getType()) != null;
+        }
+        if (haveFlag){
+            int commentId = commentMapper.insert(comment);
+            questionMapper.incComment(questionId,1);
+            BeanUtils.copyProperties(comment,commentDto);
+            commentDto.setUser(userMapper.findById(comment.getCreator()));
+            resultDto.setCode(100);
+            resultDto.setObj(commentDto);
+        }else {
+            if (comment.getType() == CommentTypeEnum.QUESTION_TYPE.getType()){
                 resultDto.setCode(2002);
                 resultDto.setMsg("回复主题未找到");
-                return resultDto;
-            }
-        }else {
-            Comment dbComment = commentMapper.findCommentByCommentId(comment.getParentId());
-            if (dbComment != null){
-                int commentId = commentMapper.insert(comment);
-                questionMapper.incComment(comment.getParentId(),1);
-                resultDto.setCode(100);
-                resultDto.setObj(comment);
             }else {
-                resultDto.setCode(2002);
+                resultDto.setCode(2003);
                 resultDto.setMsg("回复评论未找到");
-                return resultDto;
             }
+            return resultDto;
         }
         return resultDto;
     }
 
 
-    public List<CommentDto> QuestionComment(Integer id) {
-        List<Comment> comments = commentMapper.findCommentById(id,CommentTypeEnum.QUESTION_TYPE.getType());
+    public List<CommentDto> getComments(Integer id, Integer commentType) {
+        List<Comment> comments = commentMapper.findCommentById(id,commentType);
         if (comments.size() == 0){
             return new ArrayList<>();
         }

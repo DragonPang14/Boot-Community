@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class InsertCommentDto {
 
-    private Integer ParentId;
+    private Integer questionId;
+    private Integer parentId;
     private String content;
     private Integer type;
 }
