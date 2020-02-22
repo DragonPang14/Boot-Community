@@ -3,6 +3,11 @@
 
 添加README
 
+##更新日志
+###02/02/22
+完成二级评论功能
+
+
 ## 知识点
 
 @Component
@@ -29,3 +34,4 @@ onclick中传递参数\
 [bootstrap文档](https://v3.bootcss.com/components/) 
 
 [OAuth文档](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
+
