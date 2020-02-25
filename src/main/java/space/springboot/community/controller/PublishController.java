@@ -3,11 +3,10 @@ package space.springboot.community.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import space.springboot.community.dto.QuestionDto;
+import space.springboot.community.dto.ResultDto;
+import space.springboot.community.enums.CustomizeStatusEnum;
 import space.springboot.community.model.Question;
 import space.springboot.community.model.User;
 import space.springboot.community.service.QuestionService;
@@ -37,14 +36,12 @@ public class PublishController {
         return "publish";
     }
 
-    @PostMapping("/doPublish")
-    public String doPublish(Question question,
-                            @CookieValue(value = "token", required = false) String token,
-                            Model model) {
+    @RequestMapping(value = "/doPublish",method = RequestMethod.POST)
+    public @ResponseBody ResultDto doPublish(@RequestBody Question question,
+                               @CookieValue(value = "token", required = false) String token) {
         try {
             if (token == null) {
-                model.addAttribute("error", "用户不存在");
-                return "publish";
+                return new ResultDto(CustomizeStatusEnum.UNLOGIN_CODE);
             }
             User user = userService.findByToken(token);
             if (user != null) {
@@ -53,14 +50,12 @@ public class PublishController {
                 question.setGmtModified(question.getGmtCreate());
                 questionService.createOrUpdate(question);
             }else{
-                model.addAttribute("error", "用户不存在");
-                return "publish";
+                return new ResultDto(CustomizeStatusEnum.UNRECOGNIZED_USER);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("error","发布失败！");
-            return "publish";
+            return new ResultDto(CustomizeStatusEnum.CODE_ERROR);
         }
-        return "redirect:/";
+        return new ResultDto(CustomizeStatusEnum.SUCCESS_CODE);
     }
 }

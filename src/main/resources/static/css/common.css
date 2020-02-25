@@ -163,3 +163,21 @@ a {
 a:hover{
     text-decoration: none;
 }
+
+.unselect-tag {
+    display: inline-block;
+    font-size: .875rem;
+    padding: 0 .375rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: .1875rem;
+    background-color: rgba(0,150,94,.1);
+}
+
+.tag-card {
+    width: 475px;
+}
+
+.wid430 {
+    width: 430px;
+}

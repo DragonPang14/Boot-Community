@@ -38,6 +38,7 @@
                     </div>
                     <div class="fr inline"
                          th:if="${session.user != null && questionDto.user.id == session.user.id}">
+                        <input id="question-id" type="hidden" th:value="${questionDto.id}">
                         <button type="button" class="btn btn-light btn-sm" onclick="editQuestion()"><i
                                 class="zi zi_pencilalt"></i>编辑
                         </button>

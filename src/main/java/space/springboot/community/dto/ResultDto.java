@@ -1,6 +1,7 @@
 package space.springboot.community.dto;
 
 import lombok.Data;
+import space.springboot.community.enums.CustomizeStatusEnum;
 
 @Data
 public class ResultDto<T> {
@@ -12,6 +13,11 @@ public class ResultDto<T> {
     public ResultDto(int code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    public ResultDto(CustomizeStatusEnum statusEnum){
+        this.code = statusEnum.getCode();
+        this.msg = statusEnum.getMsg();
     }
 
     public ResultDto(){

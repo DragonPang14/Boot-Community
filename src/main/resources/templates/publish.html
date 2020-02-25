@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/zico.min.css">
     <link rel="stylesheet" href="/css/common.css">
     <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
     <script src="/pagejs/publish.js" type="application/javascript"></script>
 </head>
 <style>
@@ -23,67 +23,86 @@
 <div id="wrapper">
     <div class="sep20"></div>
     <div class="container">
-        <form action="/doPublish" method="post">
-            <div class="row">
-                <div class="col-lg-9 col-md-12 col-sm-12 col-12 box">
-                    <h5>标题:</h5>
-                    <span>(简明扼要的描述你的主题)</span>
-                    <div class="input-group">
-                        <input class="form-control" type="text" name="title" id="title" th:value="${questionDto != null?questionDto.title:''}">
-                    </div>
-                    <hr>
-                    <h5>问题补充:</h5>
-                    <div class="input-group">
-                    <textarea class="form-control" placeholder="问题补充" rows="10" name="description"
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-12 box">
+                <h5>标题</h5>
+                <span>(简明扼要的描述你的主题)</span>
+                <div class="input-group">
+                    <input class="form-control" type="text" name="title" id="title"
+                           th:value="${questionDto != null?questionDto.title:''}">
+                </div>
+                <hr>
+                <h5>问题补充</h5>
+                <div class="input-group">
+                    <textarea class="form-control" placeholder="问题补充" rows="17" name="description"
                               id="description" th:text="${questionDto != null?questionDto.description:''}"></textarea>
-                    </div>
-                    <hr>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">添加标签</span>
+                </div>
+                <hr>
+                <!--添加标签-->
+                <div class="d-flex">
+                    <div class="dropdown inline">
+                        <button class="btn btn-light" id="dropdown-button" data-toggle="dropdown" aria-expanded="true">
+                            <i class="zi zi_plus"></i>&nbsp;添加标签
+                        </button>
+                        <div class="tag-card dropdown-menu fl" id="tag-dropdown" aria-labelledby="dropdown-button">
+                            <h6 class="dropdown-header" id="tag-header">
+                                <span>还可添加3个标签</span>
+                                <span class="fr">创建标签</span>
+                            </h6>
+                            <div class="pl-4 pr-4">
+                                <input class="form-control" id="search-tag" placeholder="搜索标签" autocomplete="off">
+                            </div>
+                            <div class="mt-2 pl-4 pr-4">
+                                <a class="unselect-tag m-1" href="#">灌水</a>
+                                <a class="unselect-tag m-1" href="#">技术</a>
+                                <a class="unselect-tag m-1" href="#">技术</a>
+                                <a class="unselect-tag m-1" href="#">技术</a>
+                                <a class="unselect-tag m-1" href="#">技术</a>
+                                <a class="unselect-tag m-1" href="#">技术</a>
+                            </div>
                         </div>
-                        <input type="text" class="form-control" placeholder="输入标签，以“，”分隔" name="tag" id="tag">
-                        <input type="hidden" class="form-control" name="id" id="id" th:value="${questionDto != null?questionDto.id:''}">
                     </div>
-                    <div class="mt-4">
-                        <button class="btn btn-light float-right" type="submit" onclick="verifyValue();"><i class="zi zi_plusSquare"></i>发布</button>
-                    </div>
-                    <div th:if="${error != null}" class="alert alert-warning" role="alert">
-                        <span th:text="${error}"></span>
+
+                    <input type="hidden" class="form-control" name="id" id="question-id"
+                           th:value="${questionDto != null?questionDto.id:''}">
+                    <div class="ml-auto">
+                        <button class="btn btn-light float-right" onclick="publish()"><i class="zi zi_plusSquare"></i>&nbsp;发布
+                        </button>
                     </div>
                 </div>
-                <div class="col-lg-3 box">
-                    <div class="right-content">
-                        发帖提示
-                        <hr>
-                        ·主题标题
-                        <br>
-                        请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
-                        <br>
-                        ·正文
-                        <br>
-                        可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
-                        在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
-                        <br>
-                        ·添加标签
-                        <br>
-                        在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
-                        你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
-                    </div>
-                    <div class="right-bottum">
-                        社区指导原则
-                        <hr>
-                        ·尊重原创
-                        <br>
-                        ·请不要在 V2EX 发布任何盗版下载链接，包括软件、音乐、电影等等。V2EX 是创意工作者的社区，我们尊重原创。
-                        <br>
-                        ·友好互助
-                        <br>
-                        ·保持对陌生人的友善。用知识去帮助别人。
-                    </div>
+
+            </div>
+            <div class="col-lg-3 box">
+                <div class="right-content">
+                    发帖提示
+                    <hr>
+                    ·主题标题
+                    <br>
+                    请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
+                    <br>
+                    ·正文
+                    <br>
+                    可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
+                    在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
+                    <br>
+                    ·添加标签
+                    <br>
+                    在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
+                    你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
+                </div>
+                <div class="right-bottum">
+                    社区指导原则
+                    <hr>
+                    ·尊重原创
+                    <br>
+                    ·请不要在 V2EX 发布任何盗版下载链接，包括软件、音乐、电影等等。V2EX 是创意工作者的社区，我们尊重原创。
+                    <br>
+                    ·友好互助
+                    <br>
+                    ·保持对陌生人的友善。用知识去帮助别人。
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 </body>
