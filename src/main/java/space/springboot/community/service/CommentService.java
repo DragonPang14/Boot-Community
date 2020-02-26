@@ -50,7 +50,7 @@ public class CommentService {
             haveFlag = commentMapper.findCommentByCommentId(comment.getParentId(),CommentTypeEnum.QUESTION_TYPE.getType()) != null;
         }
         if (haveFlag){
-            int commentId = commentMapper.insert(comment);
+            commentMapper.insert(comment);
             questionMapper.incComment(questionId,1);
             BeanUtils.copyProperties(comment,commentDto);
             commentDto.setUser(userMapper.findById(comment.getCreator()));

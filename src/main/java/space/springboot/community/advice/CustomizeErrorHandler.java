@@ -1,4 +1,4 @@
-package space.springboot.community.controller;
+package space.springboot.community.advice;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;

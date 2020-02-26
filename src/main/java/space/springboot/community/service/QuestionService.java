@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
+import space.springboot.community.dto.TagDto;
 import space.springboot.community.exception.CustomizeErrorCode;
 import space.springboot.community.exception.CustomizeException;
 import space.springboot.community.mapper.QuestionMapper;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.Question;
+import space.springboot.community.model.Tag;
 import space.springboot.community.model.User;
 
 import java.util.ArrayList;
@@ -99,5 +101,20 @@ public class QuestionService {
             dbQuestion.setDescription(question.getDescription());
             questionMapper.updateQuestion(dbQuestion);
         }
+    }
+
+    /**
+     * @desc save tag method
+     * @param tagDto
+     * @return
+     */
+    public int saveTag(TagDto tagDto) {
+        Tag tag = new Tag();
+        tag.setTagName(tagDto.getTagName());
+        tag.setRemarks(tagDto.getRemarks());
+        tag.setGmtCreate(System.currentTimeMillis());
+        tag.setGmtModify(tag.getGmtCreate());
+        int isSuccess = questionMapper.saveTag(tag);
+        return isSuccess;
     }
 }

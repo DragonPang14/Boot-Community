@@ -6,12 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.dto.ResultDto;
+import space.springboot.community.dto.TagDto;
 import space.springboot.community.enums.CustomizeStatusEnum;
 import space.springboot.community.model.Question;
 import space.springboot.community.model.User;
 import space.springboot.community.service.QuestionService;
 import space.springboot.community.service.UserService;
 
+/**
+ * @desc 发布页面
+ */
 @Controller
 public class PublishController {
 
@@ -57,5 +61,18 @@ public class PublishController {
             return new ResultDto(CustomizeStatusEnum.CODE_ERROR);
         }
         return new ResultDto(CustomizeStatusEnum.SUCCESS_CODE);
+    }
+
+    @RequestMapping(value = "/saveTag",method = RequestMethod.POST)
+    public @ResponseBody ResultDto saveTag(@RequestBody TagDto tagDto){
+        ResultDto<TagDto> resultDto;
+        int tagId = questionService.saveTag(tagDto);
+        if(tagId == 1){
+            resultDto = new ResultDto<>(CustomizeStatusEnum.SUCCESS_CODE);
+            resultDto.setObj(tagDto);
+        }else {
+            resultDto = new ResultDto<>(CustomizeStatusEnum.CODE_ERROR);
+        }
+        return resultDto;
     }
 }

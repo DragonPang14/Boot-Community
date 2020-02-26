@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.model.Question;
+import space.springboot.community.model.Tag;
 
 import java.util.List;
 
@@ -39,4 +40,8 @@ public interface QuestionMapper {
 
     @Update("update question set comment_count = comment_count + #{i} where id = #{id}")
     void incComment(@Param(value = "id") Integer parentId,@Param(value = "i") int i);
+
+    @Insert("insert into tag (tag_name,remarks,gmt_create,gmt_modify) values (#{tagName},#{remarks},#{gmtCreate},#{gmtModify})")
+    @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
+    int saveTag(Tag tag);
 }

@@ -15,7 +15,7 @@ public interface CommentMapper {
     @Insert("insert into comment (parent_id,content,type,creator,like_count,gmt_create,gmt_modified) values " +
             "(#{parentId},#{content},#{type},#{creator},#{likeCount},#{gmtCreate},#{gmtModified})")
     @Options(keyColumn = "id",useGeneratedKeys = true,keyProperty = "id")
-    int insert(Comment comment);
+    void insert(Comment comment);
 
     //根据父ID查找评论
     @Select("select * from comment where parent_id = #{parentId} and type = #{type} order by gmt_create asc")
