@@ -27,14 +27,65 @@ function publish() {
     });
 }
 
-$(function () {
-
-    $(".unselect-tag").on('click',function () {
-        var tag = $.this.text();
-        console.info(tag);
+function saveTag() {
+    var flag = true;
+    $("#tag-modal").each(function () {
+        console.info("each");
+        console.info("input" + $(this).find("input").val());
+        if (!verifyInput($(this).find("input").val())){
+            $(this).find("input").addClass("is-invalid").attr("placeholder","必填！");
+            flag = false;
+        }
     });
-});
+    var name = $("#tagName").val();
+    var remarks = $("#remarks").val();
+    if (flag){
+        $.ajax({
+            url:"/saveTag",
+            type:"post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({"tagName":name,"remarks":remarks}),
+            success:function (data) {
+                if (data.code == 100){
+                    alert("创建成功！");
+                    $("#tag-modal").modal('close');
+                }
+            }
+        })
+    } 
+}
 
+function getTags() {
+    $("#tag-content").empty();
+    $.ajax({
+        url:"/getTags",
+        type:"post",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({"tagName":name,"remarks":remarks}),
+        success:function (data) {
+            if (data.code == 100){
+                var tagHtml = '';
+                $.each(data.obj,function (index,tag) {
+                    tagHtml += '<a class="unselect-tag m-1" href="javascript:;" >'+tag.tagName+'</a>\n'
+                })
+                $("#tag-content").append(tagHtml);
+                bind_search_event();
+                bind_tag_click_event();
+            }
+        }
+    })
+}
+
+function verifyInput(value) {
+    console.info("name" + name);
+    if(value == null||value == ""){
+        return false;
+    }else {
+        return true;
+    }
+}
 
 var bind_search_event = function () {
     var search_input = document.querySelector('#search-tag')

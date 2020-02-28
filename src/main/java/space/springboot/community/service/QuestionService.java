@@ -117,4 +117,21 @@ public class QuestionService {
         int isSuccess = questionMapper.saveTag(tag);
         return isSuccess;
     }
+
+    /**
+     * @desc getTags method
+     * @return
+     */
+    public List<TagDto> getTags() {
+        List<Tag> tags = questionMapper.getTags();
+        List<TagDto> tagDtos = new ArrayList<>();
+        if (tags != null && tags.size() > 0 ){
+            for (Tag tag : tags){
+                TagDto tagDto = new TagDto();
+                BeanUtils.copyProperties(tag,tagDto);
+                tagDtos.add(tagDto);
+            }
+        }
+        return tagDtos;
+    }
 }

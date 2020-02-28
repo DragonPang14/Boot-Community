@@ -40,24 +40,20 @@
                 <!--添加标签-->
                 <div class="d-flex">
                     <div class="dropdown inline">
-                        <button class="btn btn-light" id="dropdown-button" data-toggle="dropdown" aria-expanded="true">
+                        <button class="btn btn-light" id="dropdown-button" data-toggle="dropdown" onclick="getTags()" aria-expanded="true">
                             <i class="zi zi_plus"></i>&nbsp;添加标签
                         </button>
                         <div class="tag-card dropdown-menu fl" id="tag-dropdown" aria-labelledby="dropdown-button">
                             <h6 class="dropdown-header" id="tag-header">
                                 <span>还可添加3个标签</span>
-                                <span class="fr">创建标签</span>
+                                <span class="fr" data-toggle="modal" data-target="#tag-modal">
+                                    <a href="javascript:;" class="gray">创建标签</a>
+                                </span>
                             </h6>
                             <div class="pl-4 pr-4">
                                 <input class="form-control" id="search-tag" placeholder="搜索标签" autocomplete="off">
                             </div>
-                            <div class="mt-2 pl-4 pr-4">
-                                <a class="unselect-tag m-1" href="javascript:;" data-tag-id="1">灌水</a>
-                                <a class="unselect-tag m-1" href="javascript:;" data-tag-id="2">技术</a>
-                                <a class="unselect-tag m-1" href="javascript:;" data-tag-id="3">吃饭</a>
-                                <a class="unselect-tag m-1" href="javascript:;" data-tag-id="4">睡觉</a>
-                                <a class="unselect-tag m-1" href="javascript:;" data-tag-id="5">搞事情</a>
-                                <a class="unselect-tag m-1" href="javascript:;" data-tag-id="6">Ha Li lu ya</a>
+                            <div class="mt-2 pl-4 pr-4" id="tag-content">
                             </div>
                         </div>
                     </div>
@@ -71,6 +67,36 @@
                 </div>
 
             </div>
+
+            <!--创建标签模态框-->
+            <div class="modal fade" id="tag-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">创建标签</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+                            <lable>标签名称</lable>
+                            <input class="form-control" placeholder="请输入标签名称" autocomplete="off" name="tagName" id="tagName">
+                            <div class="sep10"></div>
+                            <label>标签介绍</label>
+                            <input class="form-control" placeholder="请输入标签简介，供审核" autocomplete="off" name="remarks" id="remarks">
+                        </div>
+
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-light" onclick="saveTag()">确定</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="col-lg-3 box">
                 <div class="right-content">
                     发帖提示

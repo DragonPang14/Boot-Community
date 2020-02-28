@@ -44,4 +44,7 @@ public interface QuestionMapper {
     @Insert("insert into tag (tag_name,remarks,gmt_create,gmt_modify) values (#{tagName},#{remarks},#{gmtCreate},#{gmtModify})")
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
     int saveTag(Tag tag);
+
+    @Select("select * from tag")
+    List<Tag> getTags();
 }
