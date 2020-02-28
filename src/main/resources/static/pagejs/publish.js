@@ -115,12 +115,14 @@ var template_tag = function (tag_text) {
 }
 
 var bind_tag_click_event = function() {
-    $('.unselect-tag').click(function (e) {
-        var add_tag_btn = document.querySelector('#dropdown-button')
-        var tag_text = e.target.text
-        var tag = template_tag(tag_text)
-        add_tag_btn.insertAdjacentHTML('beforeBegin', tag)
-        bind_tag_close_event()
+    $('#tag-content').click(function (e) {
+        if (e.target.classList.contains('unselect-tag')){
+            var add_tag_btn = document.querySelector('#dropdown-button')
+            var tag_text = e.target.text
+            var tag = template_tag(tag_text)
+            add_tag_btn.insertAdjacentHTML('beforeBegin', tag)
+            bind_tag_close_event()
+        }
     })
 }
 
