@@ -47,4 +47,8 @@ public interface QuestionMapper {
 
     @Select("select * from tag")
     List<Tag> getTags();
+
+    @Select("select count(1) from tag where tag_name = #{tagName}")
+    @Options(keyColumn = "count(1)")
+    int findTagByName(String tagName);
 }

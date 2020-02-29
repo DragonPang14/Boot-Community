@@ -73,11 +73,13 @@ public class PublishController {
     @RequestMapping(value = "/saveTag",method = RequestMethod.POST)
     public @ResponseBody ResultDto saveTag(@RequestBody TagDto tagDto){
         ResultDto<TagDto> resultDto;
-        int tagId = questionService.saveTag(tagDto);
-        if(tagId == 1){
-            resultDto = new ResultDto<>(CustomizeStatusEnum.SUCCESS_CODE);
+        int isExists = questionService.findTagByName(tagDto.getTagName());
+        if (isExists == 1){
+            resultDto = new ResultDto<>(CustomizeStatusEnum.TAG_EXISTS);
         }else {
-            resultDto = new ResultDto<>(CustomizeStatusEnum.CODE_ERROR);
+            int tagId = questionService.saveTag(tagDto);
+            resultDto = tagId == 1?new ResultDto<>(CustomizeStatusEnum.SUCCESS_CODE):
+                    new ResultDto<>(CustomizeStatusEnum.CODE_ERROR);
         }
         return resultDto;
     }

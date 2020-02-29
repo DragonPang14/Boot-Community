@@ -1,3 +1,6 @@
+$(function () {
+    getTags();
+});
 
 function publish() {
     var title = $("#title").val();
@@ -29,14 +32,13 @@ function publish() {
 
 function saveTag() {
     var flag = true;
-    $("#tag-modal").each(function () {
-        console.info("each");
-        console.info("input" + $(this).find("input").val());
-        if (!verifyInput($(this).find("input").val())){
-            $(this).find("input").addClass("is-invalid").attr("placeholder","必填！");
+    $("#tag-modal .form-control").each(function () {
+        if (!verifyInput($(this).val())){
+            $(this).addClass("is-invalid").attr("placeholder","必填！");
             flag = false;
         }
     });
+    console.info(flag);
     var name = $("#tagName").val();
     var remarks = $("#remarks").val();
     if (flag){
@@ -50,10 +52,12 @@ function saveTag() {
                 if (data.code == 100){
                     alert("创建成功！");
                     $("#tag-modal").modal('close');
+                }else {
+                    alert(data.msg);
                 }
             }
         })
-    } 
+    }
 }
 
 function getTags() {
@@ -71,15 +75,12 @@ function getTags() {
                     tagHtml += '<a class="unselect-tag m-1" href="javascript:;" >'+tag.tagName+'</a>\n'
                 })
                 $("#tag-content").append(tagHtml);
-                bind_search_event();
-                bind_tag_click_event();
             }
         }
     })
 }
 
 function verifyInput(value) {
-    console.info("name" + name);
     if(value == null||value == ""){
         return false;
     }else {

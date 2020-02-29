@@ -8,6 +8,8 @@ public enum CustomizeStatusEnum {
 
     UNRECOGNIZED_USER(1002,"未找到该用户"),
 
+    TAG_EXISTS(1003,"标签已存在"),
+
     CODE_ERROR(600,"操作出现异常"),
 
     QUESTION_NOT_FOUND(2001,"主题没有找到，再确认下你的地址"),

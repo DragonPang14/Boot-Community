@@ -134,4 +134,15 @@ public class QuestionService {
         }
         return tagDtos;
     }
+
+    /**
+     * @desc 根据标签名查找标签
+     * @param tagName
+     * @return
+     */
+    public int findTagByName(String tagName) {
+        tagName = tagName.toLowerCase();
+        int isExists = questionMapper.findTagByName(tagName);
+        return isExists;
+    }
 }
