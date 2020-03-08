@@ -15,6 +15,6 @@ public class QuestionDto {
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;
-    private String tag;
+    private TagDto tag;
     private User user;
 }

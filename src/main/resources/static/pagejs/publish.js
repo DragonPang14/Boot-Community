@@ -6,6 +6,7 @@ function publish() {
     var title = $("#title").val();
     var description = $("#description").val();
     var questionId = $("#question-id").val();
+    
     if (title == null || title == "") {
         alert("请输入标题！");
         return;
@@ -50,7 +51,7 @@ function saveTag() {
             data: JSON.stringify({"tagName":name,"remarks":remarks}),
             success:function (data) {
                 if (data.code == 100){
-                    alert("创建成功！");
+                    alert("创建成功，请重新进入页面使用新标签");
                     $("#tag-modal").modal('close');
                 }else {
                     alert(data.msg);
@@ -72,7 +73,7 @@ function getTags() {
             if (data.code == 100){
                 var tagHtml = '';
                 $.each(data.obj,function (index,tag) {
-                    tagHtml += '<a class="unselect-tag m-1" href="javascript:;" >'+tag.tagName+'</a>\n'
+                    tagHtml += '<a class="unselect-tag m-1" href="javascript:;" id="'+tag.id+'">'+tag.tagName+'</a>\n'
                 })
                 $("#tag-content").append(tagHtml);
             }
@@ -120,7 +121,8 @@ var bind_tag_click_event = function() {
         if (e.target.classList.contains('unselect-tag')){
             var add_tag_btn = document.querySelector('#dropdown-button')
             var tag_text = e.target.text
-            var tag = template_tag(tag_text)
+            var tag_id = e.target.id
+            var tag = template_tag(tag_text,tag_id)
             add_tag_btn.insertAdjacentHTML('beforeBegin', tag)
             bind_tag_close_event()
         }
