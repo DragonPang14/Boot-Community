@@ -11,7 +11,6 @@ import space.springboot.community.mapper.CommentMapper;
 import space.springboot.community.mapper.QuestionMapper;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.Comment;
-import space.springboot.community.model.Question;
 import space.springboot.community.model.User;
 
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public class CommentService {
             User user = userMapper.findById(integer);
             return user;
         }).collect(Collectors.toList());
-        Map<Integer,User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(),user -> user));
+        Map<Integer,User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
         List<CommentDto> commentDtos = comments.stream().map(comment -> {
             CommentDto commentDto = new CommentDto();
             BeanUtils.copyProperties(comment,commentDto);

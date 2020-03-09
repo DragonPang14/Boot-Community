@@ -3,6 +3,7 @@ package space.springboot.community.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.dto.TagDto;
@@ -91,14 +92,18 @@ public class QuestionService {
         return questionDto;
     }
 
-    public void createOrUpdate(Question question) {
-        Question dbQuestion = questionMapper.findQuestionById(question.getId());
-        if (dbQuestion == null) {
+    public void createOrUpdate(QuestionDto questionDto) {
+        if (StringUtils.isEmpty(questionDto.getId())) {
+            Question question = new Question();
+            BeanUtils.copyProperties(questionDto,question);
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
             questionMapper.createQuestion(question);
         } else {
-            dbQuestion.setGmtModified(question.getGmtCreate());
-            dbQuestion.setTitle(question.getTitle());
-            dbQuestion.setDescription(question.getDescription());
+            Question dbQuestion = questionMapper.findQuestionById(questionDto.getId());
+            dbQuestion.setGmtModified(questionDto.getGmtCreate());
+            dbQuestion.setTitle(questionDto.getTitle());
+            dbQuestion.setDescription(questionDto.getDescription());
             questionMapper.updateQuestion(dbQuestion);
         }
     }

@@ -43,7 +43,7 @@ public class PublishController {
     }
 
     @RequestMapping(value = "/doPublish",method = RequestMethod.POST)
-    public @ResponseBody ResultDto doPublish(@RequestBody Question question,
+    public @ResponseBody ResultDto doPublish(@RequestBody QuestionDto questionDto,
                                @CookieValue(value = "token", required = false) String token) {
         try {
             if (token == null) {
@@ -51,10 +51,8 @@ public class PublishController {
             }
             User user = userService.findByToken(token);
             if (user != null) {
-                question.setCreator(user.getId());
-                question.setGmtCreate(System.currentTimeMillis());
-                question.setGmtModified(question.getGmtCreate());
-                questionService.createOrUpdate(question);
+                questionDto.setCreator(user.getId());
+                questionService.createOrUpdate(questionDto);
             }else{
                 return new ResultDto(CustomizeStatusEnum.UNRECOGNIZED_USER);
             }
