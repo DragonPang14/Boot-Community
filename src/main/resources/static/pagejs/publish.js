@@ -6,7 +6,11 @@ function publish() {
     var title = $("#title").val();
     var description = $("#description").val();
     var questionId = $("#question-id").val();
-    
+    var tag = '';
+    $(".selected-tag").each(function () {
+        tag += $(this).data("tag-id");
+        tag += ',';
+    });
     if (title == null || title == "") {
         alert("请输入标题！");
         return;
@@ -15,12 +19,16 @@ function publish() {
         alert("请输入描述！");
         return;
     }
+    if (tag == ''){
+        alert("请选择标签！");
+        return;
+    }
     $.ajax({
         url: "/doPublish",
         dataType: "json",
         type: "post",
         contentType: "application/json",
-        data: JSON.stringify({"id":questionId,"title": title, "description": description}),
+        data: JSON.stringify({"id":questionId,"title": title, "description": description,"tag":tag}),
         success: function (data) {
             if (data.code == 100) {
                 window.location.href = "/";
@@ -52,7 +60,7 @@ function saveTag() {
             success:function (data) {
                 if (data.code == 100){
                     alert("创建成功，请重新进入页面使用新标签");
-                    $("#tag-modal").modal('close');
+                    $("#tag-modal").modal('hide');
                 }else {
                     alert(data.msg);
                 }
@@ -106,9 +114,9 @@ var bind_search_event = function () {
     })
 }
 
-var template_tag = function (tag_text) {
+var template_tag = function (tag_text,tag_id) {
     var tag = `
-        <a class="btn btn-light btn-sm tag-input mr-2" data-tag-id="${tag_text}" href="javascript:;">
+        <a class="btn btn-light btn-sm selected-tag mr-2" data-tag-id="${tag_id}" href="javascript:;">
             ${tag_text}
             <span class="ml-2">✗</span>
         </a>

@@ -13,6 +13,7 @@ import space.springboot.community.model.User;
 import space.springboot.community.service.QuestionService;
 import space.springboot.community.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,9 +51,16 @@ public class PublishController {
                 return new ResultDto(CustomizeStatusEnum.UNLOGIN_CODE);
             }
             User user = userService.findByToken(token);
+            String tag = questionDto.getTag().substring(0,questionDto.getTag().length() - 1);
+            String[] tagIdStr = tag.split(",");
+            List<Integer> tagIdList = new ArrayList<>();
+            for (String s : tagIdStr) {
+                Integer tagId = Integer.valueOf(s);
+                tagIdList.add(tagId);
+            }
             if (user != null) {
                 questionDto.setCreator(user.getId());
-                questionService.createOrUpdate(questionDto);
+//                questionService.createOrUpdate(questionDto);
             }else{
                 return new ResultDto(CustomizeStatusEnum.UNRECOGNIZED_USER);
             }
