@@ -60,7 +60,7 @@ public class PublishController {
             }
             if (user != null) {
                 questionDto.setCreator(user.getId());
-//                questionService.createOrUpdate(questionDto);
+                questionService.createOrUpdate(questionDto,tagIdList);
             }else{
                 return new ResultDto(CustomizeStatusEnum.UNRECOGNIZED_USER);
             }

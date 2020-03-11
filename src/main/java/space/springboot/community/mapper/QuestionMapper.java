@@ -7,6 +7,7 @@ import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.model.Question;
 import space.springboot.community.model.Tag;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Mapper
@@ -15,7 +16,8 @@ public interface QuestionMapper {
 
     @Insert("insert into question (title,description,gmt_create,gmt_modified,creator) " +
             "values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator})")
-    void createQuestion(Question question);
+    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    Integer createQuestion(Question question);
 
     @Select("select * from question limit #{offset},#{size}")
     List<Question> getList(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
@@ -33,7 +35,8 @@ public interface QuestionMapper {
     Question findQuestionById(@Param(value = "id") Integer id);
 
     @Update("update question set gmt_modified = #{gmtModified},title = #{title},description = #{description} where id = #{id}")
-    void updateQuestion(Question dbQuestion);
+    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    Integer updateQuestion(Question dbQuestion);
 
     @Update("update question set view_count = view_count + #{i} where id = #{id}")
     void incView(@Param(value = "id") Integer id, @Param(value = "i") int i);

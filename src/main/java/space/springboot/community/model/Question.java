@@ -2,6 +2,8 @@ package space.springboot.community.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Question {
 
@@ -14,5 +16,5 @@ public class Question {
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;
-
+    private List<Tag> tags;
 }

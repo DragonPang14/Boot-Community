@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
+import space.springboot.community.model.QuestionTags;
 import space.springboot.community.dto.TagDto;
 import space.springboot.community.exception.CustomizeErrorCode;
 import space.springboot.community.exception.CustomizeException;
@@ -92,19 +93,28 @@ public class QuestionService {
         return questionDto;
     }
 
-    public void createOrUpdate(QuestionDto questionDto) {
+    public void createOrUpdate(QuestionDto questionDto, List<Integer> tagIdList) {
+        Integer id = null;
         if (StringUtils.isEmpty(questionDto.getId())) {
             Question question = new Question();
             BeanUtils.copyProperties(questionDto,question);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.createQuestion(question);
+            id = questionMapper.createQuestion(question);
         } else {
             Question dbQuestion = questionMapper.findQuestionById(questionDto.getId());
             dbQuestion.setGmtModified(questionDto.getGmtCreate());
             dbQuestion.setTitle(questionDto.getTitle());
             dbQuestion.setDescription(questionDto.getDescription());
-            questionMapper.updateQuestion(dbQuestion);
+            id = questionMapper.updateQuestion(dbQuestion);
+        }
+        List<QuestionTags> questionTagsList = new ArrayList<>();
+        for (Integer tagId : tagIdList) {
+            QuestionTags questionTags = new QuestionTags();
+            questionTags.setQuestionId(id);
+            questionTags.setTagId(tagId);
+            questionTags.setGmtCreate(System.currentTimeMillis());
+            questionTagsList.add(questionTags);
         }
     }
 
