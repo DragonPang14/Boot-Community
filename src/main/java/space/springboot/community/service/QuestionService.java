@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import space.springboot.community.dao.QuestionDao;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.model.QuestionTags;
@@ -27,6 +28,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionDao questionDao;
 
     public PaginationDto<QuestionDto> getList(Integer page, Integer size) {
         Integer totalCount = questionMapper.totalCount();
@@ -94,7 +98,7 @@ public class QuestionService {
     }
 
     public void createOrUpdate(QuestionDto questionDto, List<Integer> tagIdList) {
-        Integer id = null;
+        Integer id;
         if (StringUtils.isEmpty(questionDto.getId())) {
             Question question = new Question();
             BeanUtils.copyProperties(questionDto,question);
@@ -116,6 +120,8 @@ public class QuestionService {
             questionTags.setGmtCreate(System.currentTimeMillis());
             questionTagsList.add(questionTags);
         }
+        //保存问题与标签关系
+        questionDao.saveQuestionTags(questionTagsList);
     }
 
     /**
