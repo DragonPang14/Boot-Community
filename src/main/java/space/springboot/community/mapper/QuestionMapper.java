@@ -54,4 +54,7 @@ public interface QuestionMapper {
     @Select("select count(1) from tag where tag_name = #{tagName}")
     @Options(keyColumn = "count(1)")
     int findTagByName(String tagName);
+
+    @Update("update question_tags set del_flag = 1 where quesiont_id = #{id}")
+    int deleteQuestionTags(Integer id);
 }
