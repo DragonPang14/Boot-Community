@@ -7,8 +7,7 @@
     <insert id="saveQuestionTags" >
         insert into question_tags (question_id,tag_id,gmt_create) values
         <foreach collection="list" index="index" item="qtag" separator=",">
-            (#{qtag.questionId},#{qtag.tagId},#{gmtCreate})
+            (#{qtag.questionId},#{qtag.tagId},#{qtag.gmtCreate})
         </foreach>
-
     </insert>
 </mapper>

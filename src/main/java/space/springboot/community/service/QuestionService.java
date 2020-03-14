@@ -111,6 +111,7 @@ public class QuestionService {
             dbQuestion.setTitle(questionDto.getTitle());
             dbQuestion.setDescription(questionDto.getDescription());
             id = questionMapper.updateQuestion(dbQuestion);
+            questionMapper.deleteQuestionTags(dbQuestion.getId());
         }
         List<QuestionTags> questionTagsList = new ArrayList<>();
         for (Integer tagId : tagIdList) {
