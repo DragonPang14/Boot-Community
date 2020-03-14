@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
 
+import java.util.UUID;
+
 @Component
 public class UserService {
 

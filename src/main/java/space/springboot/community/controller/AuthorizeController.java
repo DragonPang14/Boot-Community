@@ -3,6 +3,7 @@ package space.springboot.community.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import space.springboot.community.dto.AccessTokenDto;
@@ -52,12 +53,15 @@ public class AuthorizeController {
         accessTokenDto.setCode(code);
         accessTokenDto.setState(state);
         String accessToken= gitHubProvider.getAccessToken(accessTokenDto);
-        GitHubUserDto gitHubUser = gitHubProvider.getUser(accessToken);
+        GitHubUserDto gitHubUser = null;
+        if (!StringUtils.isEmpty(accessToken)){
+            gitHubUser = gitHubProvider.getUser(accessToken);
+        }
         if(gitHubUser != null){
             User user = new User();
+            user.setToken(UUID.randomUUID().toString());
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setName(gitHubUser.getName());
-            user.setToken(UUID.randomUUID().toString());
             user.setAvatarUrl(gitHubUser.getAvatarUrl());
             userService.insertOrUpdateUser(user);
 //            登陆成功
