@@ -5,7 +5,7 @@
 <mapper namespace="space.springboot.community.dao.QuestionDao">
 
     <resultMap id="QuestionDto" type="space.springboot.community.dto.QuestionDto">
-        <id property="id" column="id"></id>
+        <id property="id" column="qid"></id>
         <result property="title" column="title"></result>
         <result property="description" column="description"></result>
         <result property="gmtCreate" column="gmt_create"></result>
@@ -15,16 +15,16 @@
         <result property="viewCount" column="view_count"></result>
         <result property="likeCount" column="like_count"></result>
         <association property="user" javaType="space.springboot.community.model.User">
-            <id property="id" column="id"></id>
+            <id property="id" column="uid"></id>
             <result property="accountId" column="account_id"></result>
-            <result property="name" column="name"></result>
+            <result property="name" column="user_name"></result>
             <result property="token" column="token"></result>
             <result property="gmtCreate" column="gmt_create"></result>
             <result property="gmtModified" column="gmt_modified"></result>
             <result property="avatarUrl" column="avatar_url"></result>
         </association>
         <collection property="tagList" ofType="space.springboot.community.dto.TagDto">
-            <id property="id" column="id"></id>
+            <id property="id" column="tid"></id>
             <result property="tagName" column="tag_name"></result>
             <result property="remarks" column="remarks"></result>
         </collection>
@@ -37,7 +37,10 @@
         </foreach>
     </insert>
     <select id="getQuestionList" resultMap="QuestionDto">
-        select q.*,t.*,u.* from (select * from question order by gmt_create desc limit #{offset},#{size}) q
+        select q.id qid,q.title,q.description,q.gmt_create,q.gmt_modified,q.creator,q.comment_count,q.view_count,q.like_count,
+            t.id tid,t.tag_name,t.remarks,
+            u.id uid,u.account_id,u.name user_name,u.token,u.gmt_create,u.gmt_modified,u.avatar_url
+        from (select * from question order by gmt_create desc limit #{offset},#{size}) q
         left join question_tags qt on q.id = qt.question_id
         left join tag t on qt.tag_id = t.id
         left join user u on q.creator = u.id

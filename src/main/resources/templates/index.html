@@ -53,7 +53,7 @@
         </div>
         <div class="box box-left">
             <div class="inner-title">
-                <span ><i class="zi zi_list"></i>&nbsp;发现</span>
+                <span><i class="zi zi_list"></i>&nbsp;发现</span>
             </div>
             <ul class="list-unstyled">
                 <li class="media question-list-item" th:each="question : ${pagination.pageList}">
@@ -63,7 +63,11 @@
                         <span class="mt-0 mb-1 question-list-title"><a th:href="@{'/question/' + ${question.id}}"
                                                                        th:text="${question.title}"></a></span>
                         <span class="text-color-000">
-                        <span th:text="${question.commentCount}"></span> 个回复 • <span
+                            <span th:if="${question.tagList.size() != 0}" th:each="tag : ${question.tagList}">
+                                <a class="tag" th:text="${tag.tagName}"></a>
+                            </span>
+                            <strong th:text="${question.user.name}"></strong> •
+                            <span th:text="${question.commentCount}"></span> 个回复 • <span
                                 th:text="${question.viewCount}"></span> 次浏览 •
                             <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                         </span>
