@@ -4,10 +4,45 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="space.springboot.community.dao.QuestionDao">
 
+    <resultMap id="QuestionDto" type="space.springboot.community.dto.QuestionDto">
+        <id property="id" column="id"></id>
+        <result property="title" column="title"></result>
+        <result property="description" column="description"></result>
+        <result property="gmtCreate" column="gmt_create"></result>
+        <result property="gmtModified" column="gmt_modified"></result>
+        <result property="creator" column="creator"></result>
+        <result property="commentCount" column="comment_count"></result>
+        <result property="viewCount" column="view_count"></result>
+        <result property="likeCount" column="like_count"></result>
+        <association property="user" javaType="space.springboot.community.model.User">
+            <id property="id" column="id"></id>
+            <result property="accountId" column="account_id"></result>
+            <result property="name" column="name"></result>
+            <result property="token" column="token"></result>
+            <result property="gmtCreate" column="gmt_create"></result>
+            <result property="gmtModified" column="gmt_modified"></result>
+            <result property="avatarUrl" column="avatar_url"></result>
+        </association>
+        <collection property="tagList" ofType="space.springboot.community.dto.TagDto">
+            <id property="id" column="id"></id>
+            <result property="tagName" column="tag_name"></result>
+            <result property="remarks" column="remarks"></result>
+        </collection>
+    </resultMap>
+
     <insert id="saveQuestionTags" >
         insert into question_tags (question_id,tag_id,gmt_create) values
         <foreach collection="list" index="index" item="qtag" separator=",">
             (#{qtag.questionId},#{qtag.tagId},#{qtag.gmtCreate})
         </foreach>
     </insert>
+    <select id="getQuestionList" resultMap="QuestionDto">
+        select q.*,t.*,u.* from (select * from question order by gmt_create desc limit #{offset},#{size}) q
+        left join question_tags qt on q.id = qt.question_id
+        left join tag t on qt.tag_id = t.id
+        left join user u on q.creator = u.id
+        <if test="userId != null">
+            where q.creator = #{userId};
+        </if>
+    </select>
 </mapper>

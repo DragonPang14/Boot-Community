@@ -32,8 +32,10 @@ public class QuestionService {
     @Autowired
     private QuestionDao questionDao;
 
-    public PaginationDto<QuestionDto> getList(Integer page, Integer size) {
-        Integer totalCount = questionMapper.totalCount();
+    public PaginationDto<QuestionDto> getList(Integer userId, Integer page, Integer size) {
+
+        Integer totalCount = userId == null?
+                questionMapper.totalCount():questionMapper.userQuestionCount(userId);
         Integer totalPage = totalCount % 10 == 0 ? totalCount / 10 : (totalCount / 10) + 1;
         if (page < 1) {
             page = 1;
@@ -42,45 +44,33 @@ public class QuestionService {
         }
 //        偏移量
         Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.getList(offset, size);
-        List<QuestionDto> questionDtos = new ArrayList<>();
         PaginationDto<QuestionDto> pagination = new PaginationDto<>();
+        List<QuestionDto> questionDtos = questionDao.getQuestionList(userId,offset,size);
+        /*改为使用xml一次性查询出文章，和标签
+        List<Question> questions = userId == null?
+                questionMapper.getList(offset, size):questionMapper.getListByUserId(userId,offset,size);
+        List<QuestionDto> questionDtos = new ArrayList<>();
+        User loginUser = null;
+        if (userId != null){
+            loginUser = userMapper.findById(userId);
+        }
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(question, questionDto);
-            questionDto.setUser(user);
+            if (loginUser != null){
+                questionDto.setUser(loginUser);
+            }else {
+                User user = userMapper.findById(question.getCreator());
+                questionDto.setUser(user);
+            }
             questionDtos.add(questionDto);
         }
+        */
         pagination.setPageList(questionDtos);
         pagination.setPagination(totalPage, page);
         return pagination;
     }
 
-    public PaginationDto<QuestionDto> getListByUserId(Integer userId, Integer page, Integer size) {
-        Integer totalCount = questionMapper.userQuestionCount(userId);
-        Integer totalPage = totalCount % 10 == 0 ? totalCount / 10 : (totalCount / 10) + 1;
-        if (page < 1) {
-            page = 1;
-        } else if (page > totalPage) {
-            page = totalPage;
-        }
-//        偏移量
-        Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.getListByUserId(userId, offset, size);
-        List<QuestionDto> questionDtos = new ArrayList<>();
-        PaginationDto<QuestionDto> pagination = new PaginationDto<>();
-        for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
-            QuestionDto questionDto = new QuestionDto();
-            BeanUtils.copyProperties(question, questionDto);
-            questionDto.setUser(user);
-            questionDtos.add(questionDto);
-        }
-        pagination.setPageList(questionDtos);
-        pagination.setPagination(totalPage, page);
-        return pagination;
-    }
 
     public QuestionDto findQuestionById(Integer id, int isView) {
         Question question = questionMapper.findQuestionById(id);
@@ -104,14 +94,16 @@ public class QuestionService {
             BeanUtils.copyProperties(questionDto,question);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            id = questionMapper.createQuestion(question);
+            questionMapper.createQuestion(question);
+            id = question.getId();
         } else {
             Question dbQuestion = questionMapper.findQuestionById(questionDto.getId());
             dbQuestion.setGmtModified(questionDto.getGmtCreate());
             dbQuestion.setTitle(questionDto.getTitle());
             dbQuestion.setDescription(questionDto.getDescription());
-            id = questionMapper.updateQuestion(dbQuestion);
+            questionMapper.updateQuestion(dbQuestion);
             questionMapper.deleteQuestionTags(dbQuestion.getId());
+            id = dbQuestion.getId();
         }
         List<QuestionTags> questionTagsList = new ArrayList<>();
         for (Integer tagId : tagIdList) {
