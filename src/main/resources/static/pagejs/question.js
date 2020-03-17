@@ -66,7 +66,8 @@ function buildHtmlStr(comment) {
 
 //评论回复
 function replyComment(commentId,replyName) {
-    if($("#comment-" + commentId).css("display","none")){
+    if($("#comments-" + commentId).css('display') === 'none'){
+        $("#comments-" + commentId).empty();
         $.get({
             url: "/getCommentsReply/"+commentId,
             async:false,
