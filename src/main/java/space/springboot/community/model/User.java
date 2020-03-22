@@ -13,4 +13,11 @@ public class User {
     private Long gmtModified;
     private String avatarUrl;
 
+//    增加注册
+    private String user_name;
+    private String password;
+    private String mobile;
+    private String bio;  //简介
+    private String mail;
+
 }

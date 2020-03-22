@@ -22,6 +22,11 @@
                     <a href="https://github.com/login/oauth/authorize?client_id=dc364cf81cbdc28a0e43&redirect_uri=http://localhost:8887/callback&scope=user&state=123"
                        class="nav-link">登陆</a>
                 </li>
+                <li class="nav-item" th:if="${session.user == null}">
+                    <a href="/register" class="nav-link">
+                        注册
+                    </a>
+                </li>
                 <li class="nav-item" th:if="${session.user != null}">
                     <img th:src="${session.user.avatarUrl}" class="avatar-nav"/>
                 </li>
