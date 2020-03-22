@@ -124,22 +124,57 @@ var template_tag = function (tag_text,tag_id) {
     return tag
 }
 
+var check_tag_limit = function () {
+    var add_tag_btn = document.querySelector('#dropdown-button')
+    var p = add_tag_btn.parentNode
+    ++p.dataset.tagNums
+    var max = p.dataset.tagMaxNum
+    var tag_nums = p.dataset.tagNums
+    if (tag_nums >= max) {
+        add_tag_btn.disabled = true
+    }
+}
+
+var hide_tag = function (tag) {
+    tag.hidden = true
+    tag.classList.remove('unselect-tag')
+    tag.classList.add('hidden-tag')
+}
+
+var show_tag = function (id) {
+    $('.hidden-tag').each(function () {
+        if (this.id == id) {
+            this.classList.add('unselect-tag')
+            this.classList.remove('hidden-tag')
+            this.hidden = false
+        }
+    })
+}
+
 var bind_tag_click_event = function() {
     $('#tag-content').click(function (e) {
         if (e.target.classList.contains('unselect-tag')){
-            var add_tag_btn = document.querySelector('#dropdown-button')
             var tag_text = e.target.text
             var tag_id = e.target.id
             var tag = template_tag(tag_text,tag_id)
+            var add_tag_btn = document.querySelector('#dropdown-button')
             add_tag_btn.insertAdjacentHTML('beforeBegin', tag)
             bind_tag_close_event()
+            check_tag_limit()
+            hide_tag(e.target)
         }
     })
 }
 
 var bind_tag_close_event = function(){
     $('.ml-2').click(function (e) {
-        e.target.parentNode.remove()
+        var p = e.target.parentNode
+        --p.parentNode.dataset.tagNums
+        var add_tag_btn = document.querySelector('#dropdown-button')
+        add_tag_btn.disabled = false
+        var id = p.dataset.tagId
+        show_tag(id)
+        p.remove()
     })
 }
 
