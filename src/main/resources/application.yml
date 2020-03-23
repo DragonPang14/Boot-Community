@@ -1,0 +1,50 @@
+server:
+  port: 8887
+
+github:
+  client:
+    id: dc364cf81cbdc28a0e43
+    secret: ed0b52d1c11bf5d5b27d969570dc0b8688051cfc
+  getaccesstoken:
+    url: https://github.com/login/oauth/access_token
+  getuser:
+    url: https://api.github.com/user
+
+callback:
+  url: http://localhost:8887/callback
+
+CONNECT_TIMEOUT: 10
+
+
+#数据库配置
+spring:
+  datasource:
+    url: jdbc:mysql://106.13.143.146:3306/community?useUnicode=true
+    username: root
+    password: centOS-6.8
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+#      是否只读
+      read-only: false
+      connection-timeout: 60000
+      idle-timeout: 60000
+      validation-timeout: 3000
+      max-lifetime: 60000
+      maximum-pool-size: 60
+      login-timeout: 5
+      minimum-idle: 10
+
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/*.xml
+
+logging:
+  level:
+    space:
+      springboot:
+        community:
+          dao: debug
+          mapper: debug
