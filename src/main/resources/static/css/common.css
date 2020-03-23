@@ -110,13 +110,27 @@ h1 {
     text-align: left;
     border-bottom: 1px solid #e2e2e2;
 }
+
 #wrapper {
     background-color: #e2e2e2;
     background-image: url("/img/shadow_light.png");
     background-repeat: repeat-x,repeat;
 }
 
+#bottom {
+    border-top: 1px solid rgba(0,0,0,.22);
+    background-color: #fff;
+    text-align: center;
+    color: #999;
+    padding: 0 10px;
+}
 
+.inner {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: left;
+}
 
 .reply-content {
     font-size: 14px;
