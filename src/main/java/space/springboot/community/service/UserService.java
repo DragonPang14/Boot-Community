@@ -2,6 +2,7 @@ package space.springboot.community.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import space.springboot.community.dto.UserDto;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
 
@@ -35,5 +36,14 @@ public class UserService {
     public User findByToken(String token) {
         User dbUser = userMapper.findByToken(token);
         return dbUser;
+    }
+
+    /**
+     * @desc 注册
+     * @param userDto
+     * @return 是否注册成功
+     */
+    public int registered(UserDto userDto) {
+
     }
 }
