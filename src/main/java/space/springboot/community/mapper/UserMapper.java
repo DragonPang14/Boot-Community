@@ -13,7 +13,7 @@ public interface UserMapper {
     void insertUser(User user);
 
     @Select("select * from user where token = #{token} order by gmt_create asc limit 0,1")
-    User findByToken(@Param("token") String token);
+    User findByToken(String token);
 
     @Select("select * from user where id = #{creator}")
     User findById(Integer creator);
@@ -23,4 +23,13 @@ public interface UserMapper {
 
     @Select("select * from user where account_id = #{token}")
     User findByAccountId(String token);
+
+    @Select("select count(1) from user where user_name = #{userName} and del_flag = 0")
+    @Options(keyColumn = "count(1)")
+    int findByUserName(String userName);
+
+    @Insert("insert into user (name,gmt_create,gmt_modified,user_name,password,mobile,bio,mail) values" +
+            "(#{name},#{gmtCreate},#{gmtModified},#{userName},#{password},#{mobile},#{bio},#{mail})")
+    @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
+    int registered(User user);
 }

@@ -1,5 +1,6 @@
 package space.springboot.community.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import space.springboot.community.dto.UserDto;
@@ -44,6 +45,19 @@ public class UserService {
      * @return 是否注册成功
      */
     public int registered(UserDto userDto) {
+        User user = new User();
+        BeanUtils.copyProperties(userDto,user);
+        user.setGmtCreate(System.currentTimeMillis());
+        user.setGmtModified(user.getGmtCreate());
+        return userMapper.registered(user);
+    }
 
+    /**
+     * @desc 查找重复用户名
+     * @param userName
+     * @return
+     */
+    public int findByUserName(String userName) {
+        return userMapper.findByUserName(userName);
     }
 }

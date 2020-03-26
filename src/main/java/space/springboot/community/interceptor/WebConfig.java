@@ -17,8 +17,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(sessionInterceptor).addPathPatterns("/**");
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/register").setViewName("register");
-    }
 }

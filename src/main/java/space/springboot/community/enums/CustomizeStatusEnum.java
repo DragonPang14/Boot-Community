@@ -8,6 +8,8 @@ public enum CustomizeStatusEnum {
 
     UNRECOGNIZED_USER(1002,"未找到该用户"),
 
+    DUPLICATE_USER(1003,"用户名重复"),
+
     TAG_EXISTS(1003,"标签已存在"),
 
     CODE_ERROR(600,"操作出现异常"),

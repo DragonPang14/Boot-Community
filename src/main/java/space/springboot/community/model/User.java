@@ -14,7 +14,7 @@ public class User {
     private String avatarUrl;
 
 //    增加注册
-    private String user_name;
+    private String userName;
     private String password;
     private String mobile;
     private String bio;  //简介
