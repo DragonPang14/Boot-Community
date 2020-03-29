@@ -23,7 +23,7 @@
         text-align: center;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
       }
-      .form a {
+      .form a{
         pointer-events:none;
         width: 75%;
         margin: 10px;
@@ -34,19 +34,20 @@
       .container input:focus {
         background-color: #E3F9FD;
       }
+      .form-pad{
+        margin-top: 10px;
+      }
     </style>
 </head>
 <body>
   <div class="container">
+    <button class="btn btn-warning btn-lg btn-block" data-target="#signup_modal" data-toggle="modal">注册</button>
     <form class="form">
-      <a type="button" class="btn btn-secondary btn-lg ">Welcome</a>
-      <input class="form-control" type="text" placeholder="Username" id="username">
-      <input class="form-control" type="password" placeholder="Password" id="password">
-      <button class="btn btn-block btn-primary" type="submit" id="login-button">Login</button>
+      <a type="button" class="btn btn-secondary btn-lg ">澳门赌场上线了</a>
+      <input class="form-control form-pad" type="text" placeholder="账号" id="username">
+      <input class="form-control form-pad" type="password" placeholder="密码" id="password">
+      <button class="btn btn-block btn-primary" type="submit" id="login-button">登录</button>
     </form>
-
-    <button class="btn btn-warning" btn-lg btn-block" data-target="#signup_modal" data-toggle="modal">Sign up</button>
-
     <!-- 模态框 -->
     <div class="modal fade" id="signup_modal">
       <div class="modal-dialog">
@@ -60,24 +61,20 @@
       
             <!-- 模态框主体 -->
             <div class="modal-body">
-              
-                <div class="input-group">
-                  <input class="form-control" type="text" placeholder="prefix" id="email_prefix"> 
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">@</span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="endfix" id="email_endfix">
-                  
+              <div class="input-group">
+                <input class="form-control" type="text" placeholder="邮件前缀" id="email_prefix"> 
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
                 </div>
-                <input class="form-control" type="text" placeholder="Username" id="signup_username">
-                <input class="form-control" type="password" placeholder="Password" id="signup_password>
-              
+                <input type="text" class="form-control" placeholder="邮件后缀" id="email_endfix">
+              </div>
+              <input class="form-control form-pad" type="text" placeholder="账号" id="signup_username">
+              <input class="form-control form-pad" type="password" placeholder="密码" id="signup_password">
             </div>
-      
-            <!-- 模态框底部 -->
+          
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-              <button class="btn btn-primary" type="submit" id="signup-button">Signup</button>
+              <button class="btn btn-primary" type="submit" id="signup-button">注册</button>
             </div>
           </form>
         </div>
