@@ -26,6 +26,7 @@ public class UserService {
             dbUser.setToken(user.getToken());
             dbUser.setName(user.getName());
             dbUser.setGmtModified(System.currentTimeMillis());
+            dbUser.setUserName(user.getUserName());
             userMapper.updateUser(dbUser);
         }else {
             user.setGmtCreate(System.currentTimeMillis());
@@ -59,5 +60,10 @@ public class UserService {
      */
     public int findByUserName(String userName) {
         return userMapper.findByUserName(userName);
+    }
+
+
+    public User findById(Integer userId) {
+        return userMapper.findById(userId);
     }
 }

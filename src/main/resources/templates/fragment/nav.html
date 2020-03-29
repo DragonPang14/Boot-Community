@@ -37,7 +37,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/profile/question">我的发布</a>
-                        <a class="dropdown-item" href="#">个人资料</a>
+                        <a class="dropdown-item" th:href="@{'/setting/'+${session.user.id}}" >设置</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/logout">退出登录</a>
                     </div>

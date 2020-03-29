@@ -60,6 +60,7 @@ public class AuthorizeController {
         if(gitHubUser != null){
             User user = new User();
             user.setToken(UUID.randomUUID().toString());
+            user.setUserName(gitHubUser.getLogin());
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setName(gitHubUser.getName());
             user.setAvatarUrl(gitHubUser.getAvatarUrl());

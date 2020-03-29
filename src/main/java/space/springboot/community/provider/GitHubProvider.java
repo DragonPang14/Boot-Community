@@ -60,6 +60,7 @@ public class GitHubProvider {
         Request request = new Request.Builder()
                 .url(getUserUrl)
                 .header("Authorization","token " + accessToken)
+                .header("Connection","keep-alive")
                 .build();
         try {
             Response response = client.newCall(request).execute();

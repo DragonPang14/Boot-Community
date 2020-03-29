@@ -18,7 +18,8 @@ public interface UserMapper {
     @Select("select * from user where id = #{creator}")
     User findById(Integer creator);
 
-    @Update("update user set name = #{name},token = #{token},gmt_modified = #{gmtModified},avatar_url = #{avatarUrl} where account_id = #{accountId}")
+    @Update("update user set name = #{name},token = #{token},gmt_modified = #{gmtModified},avatar_url = #{avatarUrl},user_name = #{userName} " +
+            "where account_id = #{accountId}")
     void updateUser(User dbUser);
 
     @Select("select * from user where account_id = #{token}")
