@@ -1,85 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <script src="../jquery-3.4.1.js"></script>
-    <script src="../bootstrap.js"></script>
-    <link rel="stylesheet" href="../bootstrap.css">
+    <title>登陆</title>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
     <style>
-      .container {
-        text-align:center;
-      }
-      body {
-        background: #5D513C; /* fallback for old browsers */
-        background: linear-gradient(to left, #5D513C, #75664D);    
-      }
-      .form {
-        background: #BACAC6;
-        max-width: 360px;
-        margin: 15% auto auto;
-        padding: 45px;
-        text-align: center;
-        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-      }
-      .form a{
-        pointer-events:none;
-        width: 75%;
-        margin: 10px;
-      }
-      .form button {
-        margin-top: 10px;
-      }
-      .container input:focus {
-        background-color: #E3F9FD;
-      }
-      .form-pad{
-        margin-top: 10px;
-      }
+        .form button {
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
-  <div class="container">
-    <button class="btn btn-warning btn-lg btn-block" data-target="#signup_modal" data-toggle="modal">注册</button>
-    <form class="form">
-      <a type="button" class="btn btn-secondary btn-lg ">澳门赌场上线了</a>
-      <input class="form-control form-pad" type="text" placeholder="账号" id="username">
-      <input class="form-control form-pad" type="password" placeholder="密码" id="password">
-      <button class="btn btn-block btn-primary" type="submit" id="login-button">登录</button>
-    </form>
-    <!-- 模态框 -->
-    <div class="modal fade" id="signup_modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form>
-            <!-- 模态框头部 -->
-            <div class="modal-header">
-              <h4 class="modal-title">Sign up</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-      
-            <!-- 模态框主体 -->
-            <div class="modal-body">
-              <div class="input-group">
-                <input class="form-control" type="text" placeholder="邮件前缀" id="email_prefix"> 
-                <div class="input-group-prepend">
-                  <span class="input-group-text">@</span>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">BuDERX</a>
+        <strong class="gray">|</strong>
+        &nbsp;&nbsp;&nbsp;
+        <span class="navbar-brand">登陆</span>
+    </nav>
+</div>
+<div id="wrapper">
+    <div class="sep20"></div>
+    <div class="container">
+        <!--注册框-->
+        <div class="registered-right">
+            <div class="box">
+                <div class="cell">
+                    登陆
                 </div>
-                <input type="text" class="form-control" placeholder="邮件后缀" id="email_endfix">
-              </div>
-              <input class="form-control form-pad" type="text" placeholder="账号" id="signup_username">
-              <input class="form-control form-pad" type="password" placeholder="密码" id="signup_password">
+                <div class="cell login-form">
+                    <input class="form-control mt-2" type="text" placeholder="账号" id="username">
+                    <input class="form-control mt-2" type="password" placeholder="密码" id="password">
+                    <div class="mt-2 login-button">
+                        <button class="btn btn-light" id="login-button">登录</button>
+                        <botton class="btn btn-light" data-target="#signup_modal" data-toggle="modal">注册</botton>
+                    </div>
+                </div>
+                <div class="cell">
+                    使用其他账号登陆
+                </div>
+                <div class="cell text-center">
+                    <a href="https://github.com/login/oauth/authorize?client_id=dc364cf81cbdc28a0e43&redirect_uri=http://localhost:8887/callback&scope=user&state=123">
+                        <img src="/img/github-icon.png" class="rounded th-account-icon">
+                    </a>
+                </div>
             </div>
-          
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-              <button class="btn btn-primary" type="submit" id="signup-button">注册</button>
-            </div>
-          </form>
         </div>
-      </div>
+        <div class="registered-left">
+            <img src="/img/registered-left.png" class="registered-left-img">
+        </div>
+
+        <!-- 模态框 -->
+        <div class="modal fade" id="signup_modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form>
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">一分钟注册</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="邮件前缀" id="email_prefix">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="邮件后缀" id="email_endfix">
+                            </div>
+                            <input class="form-control form-pad" type="text" placeholder="账号" id="signup_username">
+                            <input class="form-control form-pad" type="password" placeholder="密码" id="signup_password">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-light" id="signup-button">注册</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+<div th:insert="~{fragment/bottom :: bottom}"></div>
 </body>
 </html>
