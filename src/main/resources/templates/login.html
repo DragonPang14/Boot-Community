@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="../jquery-3.4.1.js"></script>
+    <script src="../bootstrap.js"></script>
+    <link rel="stylesheet" href="../bootstrap.css">
+    <style>
+      .container {
+        text-align:center;
+      }
+      body {
+        background: #5D513C; /* fallback for old browsers */
+        background: linear-gradient(to left, #5D513C, #75664D);    
+      }
+      .form {
+        background: #BACAC6;
+        max-width: 360px;
+        margin: 15% auto auto;
+        padding: 45px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      }
+      .form a {
+        pointer-events:none;
+        width: 75%;
+        margin: 10px;
+      }
+      .form button {
+        margin-top: 10px;
+      }
+      .container input:focus {
+        background-color: #E3F9FD;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <form class="form">
+      <a type="button" class="btn btn-secondary btn-lg ">Welcome</a>
+      <input class="form-control" type="text" placeholder="Username" id="username">
+      <input class="form-control" type="password" placeholder="Password" id="password">
+      <button class="btn btn-block btn-primary" type="submit" id="login-button">Login</button>
+    </form>
+
+    <button class="btn btn-warning" btn-lg btn-block" data-target="#signup_modal" data-toggle="modal">Sign up</button>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="signup_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form>
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+              <h4 class="modal-title">Sign up</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+              
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="prefix" id="email_prefix"> 
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="endfix" id="email_endfix">
+                  
+                </div>
+                <input class="form-control" type="text" placeholder="Username" id="signup_username">
+                <input class="form-control" type="password" placeholder="Password" id="signup_password>
+              
+            </div>
+      
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+              <button class="btn btn-primary" type="submit" id="signup-button">Signup</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
