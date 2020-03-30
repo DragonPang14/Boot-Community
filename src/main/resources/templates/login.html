@@ -8,12 +8,6 @@
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/common.css">
-    <style>
-        .form button {
-            margin-top: 10px;
-        }
-
-    </style>
 </head>
 <body>
 <div>
@@ -68,20 +62,41 @@
 
                         <!-- 模态框主体 -->
                         <div class="modal-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="邮件前缀" id="email_prefix">
+                            <div class="input-group mt-2">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">@</span>
+                                    <span class="input-group-text">昵称</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="邮件后缀" id="email_endfix">
+                                <input class="form-control" type="text" name="registered-name" id="registered-name">
                             </div>
-                            <input class="form-control form-pad" type="text" placeholder="账号" id="signup_username">
-                            <input class="form-control form-pad" type="password" placeholder="密码" id="signup_password">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">用户名</span>
+                                </div>
+                                <input class="form-control " type="text" name="registered-user-name" id="registered-user-name">
+                            </div>
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">密码</span>
+                                </div>
+                                <input class="form-control " type="password" name="registered-password" id="registered-password">
+                            </div>
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">手机</span>
+                                </div>
+                                <input class="form-control " type="text" name="registered-mobile" id="registered-mobile">
+                            </div>
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">邮箱</span>
+                                </div>
+                                <input class="form-control " type="text" name="registered-mail" id="registered-mail">
+                            </div>
+
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
-                            <button class="btn btn-light" id="signup-button">注册</button>
+                            <button type="button" class="btn btn-light" onclick="registered()" >注册</button>
                         </div>
                     </form>
                 </div>
@@ -90,5 +105,6 @@
     </div>
 </div>
 <div th:insert="~{fragment/bottom :: bottom}"></div>
+<script type="application/javascript" src="/pagejs/login.js"></script>
 </body>
 </html>

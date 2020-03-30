@@ -50,6 +50,7 @@ public class UserService {
         BeanUtils.copyProperties(userDto,user);
         user.setGmtCreate(System.currentTimeMillis());
         user.setGmtModified(user.getGmtCreate());
+        user.setUserType(0);
         return userMapper.registered(user);
     }
 
@@ -65,5 +66,9 @@ public class UserService {
 
     public User findById(Integer userId) {
         return userMapper.findById(userId);
+    }
+
+    public int findByMobile(String mobile) {
+        return userMapper.findByMobile(mobile);
     }
 }

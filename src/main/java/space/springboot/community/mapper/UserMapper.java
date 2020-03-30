@@ -29,8 +29,14 @@ public interface UserMapper {
     @Options(keyColumn = "count(1)")
     int findByUserName(String userName);
 
+    @Select("select count(1) from user where mobile = #{mobile} and del_flag = 0")
+    @Options(keyColumn = "count(1)")
+    int findByMobile(String mobile);
+
     @Insert("insert into user (name,gmt_create,gmt_modified,user_name,password,mobile,bio,mail) values" +
             "(#{name},#{gmtCreate},#{gmtModified},#{userName},#{password},#{mobile},#{bio},#{mail})")
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
     int registered(User user);
+
+
 }

@@ -8,7 +8,9 @@ public enum CustomizeStatusEnum {
 
     UNRECOGNIZED_USER(1002,"未找到该用户"),
 
-    DUPLICATE_USER(1003,"用户名重复"),
+    DUPLICATE_USER_NAME(1003,"用户名重复"),
+
+    DUPLICATE_MOBILE(1004,"手机号重复"),
 
     TAG_EXISTS(1003,"标签已存在"),
 

@@ -19,5 +19,6 @@ public class User {
     private String mobile;
     private String bio;  //简介
     private String mail;
+    private int userType;
 
 }

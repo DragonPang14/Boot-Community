@@ -35,9 +35,10 @@ public class UserController {
     public @ResponseBody
     ResultDto<UserDto> registered(@RequestBody UserDto userDto){
         ResultDto<UserDto> resultDto;
-        int isExists = userService.findByUserName(userDto.getUserName());
-        if (isExists > 0){
-            resultDto = new ResultDto<>(CustomizeStatusEnum.DUPLICATE_USER);
+        if (userService.findByUserName(userDto.getUserName()) > 0){
+            resultDto = new ResultDto<>(CustomizeStatusEnum.DUPLICATE_USER_NAME);
+        }else if (userService.findByMobile(userDto.getMobile()) > 0){
+            resultDto = new ResultDto<>(CustomizeStatusEnum.DUPLICATE_MOBILE);
         }else {
             int isSuccess = userService.registered(userDto);
             if (isSuccess == 1){
