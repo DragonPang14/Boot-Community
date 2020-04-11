@@ -67,6 +67,14 @@
             <version>1.2.62</version>
         </dependency>
 
+        <!--fastfds-->
+        <dependency>
+            <groupId>com.github.tobato</groupId>
+            <artifactId>fastdfs-client</artifactId>
+            <version>1.27.2</version>
+        </dependency>
+
+
         <!--mysql database-->
         <dependency>
             <groupId>mysql</groupId>

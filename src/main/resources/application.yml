@@ -13,15 +13,16 @@ github:
 callback:
   url: http://localhost:8887/callback
 
+READ_TIMEOUT: 100
 CONNECT_TIMEOUT: 60
-
+WRITE_TIMEOUT: 60
 
 #数据库配置
 spring:
   datasource:
-    url: jdbc:mysql://106.13.143.146:3306/community?useUnicode=true
+    url: jdbc:mysql://94.191.65.139:3306/community?useUnicode=true
     username: root
-    password: centOS-6.8
+    password: wwwhao123
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
 #      是否只读
@@ -33,6 +34,15 @@ spring:
       maximum-pool-size: 60
       login-timeout: 5
       minimum-idle: 10
+
+#fastdfs配置
+fdfs:
+  soTimeout: 1500
+  connectTimeout: 600
+  thumbImage:
+    width: 150
+    height: 150
+  trackerList: 94.191.65.139:22122
 
 
 

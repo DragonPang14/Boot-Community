@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import space.springboot.community.dto.AccessTokenDto;
 import space.springboot.community.dto.GitHubUserDto;
+import space.springboot.community.utils.OkHttpUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -20,9 +21,6 @@ public class GitHubProvider {
     @Value("${github.getuser.url}")
     private String getUserUrl;
 
-    @Value("${CONNECT_TIMEOUT}")
-    private String CONNECT_TIMEOUT;
-
     /**
      * 获取github的accesstoken
      * @param accessTokenDto
@@ -30,8 +28,7 @@ public class GitHubProvider {
      */
     public String getAccessToken(AccessTokenDto accessTokenDto){
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(Long.parseLong(CONNECT_TIMEOUT), TimeUnit.SECONDS).build();
+        OkHttpClient client = OkHttpUtils.getInstance();
         RequestBody body = RequestBody.create(mediaType,JSON.toJSONString(accessTokenDto));
         Request request = new Request.Builder()
                 .url(getAccessUrl)
@@ -54,9 +51,7 @@ public class GitHubProvider {
      * @return
      */
     public GitHubUserDto getUser(String accessToken){
-        OkHttpClient client = new OkHttpClient
-                .Builder()
-                .readTimeout(Long.parseLong(CONNECT_TIMEOUT),TimeUnit.SECONDS).build();
+        OkHttpClient client = OkHttpUtils.getInstance();
         Request request = new Request.Builder()
                 .url(getUserUrl)
                 .header("Authorization","token " + accessToken)
