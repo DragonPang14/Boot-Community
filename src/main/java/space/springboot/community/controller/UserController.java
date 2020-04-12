@@ -13,6 +13,9 @@ import space.springboot.community.exception.CustomizeException;
 import space.springboot.community.model.User;
 import space.springboot.community.service.UserService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class UserController {
 
@@ -45,6 +48,24 @@ public class UserController {
                 resultDto = new ResultDto<>(CustomizeStatusEnum.SUCCESS_CODE);
             } else {
                 resultDto = new ResultDto<>(CustomizeStatusEnum.CODE_ERROR);
+            }
+        }
+        return resultDto;
+    }
+
+    @PostMapping("/userLogin")
+    public @ResponseBody ResultDto<UserDto> login(@RequestBody UserDto userDto,
+                                                  HttpServletResponse response){
+        ResultDto<UserDto> resultDto;
+        if (userService.findByUserName(userDto.getUserName()) == 0){
+            resultDto = new ResultDto<>(CustomizeStatusEnum.USERNAME_ERROR);
+        }else {
+            String token = userService.login(userDto);
+            if (token !=null && !"".equals(token)){
+                response.addCookie(new Cookie("token",token));
+                resultDto = new ResultDto<>(CustomizeStatusEnum.SUCCESS_CODE);
+            }else {
+                resultDto = new ResultDto<>(CustomizeStatusEnum.PASSWORD_ERROR);
             }
         }
         return resultDto;

@@ -2,6 +2,7 @@ package space.springboot.community.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import space.springboot.community.dto.UserDto;
 import space.springboot.community.mapper.UserMapper;
@@ -15,8 +16,10 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Value("${DEFAULT_AVATAR}")
+    private String DEFAULT_AVATAR;
     /**
-     * @desc 用户登录，更新或删除
+     * @desc 用户登录，更新
      * @param user
      */
     public void insertOrUpdateUser(User user) {
@@ -50,6 +53,7 @@ public class UserService {
         BeanUtils.copyProperties(userDto,user);
         user.setGmtCreate(System.currentTimeMillis());
         user.setGmtModified(user.getGmtCreate());
+        user.setAvatarUrl(DEFAULT_AVATAR);
         user.setUserType(0);
         return userMapper.registered(user);
     }
@@ -70,5 +74,15 @@ public class UserService {
 
     public int findByMobile(String mobile) {
         return userMapper.findByMobile(mobile);
+    }
+
+    public String login(UserDto userDto) {
+        User dbUser = userMapper.verifyUser(userDto);
+        if (dbUser != null){
+            dbUser.setToken(UUID.randomUUID().toString());
+            userMapper.updateUser(dbUser);
+            return dbUser.getToken();
+        }
+        return null;
     }
 }

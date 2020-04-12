@@ -12,13 +12,17 @@ public enum CustomizeStatusEnum {
 
     DUPLICATE_MOBILE(1004,"手机号重复"),
 
-    TAG_EXISTS(1003,"标签已存在"),
+    USERNAME_ERROR(1005,"用户名错误"),
+
+    PASSWORD_ERROR(1006,"密码错误"),
 
     CODE_ERROR(600,"操作出现异常"),
 
     QUESTION_NOT_FOUND(2001,"主题没有找到，再确认下你的地址"),
 
-    COMMENT_NOT_FOUND(2002,"回复的评论未找到");
+    COMMENT_NOT_FOUND(2002,"回复的评论未找到"),
+
+    TAG_EXISTS(2003,"标签已存在");
 
     private Integer statusCode;
     private String msg;

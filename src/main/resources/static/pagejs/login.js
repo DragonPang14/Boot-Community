@@ -20,3 +20,22 @@ function registered() {
         }
     });
 }
+
+function userLogin() {
+    var userName = $("#username").val();
+    var password = $("#password").val();
+    $.ajax({
+       url:"/userLogin",
+        dataType:"json",
+        type:"post",
+        contentType:"application/json",
+        data:JSON.stringify({"userName":userName,"password":password}),
+        success:function (data) {
+            if (data.code == 100){
+                window.location.href = "/";
+            }else {
+                alert(data.msg);
+            }
+        }
+    });
+}
