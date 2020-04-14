@@ -5,6 +5,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import space.springboot.community.dto.AvatarDto;
 import space.springboot.community.dto.ResultDto;
 import space.springboot.community.dto.UserDto;
 import space.springboot.community.enums.CustomizeStatusEnum;
@@ -12,15 +14,20 @@ import space.springboot.community.exception.CustomizeErrorCode;
 import space.springboot.community.exception.CustomizeException;
 import space.springboot.community.model.User;
 import space.springboot.community.service.UserService;
+import space.springboot.community.utils.FastDfsUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FastDfsUtils fastDfsUtils;
 
     @GetMapping("/setting/{userId}")
     public String setting(@PathVariable(name = "userId") Integer userId, Model model){
@@ -69,6 +76,19 @@ public class UserController {
             }
         }
         return resultDto;
+    }
+
+    @PostMapping("/uploadAvatar")
+    public @ResponseBody ResultDto uploadAvatar(AvatarDto avatarDto,
+                                                @RequestParam(name = "avatar") MultipartFile avatar){
+        try {
+            String storePath = fastDfsUtils.uploadFile(avatar);
+            avatarDto.setAvatarUrl(storePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResultDto.errorOf(CustomizeStatusEnum.UPLOAD_ERROR);
+        }
+        return ResultDto.okOf(avatarDto);
     }
 
 }

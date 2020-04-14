@@ -22,7 +22,9 @@ public enum CustomizeStatusEnum {
 
     COMMENT_NOT_FOUND(2002,"回复的评论未找到"),
 
-    TAG_EXISTS(2003,"标签已存在");
+    TAG_EXISTS(2003,"标签已存在"),
+
+    UPLOAD_ERROR(3001,"上传失败");
 
     private Integer statusCode;
     private String msg;
