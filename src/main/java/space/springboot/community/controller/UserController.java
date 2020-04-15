@@ -84,6 +84,7 @@ public class UserController {
         try {
             String storePath = fastDfsUtils.uploadFile(avatar);
             avatarDto.setAvatarUrl(storePath);
+            System.out.println(avatarDto.getUserId() + storePath);
         } catch (IOException e) {
             e.printStackTrace();
             return ResultDto.errorOf(CustomizeStatusEnum.UPLOAD_ERROR);

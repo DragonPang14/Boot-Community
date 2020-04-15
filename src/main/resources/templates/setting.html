@@ -103,7 +103,7 @@
                     </span>
                 </div>
                 <div class="cell pl-5">
-                    <div class="row">
+                    <div class="row" id="current-avatar">
                         <label class="col-sm-2 col-form-label text-sm-right">当前头像</label>
                         <img th:src="${session.user.avatarUrl}" class="rounded avatar-big ">
                         &nbsp;&nbsp;
@@ -112,11 +112,18 @@
                         <img th:src="${session.user.avatarUrl}" class="rounded avatar">
                     </div>
                     <form enctype="multipart/form-data" id="avatar-form">
+                        <div class="sep5"></div>
                         <div class="row">
                             <label class="col-sm-2 col-form-label text-sm-right"></label>
-                            <input type="file" class="form-control-file" name="avatar" id="avatar">
+                            <input type="file" name="avatar" id="avatar">
                             <input type="hidden" name="userId">
                         </div>
+                        <div class="sep5"></div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label text-sm-right"></label>
+                            <label class="gray">请上传长宽比相同的图片</label>
+                        </div>
+                        <div class="sep5"></div>
                         <div class="row">
                             <label class="col-sm-2 col-form-label text-sm-right"></label>
                             <div class="btn btn-light" onclick="uploadAvatar()">上传图片</div>
@@ -159,6 +166,6 @@
 </div>
 <!--底部-->
 <div th:insert="~{fragment/bottom :: bottom}"></div>
-<script type="application/javascript" src="/pagejs/registered.js"></script>
+<script type="application/javascript" src="/pagejs/setting.js"></script>
 </body>
 </html>
