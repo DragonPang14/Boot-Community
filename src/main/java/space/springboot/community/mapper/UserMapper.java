@@ -2,6 +2,7 @@ package space.springboot.community.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+import space.springboot.community.dto.AvatarDto;
 import space.springboot.community.dto.UserDto;
 import space.springboot.community.model.User;
 
@@ -42,4 +43,7 @@ public interface UserMapper {
 
     @Select("select * from user where user_name = #{userName} and password = #{password} and del_flag = 0")
     User verifyUser(UserDto userDto);
+
+    @Update("update user set avatar_url = #{avatarUrl} where id = #{userId}")
+    int modifyAvatar(AvatarDto avatarDto);
 }

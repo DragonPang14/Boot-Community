@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import space.springboot.community.dto.AvatarDto;
 import space.springboot.community.dto.UserDto;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
@@ -84,5 +85,9 @@ public class UserService {
             return dbUser.getToken();
         }
         return null;
+    }
+
+    public int modifyAvatar(AvatarDto avatarDto) {
+        return userMapper.modifyAvatar(avatarDto);
     }
 }

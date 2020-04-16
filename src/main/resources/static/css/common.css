@@ -3,6 +3,10 @@
     height: 50px;
 }
 
+.nont-display {
+    display: none;
+}
+
 .avatar-question {
     width: 72px;
     height: 72px;

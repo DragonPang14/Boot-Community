@@ -105,7 +105,7 @@
                 <div class="cell pl-5">
                     <div class="row" id="current-avatar">
                         <label class="col-sm-2 col-form-label text-sm-right">当前头像</label>
-                        <img th:src="${session.user.avatarUrl}" class="rounded avatar-big ">
+                        <img th:src="${session.user.avatarUrl}" class="rounded avatar-big " id="avatar-url">
                         &nbsp;&nbsp;
                         <img th:src="${session.user.avatarUrl}" class="rounded avatar-question ">
                         &nbsp;&nbsp;
@@ -116,7 +116,7 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label text-sm-right"></label>
                             <input type="file" name="avatar" id="avatar">
-                            <input type="hidden" name="userId">
+                            <input type="hidden" name="userId" th:value="${user.id}">
                         </div>
                         <div class="sep5"></div>
                         <div class="row">
@@ -127,6 +127,8 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label text-sm-right"></label>
                             <div class="btn btn-light" onclick="uploadAvatar()">上传图片</div>
+                            &nbsp;&nbsp;
+                            <div id="modify-button" class="btn btn-light nont-display" onclick="modifyAvatar()">确认修改</div>
                         </div>
                     </form>
                 </div>

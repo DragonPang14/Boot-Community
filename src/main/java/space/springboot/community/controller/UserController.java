@@ -92,4 +92,15 @@ public class UserController {
         return ResultDto.okOf(avatarDto);
     }
 
+    @PostMapping("/modifyAvatar")
+    public @ResponseBody ResultDto modifyAvatar(@RequestBody AvatarDto avatarDto){
+        System.out.println("url:"+avatarDto.getAvatarUrl());
+        int rows = userService.modifyAvatar(avatarDto);
+        if (rows > 0){
+            return new ResultDto(CustomizeStatusEnum.SUCCESS_CODE);
+        }else {
+            return new ResultDto(CustomizeStatusEnum.CODE_ERROR);
+        }
+    }
+
 }
