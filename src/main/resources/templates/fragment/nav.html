@@ -2,44 +2,54 @@
 <body>
 
 <div th:fragment="nav">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">BuDERX</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand" href="/">BuDERX</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
-            </form>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item" th:if="${session.user != null}">
-                    <a href="/publish" class="nav-link rounded">发布</a>
-                </li>
-                <li class="nav-item" th:if="${session.user == null}">
-                    <a href="/login"
-                       class="nav-link">登陆</a>
-                </li>
-                <li class="nav-item" th:if="${session.user != null}">
-                    <img th:src="${session.user.avatarUrl}" class="avatar-nav"/>
-                </li>
-                <li class="nav-item dropdown" th:unless="${session.user == null}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <span th:text="${session.user.name}"></span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/profile/question">我的发布</a>
-                        <a class="dropdown-item" th:href="@{'/setting/'+${session.user.id}}" >设置</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/logout">退出登录</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="form-inline ">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                </form>
+                <!--登陆后-->
+                <ul class="navbar-nav ml-auto " th:if="${session.user != null}">
+                    <li class="nav-item">
+                        <a href="/publish" class="nav-link">发布</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <img th:src="${session.user.avatarUrl}" class="avatar-nav rounded-circle"/>
+                    </li>
+                    <li class="nav-item dropdown" th:unless="${session.user == null}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span th:text="${session.user.name}"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/profile/question">我的发布</a>
+                            <a class="dropdown-item" th:href="@{'/setting/'+${session.user.id}}">设置</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout">退出登录</a>
+                        </div>
+                    </li>
+                </ul>
+                <!--未登录-->
+                <ul class="navbar-nav ml-auto" th:if="${session.user == null}">
+                    <li class="nav-item">
+                        <a href="/login"
+                           class="nav-link">登陆</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 </div>
 
 </body>
