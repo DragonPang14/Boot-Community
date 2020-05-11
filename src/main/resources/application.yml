@@ -40,6 +40,19 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  redis:
+    database: 0
+    host: 94.191.65.139
+    port: 6379
+    password: wwwhao123
+    timeout: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
 
 #fastdfs配置
 fdfs:
