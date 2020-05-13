@@ -2,7 +2,9 @@ package space.springboot.community.model;
 
 import lombok.Data;
 
-
+/**
+ * @desc 通知pojo
+ */
 @Data
 public class Notification {
     private Integer id;

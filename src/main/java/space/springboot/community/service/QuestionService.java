@@ -72,19 +72,31 @@ public class QuestionService {
     }
 
 
+    /**
+     *
+     * @param id
+     * @param isView
+     * @desc 查找文章，若是查看则增加浏览数
+     * @return
+     */
     public QuestionDto findQuestionById(Integer id, int isView) {
         Question question = questionMapper.findQuestionById(id);
         if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         if (isView == 1) {
-            questionMapper.incView(id,1);
+//            questionMapper.incView(id,1);
+            this.redisAddViews(id);
         }
         QuestionDto questionDto = new QuestionDto();
         User user = userMapper.findById(question.getCreator());
         BeanUtils.copyProperties(question, questionDto);
         questionDto.setUser(user);
         return questionDto;
+    }
+
+    private void redisAddViews(Integer questionId){
+
     }
 
     public void createOrUpdate(QuestionDto questionDto, List<Integer> tagIdList) {
