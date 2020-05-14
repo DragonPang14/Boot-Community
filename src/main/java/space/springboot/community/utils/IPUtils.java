@@ -35,7 +35,7 @@ public class IPUtils {
                 ip = request.getRemoteAddr();
             }
         } catch (Exception e) {
-            logger.error("IPUtils ERROR ", e);
+            e.printStackTrace();
         }
         // 使用代理，则获取第一个IP地址
         if (!StringUtils.isEmpty(ip) && ip.length() > 15) {
