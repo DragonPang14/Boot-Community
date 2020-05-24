@@ -88,4 +88,25 @@ public class RedisUtils {
         }
         return redisTemplate.opsForValue().increment(key,num);
     }
+
+    /**
+     * @desc hyperloglog递增
+     * @param key
+     * @param value
+     * @return
+     */
+    public long hAdd(String key, String value){
+        return redisTemplate.opsForHyperLogLog().add(key,value);
+    }
+
+    /**
+     * @desc hyperloglog大小
+     * @param key
+     * @return
+     */
+    public long hSize(String key){
+        return redisTemplate.opsForHyperLogLog().size(key);
+    }
+
+
 }

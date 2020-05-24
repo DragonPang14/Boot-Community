@@ -95,6 +95,10 @@ public class QuestionService {
         return questionDto;
     }
 
+    /**
+     * @desc redis增加阅读数
+     * @param questionId
+     */
     private void redisAddViews(Integer questionId){
 
     }
