@@ -19,9 +19,9 @@ CONNECT_TIMEOUT: 60
 #数据库配置
 spring:
   datasource:
-    url: jdbc:mysql://106.13.143.146:3306/community?useUnicode=true
+    url: jdbc:mysql://94.191.65.139:3306/community?useUnicode=true
     username: root
-    password: centOS-6.8
+    password: wwwhao123
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
 #      是否只读

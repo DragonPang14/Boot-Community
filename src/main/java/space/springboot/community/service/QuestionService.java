@@ -77,9 +77,6 @@ public class QuestionService {
         if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
-        if (isView == 1) {
-            questionMapper.incView(id,1);
-        }
         QuestionDto questionDto = new QuestionDto();
         User user = userMapper.findById(question.getCreator());
         BeanUtils.copyProperties(question, questionDto);
