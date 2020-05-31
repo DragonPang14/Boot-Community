@@ -17,21 +17,25 @@
         <div class="box-right">
             <div class="box ">
                 <div class="cell">
-                    发帖提示
-                    <hr>
-                    ·主题标题
-                    <br>
-                    请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
-                    <br>
-                    ·正文
-                    <br>
-                    可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
-                    在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
-                    <br>
-                    ·添加标签
-                    <br>
-                    在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
-                    你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
+                    <span>发帖提示</span>
+                </div>
+                <div class="cell">
+                    <ul>
+                        <li>
+                            <p>主题标题</p>
+                            请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
+                        </li>
+                        <li>
+                            <p>正文</p>
+                            可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
+                            在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
+                        </li>
+                        <li>
+                            <p>添加标签</p>
+                            在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
+                            你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="sep20"></div>
@@ -60,7 +64,8 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-sm-right">昵称</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="name" id="name" disabled th:value="${user.name}">
+                            <input type="text" class="form-control" name="name" id="name" disabled
+                                   th:value="${user.name}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -72,19 +77,20 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-sm-right">简介</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" id="bio" name="bio" rows="4" placeholder="用尽量简短的语句来概括自己"></textarea>
+                            <textarea class="form-control" id="bio" name="bio" rows="4"
+                                      placeholder="用尽量简短的语句来概括自己"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-sm-right">手机号</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="mobile" name="mobile" >
+                            <input type="password" class="form-control" id="mobile" name="mobile">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-sm-right">邮箱</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="mail" name="mail" >
+                            <input type="password" class="form-control" id="mail" name="mail">
                         </div>
                     </div>
                 </div>
@@ -97,8 +103,34 @@
                     </span>
                 </div>
                 <div class="cell pl-5">
-                    <p>当前头像</p>
-
+                    <div class="row" id="current-avatar">
+                        <label class="col-sm-2 col-form-label text-sm-right">当前头像</label>
+                        <img th:src="${session.user.avatarUrl}" class="rounded avatar-big " id="avatar-url">
+                        &nbsp;&nbsp;
+                        <img th:src="${session.user.avatarUrl}" class="rounded avatar-question ">
+                        &nbsp;&nbsp;
+                        <img th:src="${session.user.avatarUrl}" class="rounded avatar">
+                    </div>
+                    <form enctype="multipart/form-data" id="avatar-form">
+                        <div class="sep5"></div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label text-sm-right"></label>
+                            <input type="file" name="avatar" id="avatar">
+                            <input type="hidden" name="userId" th:value="${user.id}">
+                        </div>
+                        <div class="sep5"></div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label text-sm-right"></label>
+                            <label class="gray">请上传长宽比相同的图片</label>
+                        </div>
+                        <div class="sep5"></div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label text-sm-right"></label>
+                            <div class="btn btn-light" onclick="uploadAvatar()">上传图片</div>
+                            &nbsp;&nbsp;
+                            <div id="modify-button" class="btn btn-light nont-display" onclick="modifyAvatar()">确认修改</div>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="sep20"></div>
@@ -113,19 +145,19 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-sm-right">旧密码</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="old-password" >
+                            <input type="password" class="form-control" id="old-password">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-sm-right">新密码</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="new-password" >
+                            <input type="password" class="form-control" id="new-password">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label text-sm-right">重复密码</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="repeat-password" >
+                            <input type="password" class="form-control" id="repeat-password">
                         </div>
                     </div>
                 </div>
@@ -136,6 +168,6 @@
 </div>
 <!--底部-->
 <div th:insert="~{fragment/bottom :: bottom}"></div>
-<script type="application/javascript" src="/pagejs/registered.js"></script>
+<script type="application/javascript" src="/pagejs/setting.js"></script>
 </body>
 </html>

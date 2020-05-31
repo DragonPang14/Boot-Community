@@ -23,6 +23,7 @@ public class CustomizeErrorHandler implements ErrorController {
         HttpStatus status = this.getStatus(request);
         if (status.is4xxClientError()){
             model.addAttribute("errorMessage","换个姿势试试？");
+
         }
         return new ModelAndView("error");
     }
@@ -36,6 +37,7 @@ public class CustomizeErrorHandler implements ErrorController {
             try {
                 return HttpStatus.valueOf(statusCode);
             } catch (Exception var4) {
+                var4.printStackTrace();
                 return HttpStatus.INTERNAL_SERVER_ERROR;
             }
         }

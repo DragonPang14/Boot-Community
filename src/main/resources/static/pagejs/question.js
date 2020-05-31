@@ -73,7 +73,7 @@ function replyComment(commentId,replyName) {
             async:false,
             success:function (data) {
                 console.info(data);
-                if(data.code == 200){
+                if(data.code == 100){
                     var htmlStr = '';
                     $.each(data.obj,function (index,comment) {
                         htmlStr += buildHtmlStr(comment);

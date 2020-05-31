@@ -22,22 +22,63 @@
 <div id="wrapper">
     <div class="sep20"></div>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-9 col-md-12 col-sm-12 col-12 box">
-                <h5>标题</h5>
-                <span>(简明扼要的描述你的主题)</span>
+        <div class="box-right">
+            <div class="box ">
+                <div class="cell">
+                    发帖提示
+                    <hr>
+                    ·主题标题
+                    <br>
+                    请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
+                    <br>
+                    ·正文
+                    <br>
+                    可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
+                    在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
+                    <br>
+                    ·添加标签
+                    <br>
+                    在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
+                    你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
+                </div>
+            </div>
+            <div class="sep20"></div>
+            <div class="box">
+                <div class="cell">
+                    社区指导原则
+                    <hr>
+                    ·尊重原创
+                    <br>
+                    ·请不要在 V2EX 发布任何盗版下载链接，包括软件、音乐、电影等等。V2EX 是创意工作者的社区，我们尊重原创。
+                    <br>
+                    ·友好互助
+                    <br>
+                    ·保持对陌生人的友善。用知识去帮助别人。
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-left">
+            <div class="cell">
+                <span>标题(简明扼要的描述你的主题)</span>
+            </div>
+            <div class="cell">
                 <div class="input-group">
                     <input class="form-control" type="text" name="title" id="title"
                            th:value="${questionDto != null?questionDto.title:''}">
                 </div>
-                <hr>
-                <h5>问题补充</h5>
+            </div>
+            <div class="cell">
+                <span>问题补充</span>
+            </div>
+            <div class="cell">
                 <div class="input-group">
                     <textarea class="form-control" placeholder="问题补充" rows="17" name="description"
                               id="description" th:text="${questionDto != null?questionDto.description:''}"></textarea>
                 </div>
-                <hr>
-                <!--添加标签-->
+            </div>
+            <!--添加标签-->
+            <div class="cell">
                 <div class="d-flex">
                     <div class="dropdown inline" data-tag-nums="0" data-tag-max-num="5">
                         <button class="btn btn-light" id="dropdown-button" data-toggle="dropdown" aria-expanded="true">
@@ -65,73 +106,47 @@
                         </button>
                     </div>
                 </div>
-
             </div>
 
-            <!--创建标签模态框-->
-            <div class="modal fade" id="tag-modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <!-- 模态框头部 -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">创建标签</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
 
-                        <!-- 模态框主体 -->
-                        <div class="modal-body">
-                            <lable>标签名称</lable>
-                            <input class="form-control" placeholder="请输入标签名称" autocomplete="off" name="tagName" id="tagName">
-                            <div class="sep10"></div>
-                            <label>标签介绍</label>
-                            <input class="form-control" placeholder="请输入标签简介，供审核" autocomplete="off" name="remarks" id="remarks">
-                        </div>
+        </div>
 
-                        <!-- 模态框底部 -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-light" onclick="saveTag()">确定</button>
-                        </div>
-
+        <!--创建标签模态框-->
+        <div class="modal fade" id="tag-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- 模态框头部 -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">创建标签</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                </div>
-            </div>
 
-            <div class="col-lg-3 box">
-                <div class="right-content">
-                    发帖提示
-                    <hr>
-                    ·主题标题
-                    <br>
-                    请在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。
-                    <br>
-                    ·正文
-                    <br>
-                    可以在正文中为你要发布的主题添加更多细节。V2EX 支持 GitHub Flavored Markdown 文本标记语法。
-                    在正式提交之前，你可以点击本页面左下角的“预览主题”来查看 Markdown 正文的实际渲染效果。
-                    <br>
-                    ·添加标签
-                    <br>
-                    在最后，请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。
-                    你可以在主题发布后 300 秒内，对标题或者正文进行编辑。同时，在 300 秒内，你可以重新为主题选择节点。
-                </div>
-                <div class="right-bottum">
-                    社区指导原则
-                    <hr>
-                    ·尊重原创
-                    <br>
-                    ·请不要在 V2EX 发布任何盗版下载链接，包括软件、音乐、电影等等。V2EX 是创意工作者的社区，我们尊重原创。
-                    <br>
-                    ·友好互助
-                    <br>
-                    ·保持对陌生人的友善。用知识去帮助别人。
+                    <!-- 模态框主体 -->
+                    <div class="modal-body">
+                        <lable>标签名称</lable>
+                        <input class="form-control" placeholder="请输入标签名称" autocomplete="off" name="tagName"
+                               id="tagName">
+                        <div class="sep10"></div>
+                        <label>标签介绍</label>
+                        <input class="form-control" placeholder="请输入标签简介，供审核" autocomplete="off" name="remarks"
+                               id="remarks">
+                    </div>
+
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-light" onclick="saveTag()">确定</button>
+                    </div>
+
                 </div>
             </div>
         </div>
+
+
     </div>
     <div class="sep20"></div>
 </div>
-<div th:insert="~{fragmen/bottom :: bottom}"></div>
+<div th:insert="~{fragment/bottom :: bottom}"></div>
 <script src="/pagejs/publish.js" type="application/javascript"></script>
 </body>
 
