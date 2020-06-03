@@ -2,25 +2,26 @@ package space.springboot.community.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import space.springboot.community.aspect.HyperLogInc;
 import space.springboot.community.dao.QuestionDao;
 import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
-import space.springboot.community.model.QuestionTags;
 import space.springboot.community.dto.TagDto;
 import space.springboot.community.exception.CustomizeErrorCode;
 import space.springboot.community.exception.CustomizeException;
 import space.springboot.community.mapper.QuestionMapper;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.Question;
+import space.springboot.community.model.QuestionTags;
 import space.springboot.community.model.Tag;
 import space.springboot.community.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 public class QuestionService {
 
     @Autowired
@@ -71,8 +72,8 @@ public class QuestionService {
         return pagination;
     }
 
-
-    public QuestionDto findQuestionById(Integer id, int isView) {
+    @HyperLogInc(description = "增加阅读数")
+    public QuestionDto findQuestionById(Integer id) {
         Question question = questionMapper.findQuestionById(id);
         if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -83,6 +84,7 @@ public class QuestionService {
         questionDto.setUser(user);
         return questionDto;
     }
+
 
     public void createOrUpdate(QuestionDto questionDto, List<Integer> tagIdList) {
         Integer id;

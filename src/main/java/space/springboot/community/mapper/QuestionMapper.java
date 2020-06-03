@@ -38,9 +38,6 @@ public interface QuestionMapper {
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
     Integer updateQuestion(Question dbQuestion);
 
-    @Update("update question set view_count = view_count + #{i} where id = #{id}")
-    void incView(@Param(value = "id") Integer id, @Param(value = "i") int i);
-
     @Update("update question set comment_count = comment_count + #{i} where id = #{id}")
     void incComment(@Param(value = "id") Integer parentId,@Param(value = "i") int i);
 
@@ -55,6 +52,9 @@ public interface QuestionMapper {
     @Options(keyColumn = "count(1)")
     int findTagByName(String tagName);
 
-    @Update("update question_tags set del_flag = 1 where quesiont_id = #{id}")
+    @Update("update question_tags set del_flag = 1 where question_id = #{id}")
     int deleteQuestionTags(Integer id);
+
+    @Update("update question set view_count = view_count + #{count} where id = #{id}")
+    int updateViews(Integer id,long count);
 }
