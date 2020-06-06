@@ -39,6 +39,7 @@ function publish() {
     });
 }
 
+
 function saveTag() {
     var flag = true;
     $("#tag-modal .form-control").each(function () {
@@ -76,7 +77,6 @@ function getTags() {
         type:"post",
         contentType: "application/json",
         dataType: "json",
-        data: JSON.stringify({"tagName":name,"remarks":remarks}),
         success:function (data) {
             if (data.code == 100){
                 var tagHtml = '';

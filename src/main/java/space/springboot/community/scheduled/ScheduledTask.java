@@ -25,6 +25,7 @@ public class ScheduledTask {
         System.out.println("阅读数定时任务启动=============");
         if (keySet.size() > 0){
             keySet.forEach(key -> {
+                System.out.println(key);
                 long viewCount = redisUtils.hSize(key);
                 String[] questionId = key.split("_");
                 questionMapper.updateViews(Integer.valueOf(questionId[1]),viewCount);

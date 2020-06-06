@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布 - Markdown编辑器</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
+    <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">BuDERX</a>
+        <strong class="gray">|</strong>
+        &nbsp;&nbsp;&nbsp;
+        <span class="navbar-brand">编辑问题</span>
+        <div class="ml-auto">
+            <button class="btn btn-secondary fr" onclick="publishWithMd()"><i class="zi zi_plusSquare"></i>&nbsp;发布
+            </button>
+        </div>
+    </div>
+</nav>
+<div id="wrapper">
+    <div class="sep20"></div>
+    <div class="container">
+        <div class="input-group">
+            <input class="form-control" type="text" name="title" id="title" placeholder="标题">
+        </div>
+        <div class="sep20"></div>
+        <div class="dropdown inline" data-tag-nums="0" data-tag-max-num="5">
+            <button class="btn btn-light" id="dropdown-button" data-toggle="dropdown" aria-expanded="true">
+                <i class="zi zi_plus"></i>&nbsp;添加标签
+            </button>
+            <div class="tag-card dropdown-menu fl" id="tag-dropdown" aria-labelledby="dropdown-button">
+                <h6 class="dropdown-header" id="tag-header">
+                    <span>还可添加3个标签</span>
+                    <span class="fr" data-toggle="modal" data-target="#tag-modal">
+                                    <a href="javascript:;" class="gray">创建标签</a>
+                                </span>
+                </h6>
+                <div class="pl-4 pr-4">
+                    <input class="form-control" id="search-tag" placeholder="搜索标签" autocomplete="off">
+                </div>
+                <div class="mt-2 pl-4 pr-4" id="tag-content">
+                </div>
+            </div>
+        </div>
+        <div class="sep20"></div>
+        <div id="md-editor">
+            <textarea style="display: none;" id="description"></textarea>
+        </div>
+    </div>
+    <div class="sep10"></div>
+    <!--创建标签模态框-->
+    <div class="modal fade" id="tag-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">创建标签</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <lable>标签名称</lable>
+                    <input class="form-control" placeholder="请输入标签名称" autocomplete="off" name="tagName"
+                           id="tagName">
+                    <div class="sep10"></div>
+                    <label>标签介绍</label>
+                    <input class="form-control" placeholder="请输入标签简介，供审核" autocomplete="off" name="remarks"
+                           id="remarks">
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-light" onclick="saveTag()">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{fragment/bottom :: bottom}"></div>
+</body>
+<script src="/js/editormd.min.js" type="application/javascript"></script>
+<script src="/pagejs/markdownEditor.js" type="application/javascript"></script>
+</html>

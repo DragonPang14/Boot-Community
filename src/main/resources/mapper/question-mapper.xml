@@ -47,5 +47,6 @@
         <if test="userId != null">
             where q.creator = #{userId};
         </if>
+        order by q.gmt_create desc
     </select>
 </mapper>

@@ -120,7 +120,7 @@ public class RedisUtils {
      * @param key
      * @return
      */
-    public long hSize(String key){
+    public Long hSize(String key){
         return redisTemplate.opsForHyperLogLog().size(key);
     }
 

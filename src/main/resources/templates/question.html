@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/zico.min.css">
+    <link rel="stylesheet" href="/css/editormd.preview.min.css">
     <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="/pagejs/question.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{fragment/nav :: nav}">
@@ -39,12 +39,13 @@
                     <div class="fr inline"
                          th:if="${session.user != null && questionDto.user.id == session.user.id}">
                         <input id="question-id" type="hidden" th:value="${questionDto.id}">
-                        <button type="button" class="btn btn-light btn-sm" onclick="editQuestion()"><i
+                        <button type="button" class="btn btn-light btn-sm" onclick="edi tQuestion()"><i
                                 class="zi zi_pencilalt"></i>编辑
                         </button>
                     </div>
                 </div>
-                <div class="cell" th:text="${questionDto.description}">
+                <div class="cell" id="text-md-view">
+                    <textarea style="display: none;" th:text="${questionDto.description}"></textarea>
                 </div>
             </div>
             <!--回复-->
@@ -119,5 +120,9 @@
 </div>
 <div th:insert="~{fragment/bottom :: bottom}"></div>
 </body>
+<script src="/js/editormd.min.js" type="application/javascript"></script>
+<script src="/js/lib/marked.min.js" type="application/javascript"></script>
+<script src="/js/lib/prettify.min.js" type="application/javascript"></script>
+<script src="/pagejs/question.js" type="application/javascript"></script>
 
 </html>

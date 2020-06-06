@@ -17,9 +17,11 @@ import space.springboot.community.model.Question;
 import space.springboot.community.model.QuestionTags;
 import space.springboot.community.model.Tag;
 import space.springboot.community.model.User;
+import space.springboot.community.utils.RedisUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class QuestionService {
@@ -32,6 +34,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionDao questionDao;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     public PaginationDto<QuestionDto> getList(Integer userId, Integer page, Integer size) {
 
