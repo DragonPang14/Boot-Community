@@ -36,6 +36,21 @@
             (#{qtag.questionId},#{qtag.tagId},#{qtag.gmtCreate})
         </foreach>
     </insert>
+    <select id="totalCount" resultType="integer">
+        select count(1) from question q
+        <if test="tagId != null">
+            left join question_tags qt on q.id = qt.question_id
+            left join tag t on qt.tag_id = t.id
+        </if>
+        where 1 = 1
+        <if test="tagId != null">
+            and qt.tag_id = #{tagId}
+        </if>
+        <if test="userId != null">
+            and creator = #{userId}"
+        </if>
+    </select>
+
     <select id="getQuestionList" resultMap="QuestionDto">
         select q.id qid,q.title,q.description,q.gmt_create,q.gmt_modified,q.creator,q.comment_count,q.view_count,q.like_count,
             t.id tid,t.tag_name,t.remarks,
@@ -44,8 +59,12 @@
         left join question_tags qt on q.id = qt.question_id
         left join tag t on qt.tag_id = t.id
         left join user u on q.creator = u.id
+        where 1 = 1
         <if test="userId != null">
-            where q.creator = #{userId};
+            and q.creator = #{userId};
+        </if>
+        <if test="tagId != null">
+            and qt.tag_id = #{tagId}
         </if>
         order by q.gmt_create desc
     </select>

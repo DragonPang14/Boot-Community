@@ -35,8 +35,8 @@ public interface UserMapper {
     @Options(keyColumn = "count(1)")
     int findByMobile(String mobile);
 
-    @Insert("insert into user (name,gmt_create,gmt_modified,user_name,password,mobile,bio,mail) values" +
-            "(#{name},#{gmtCreate},#{gmtModified},#{userName},#{password},#{mobile},#{bio},#{mail})")
+    @Insert("insert into user (name,gmt_create,gmt_modified,avatar_url,user_name,password,mobile,bio,mail,user_type) values" +
+            "(#{name},#{gmtCreate},#{gmtModified},#{avatarUrl},#{userName},#{password},#{mobile},#{bio},#{mail},#{userType})")
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
     int registered(User user);
 

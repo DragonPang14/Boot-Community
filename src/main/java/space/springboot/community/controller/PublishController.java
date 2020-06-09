@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import space.springboot.community.dto.ImageResultDto;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.dto.ResultDto;
 import space.springboot.community.dto.TagDto;
@@ -12,7 +14,9 @@ import space.springboot.community.model.Question;
 import space.springboot.community.model.User;
 import space.springboot.community.service.QuestionService;
 import space.springboot.community.service.UserService;
+import space.springboot.community.utils.FastDfsUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +31,9 @@ public class PublishController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private FastDfsUtils fastDfsUtils;
 
     @GetMapping("/publish")
     public String publish() {
@@ -69,6 +76,28 @@ public class PublishController {
             return new ResultDto(CustomizeStatusEnum.CODE_ERROR);
         }
         return new ResultDto(CustomizeStatusEnum.SUCCESS_CODE);
+    }
+
+    /**
+     * @desc md上传图片，返回图片地址
+     * @param image
+     * @return
+     */
+    @PostMapping("/uploadImage")
+    public @ResponseBody
+    ImageResultDto uploadImage(@RequestParam(value = "editormd-image-file", required = true) MultipartFile image){
+        ImageResultDto imageResultDto = new ImageResultDto();
+        try {
+            String imagePath = fastDfsUtils.uploadFile(image);
+            imageResultDto.setSuccess(1);
+            imageResultDto.setMsg("上传成功!");
+            imageResultDto.setUrl(imagePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            imageResultDto.setSuccess(0);
+            imageResultDto.setMsg("上传失败！");
+        }
+        return imageResultDto;
     }
 
     /**

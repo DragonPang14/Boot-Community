@@ -4,6 +4,9 @@ $(function () {
         width: "100%",
         height: "750px",
         placeholder: "支持markdown语法",
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL: "/uploadImage",
         path: "/js/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
     });
 });

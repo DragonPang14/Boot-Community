@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import space.springboot.community.aspect.HyperLogInc;
 import space.springboot.community.dto.CommentDto;
 import space.springboot.community.dto.ResultDto;
 import space.springboot.community.enums.CommentTypeEnum;
@@ -31,6 +32,7 @@ public class CommentService {
     @Autowired
     private UserMapper userMapper;
 
+    @HyperLogInc(description = "评论数增加")
     @Transactional
     public ResultDto insertComment(Integer questionId, Comment comment) {
         ResultDto resultDto = new ResultDto();
@@ -50,7 +52,6 @@ public class CommentService {
         }
         if (haveFlag){
             commentMapper.insert(comment);
-            questionMapper.incComment(questionId,1);
             BeanUtils.copyProperties(comment,commentDto);
             commentDto.setUser(userMapper.findById(comment.getCreator()));
             resultDto.setCode(100);

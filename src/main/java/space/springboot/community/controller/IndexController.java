@@ -26,11 +26,11 @@ public class IndexController {
      * @desc 打开首页，获取cookie自动登录
      */
     @GetMapping("/")
-    public String index(HttpServletRequest request,
-                        @RequestParam(value = "page", defaultValue = "1") Integer page,
+    public String index(@RequestParam(value = "page", defaultValue = "1") Integer page,
                         @RequestParam(value = "size", defaultValue = "10") Integer size,
+                        @RequestParam(value = "tag", required = false) Integer tagId,
                         Model model) {
-        PaginationDto<QuestionDto> pagination= questionService.getList(null,page, size);
+        PaginationDto<QuestionDto> pagination= questionService.getList(null,page, size,tagId);
         model.addAttribute("pagination", pagination);
         return "index";
     }

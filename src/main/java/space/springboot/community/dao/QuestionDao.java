@@ -13,5 +13,7 @@ public interface QuestionDao {
 
     int saveQuestionTags(List<QuestionTags> questionTagsList);
 
-    List<QuestionDto> getQuestionList(Integer userId,Integer offset,Integer size);
+    List<QuestionDto> getQuestionList(Integer userId,Integer offset,Integer size,Integer tagId);
+
+    Integer totalCount(Integer userId, Integer tagId);
 }

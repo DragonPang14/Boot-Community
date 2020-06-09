@@ -22,12 +22,6 @@ public interface QuestionMapper {
     @Select("select * from question limit #{offset},#{size}")
     List<Question> getList(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
-    @Select("select count(1) from question")
-    Integer totalCount();
-
-    @Select("select * from question where creator = #{userId} limit #{offset},#{size}")
-    List<Question> getListByUserId(@Param(value = "userId") Integer userId, @Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
-
     @Select("select count(1) from question where creator = #{userId}")
     Integer userQuestionCount(@Param(value = "userId") Integer userId);
 
@@ -39,7 +33,7 @@ public interface QuestionMapper {
     Integer updateQuestion(Question dbQuestion);
 
     @Update("update question set comment_count = comment_count + #{i} where id = #{id}")
-    void incComment(@Param(value = "id") Integer parentId,@Param(value = "i") int i);
+    void incComment(@Param(value = "id") Integer parentId,@Param(value = "i") long i);
 
     @Insert("insert into tag (tag_name,remarks,gmt_create,gmt_modify) values (#{tagName},#{remarks},#{gmtCreate},#{gmtModify})")
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")

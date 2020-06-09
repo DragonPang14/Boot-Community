@@ -29,7 +29,7 @@ public class ProfileController {
         User user = (User)request.getSession().getAttribute("user");
         if(user != null){
             if("question".equals(action)){
-                PaginationDto<QuestionDto> pagination= questionService.getList(user.getId(),page, size);
+                PaginationDto<QuestionDto> pagination= questionService.getList(user.getId(),page, size,null);
                 model.addAttribute("pagination", pagination);
                 model.addAttribute("section","question");
                 model.addAttribute("sectionName","我的发布");

@@ -3,7 +3,6 @@ package space.springboot.community.aspect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,13 +29,19 @@ public class HyperLogAspect {
      */
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint joinPoint){
-        System.out.println("aop around start");
+        System.out.println(joinPoint.getSignature());
         Object[] args = joinPoint.getArgs();
         Object questionId = args[0];
         Object obj = null;
+        String redisKey = "";
         try {
             String ip = IPUtils.getIpAddr();
-            String redisKey = "questionViewsId_" + questionId;
+            if (joinPoint.getSignature().toString().contains("insertComment")){
+                redisKey = "questionCommentsId_" + questionId;
+            }else {
+                redisKey = "questionViewsId_" + questionId;
+            }
+            System.out.println("views aop " + redisKey);
             redisUtils.hAdd(redisKey,ip);
             obj = joinPoint.proceed();
         } catch (Throwable throwable) {
