@@ -76,7 +76,6 @@ public class QuestionService {
         return pagination;
     }
 
-    @HyperLogInc(description = "增加阅读数")
     public QuestionDto findQuestionById(Integer id) {
         Question question = questionMapper.findQuestionById(id);
         if (question == null) {

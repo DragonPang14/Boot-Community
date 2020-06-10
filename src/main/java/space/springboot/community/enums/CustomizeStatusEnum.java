@@ -24,6 +24,8 @@ public enum CustomizeStatusEnum {
 
     TAG_EXISTS(2003,"标签已存在"),
 
+    HOT_RANK_ERROR(2004,"侧边栏热门文章显示失败"),
+
     UPLOAD_ERROR(3001,"上传失败");
 
     private Integer statusCode;

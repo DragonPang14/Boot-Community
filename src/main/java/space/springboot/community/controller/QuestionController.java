@@ -24,6 +24,7 @@ public class QuestionController {
     private CommentService commentService;
 
 
+    @HyperLogInc(description = "增加阅读数")
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Integer id,
                            Model model){

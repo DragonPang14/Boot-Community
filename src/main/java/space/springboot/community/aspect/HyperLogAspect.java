@@ -5,7 +5,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import space.springboot.community.utils.DateUtils;
 import space.springboot.community.utils.IPUtils;
 import space.springboot.community.utils.RedisUtils;
 
@@ -15,6 +17,15 @@ public class HyperLogAspect {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Value("${RANK_KEY}")
+    private String RANK_KEY;
+
+    @Value("${COMMENTS_COUNT_KEY}")
+    private String COMMENTS_COUNT_KEY;
+
+    @Value("${VIEWS_COUNT_KEY}")
+    private String VIEWS_COUNT_KEY;
 
     /**
      * @desc aop切入点
@@ -34,12 +45,23 @@ public class HyperLogAspect {
         Object questionId = args[0];
         Object obj = null;
         String redisKey = "";
+        String redisZkey = RANK_KEY + ":" + DateUtils.getDate();
         try {
             String ip = IPUtils.getIpAddr();
             if (joinPoint.getSignature().toString().contains("insertComment")){
-                redisKey = "questionCommentsId_" + questionId;
+               if (redisUtils.zScore(redisZkey,questionId.toString()) == null){
+                   redisUtils.zAdd(redisZkey,questionId.toString(),3);
+               }else {
+                   redisUtils.zInc(redisZkey,questionId.toString(),3);
+               }
+                redisKey = COMMENTS_COUNT_KEY + ":" + questionId;
             }else {
-                redisKey = "questionViewsId_" + questionId;
+                if (redisUtils.zScore(redisZkey,questionId.toString()) == null){
+                    redisUtils.zAdd(redisZkey,questionId.toString(),1);
+                }else {
+                    redisUtils.zInc(redisZkey,questionId.toString(),1);
+                }
+                redisKey = VIEWS_COUNT_KEY + ":" + questionId;
             }
             System.out.println("views aop " + redisKey);
             redisUtils.hAdd(redisKey,ip);

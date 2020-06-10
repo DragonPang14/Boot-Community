@@ -134,4 +134,39 @@ public class RedisUtils {
         return redisTemplate.keys(keyPattern);
     }
 
+    /**
+     * @desc 有序集合添加
+     * @param key
+     * @param value
+     * @param score
+     */
+    public void zAdd(String key,String value,double score){
+        redisTemplate.opsForZSet().add(key,value,score);
+    }
+
+
+    /**
+     * @desc 有序集合增加delta
+     * @param key
+     * @param value
+     * @param delta
+     */
+    public void zInc(String key,String value,double delta){
+        redisTemplate.opsForZSet().incrementScore(key,value,delta);
+    }
+
+    /**
+     * @desc 获取有序集合排行榜
+     * @param key
+     * @param min
+     * @param max
+     */
+    public Set zRank(String key,double min,double max){
+        return redisTemplate.opsForZSet().reverseRangeByScore(key,min,max);
+    }
+
+    public Double zScore(String key,String value){
+        return redisTemplate.opsForZSet().score(key,value);
+    }
+
 }

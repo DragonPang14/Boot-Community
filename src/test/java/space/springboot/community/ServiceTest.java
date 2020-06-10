@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import space.springboot.community.aspect.HyperLogInc;
 import space.springboot.community.service.QuestionService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ServiceTest extends BaseTest {
 
     @Autowired
@@ -16,8 +19,8 @@ public class ServiceTest extends BaseTest {
     }
 
     @Test
-    @HyperLogInc(description = "test")
     public void aopTest(){
-        System.out.println("aop Test!");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(format.format(new Date(System.currentTimeMillis())));
     }
 }

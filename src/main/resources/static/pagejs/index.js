@@ -5,8 +5,37 @@ window.onload = function () {
     }
 
     getTags();
+
+    getHotRank();
 }
 
+
+function getHotRank() {
+    $.ajax({
+        url:"/getHotRank",
+        type:"post",
+        dataType:"json",
+        success:function (data) {
+            if(data.code != 100){
+                alert(data.msg);
+            }else {
+                var html = '';
+                $.each(data.obj,function (index,question) {
+                    html += '<div class="cell media">';
+                    html += '<img class="mr-3 avatar-side rounded" src="'+question.user.avatarUrl+'">';
+                    html += '<div class="media-body">';
+                    html += '<span class="hot-rank-title ">';
+                    html += '<a href="javascript:;">'+question.title+'</a>';
+                    html += '</span>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+               $("#hot-rank").append(html);
+            }
+        }
+    })
+
+}
 
 function getTags() {
     $("#tag-content").empty();
