@@ -12,18 +12,12 @@ import space.springboot.community.dto.PaginationDto;
 import space.springboot.community.dto.QuestionDto;
 import space.springboot.community.dto.ResultDto;
 import space.springboot.community.enums.CustomizeStatusEnum;
-import space.springboot.community.model.Question;
 import space.springboot.community.service.QuestionService;
 import space.springboot.community.utils.DateUtils;
 import space.springboot.community.utils.RedisUtils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Controller
@@ -37,6 +31,9 @@ public class IndexController {
 
     @Value("${RANK_KEY}")
     private String RANK_KEY;
+
+    @Value("${ACTIVE_USER}")
+    private String ACTIVE_USER;
 
     /**
      * @return
@@ -52,14 +49,7 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
-        request.getSession().removeAttribute("user");
-        Cookie cookie = new Cookie("token",null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-        return "redirect:/";
-    }
+
 
     /**
      * @desc 侧边栏热门文章
@@ -85,5 +75,18 @@ public class IndexController {
         }
         resultDto.setObj(questionDtos);
         return resultDto;
+    }
+
+
+    @PostMapping("/getActiveUser")
+    public @ResponseBody ResultDto<Long> activeUser(){
+        Long userCount = null;
+        try {
+            userCount = redisUtils.bitCount(ACTIVE_USER);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultDto.errorOf(CustomizeStatusEnum.CODE_ERROR);
+        }
+        return ResultDto.okOf(userCount);
     }
 }

@@ -17,6 +17,7 @@ import space.springboot.community.service.UserService;
 import space.springboot.community.utils.FastDfsUtils;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -76,6 +77,15 @@ public class UserController {
             }
         }
         return resultDto;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        request.getSession().invalidate();
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 
     @PostMapping("/uploadAvatar")

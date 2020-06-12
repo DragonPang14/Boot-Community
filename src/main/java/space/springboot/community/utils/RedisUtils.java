@@ -2,7 +2,10 @@ package space.springboot.community.utils;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import space.springboot.community.exception.CustomizeErrorCode;
@@ -167,6 +170,20 @@ public class RedisUtils {
 
     public Double zScore(String key,String value){
         return redisTemplate.opsForZSet().score(key,value);
+    }
+
+
+    public boolean setBit(String key,long userId,boolean logged){
+        return redisTemplate.opsForValue().setBit(key,userId,logged);
+    }
+
+
+    public boolean getBig(String key,long userId){
+        return redisTemplate.opsForValue().getBit(key, userId);
+    }
+
+    public Long bitCount(String key){
+        return redisTemplate.execute((RedisCallback<Long>) con -> con.bitCount(key.getBytes()));
     }
 
 }

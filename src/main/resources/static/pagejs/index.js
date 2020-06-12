@@ -7,8 +7,24 @@ window.onload = function () {
     getTags();
 
     getHotRank();
+    
+    getActiveUser();
 }
 
+function getActiveUser() {
+    $.post({
+        url:"/getActiveUser",
+        dataType:"json",
+        success:function (data) {
+            if(data.code == 100){
+                var html = '';
+                html +=  data.obj;
+                html += "人";
+                $("#active-user").prepend(html);
+            }
+        }
+    })
+}
 
 function getHotRank() {
     $.ajax({
@@ -16,21 +32,19 @@ function getHotRank() {
         type:"post",
         dataType:"json",
         success:function (data) {
-            if(data.code != 100){
-                alert(data.msg);
-            }else {
+            if(data.code == 100){
                 var html = '';
                 $.each(data.obj,function (index,question) {
                     html += '<div class="cell media">';
                     html += '<img class="mr-3 avatar-side rounded" src="'+question.user.avatarUrl+'">';
                     html += '<div class="media-body">';
                     html += '<span class="hot-rank-title ">';
-                    html += '<a href="javascript:;">'+question.title+'</a>';
+                    html += '<a href="/question/'+question.id+'">'+question.title+'</a>';
                     html += '</span>';
                     html += '</div>';
                     html += '</div>';
                 });
-               $("#hot-rank").append(html);
+                $("#hot-rank").append(html);
             }
         }
     })

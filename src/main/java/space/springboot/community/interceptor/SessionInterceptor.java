@@ -10,6 +10,7 @@ import space.springboot.community.model.User;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Service
 public class SessionInterceptor implements HandlerInterceptor {
@@ -25,7 +26,9 @@ public class SessionInterceptor implements HandlerInterceptor {
                 if("token".equals(cookie.getName())){
                     User user = userMapper.findByToken(cookie.getValue());
                     if (user != null){
-                        request.getSession().setAttribute("user",user);
+                        HttpSession session = request.getSession();
+                        session.setMaxInactiveInterval(600);
+                        session.setAttribute("user",user);
                     }
                 }
             }

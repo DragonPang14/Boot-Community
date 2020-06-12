@@ -17,15 +17,15 @@
     <div class="sep20"></div>
     <div class="container">
         <div class="box-right">
-            <div class="box ">
-                <div class="cell">
+            <div class="box " th:if="${session.user != null}">
+                <div class="cell" >
                     <span class="gray">无未读消息</span>
                 </div>
             </div>
-            <div class="sep20"></div>
+            <div class="sep20" th:if="${session.user != null}"></div>
             <div class="box" id="hot-rank">
                 <div class="cell">
-                    <span class="gray">近期热门文章</span>
+                    <span class="gray">今日热门文章</span>
                 </div>
             </div>
             <div class="sep20"></div>
@@ -34,6 +34,12 @@
                     <span class="gray">标签</span>
                 </div>
                 <div class="cell" id="tag-content"></div>
+            </div>
+            <div class="sep20"></div>
+            <div class="box">
+                <div class="cell">
+                    <span class="gray font-weight-bolder" id="active-user">在线</span>
+                </div>
             </div>
         </div>
         <div class="box box-left">

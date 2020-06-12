@@ -3,9 +3,11 @@ package space.springboot.community;
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+@ServletComponentScan
 @SpringBootApplication
 @EnableScheduling
 @Import(FdfsClientConfig.class)
