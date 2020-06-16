@@ -2,7 +2,6 @@ package space.springboot.community.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
-import space.springboot.community.dto.CommentDto;
 import space.springboot.community.model.Comment;
 
 import java.util.List;

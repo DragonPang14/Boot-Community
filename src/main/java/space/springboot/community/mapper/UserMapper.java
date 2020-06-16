@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import space.springboot.community.dto.AvatarDto;
 import space.springboot.community.dto.UserDto;
+import space.springboot.community.model.Notification;
 import space.springboot.community.model.User;
 
 @Component
@@ -46,4 +47,8 @@ public interface UserMapper {
 
     @Update("update user set avatar_url = #{avatarUrl} where id = #{userId}")
     int modifyAvatar(AvatarDto avatarDto);
+
+    @Insert("insert into notification (target_id,target_type,sender_id,receive_id,noti_content,action,gmt_create) values " +
+            "(#{targetId},#{targetType},#{senderId},#{receiveId},#{notiContent},#{action},#{gmtCreate})")
+    void insertNotification(Notification notification);
 }

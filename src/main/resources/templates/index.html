@@ -6,9 +6,6 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/zico.min.css">
-    <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="/pagejs/index.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{fragment/nav :: nav}">
@@ -16,32 +13,7 @@
 <div id="wrapper">
     <div class="sep20"></div>
     <div class="container">
-        <div class="box-right">
-            <div class="box " th:if="${session.user != null}">
-                <div class="cell" >
-                    <span class="gray">无未读消息</span>
-                </div>
-            </div>
-            <div class="sep20" th:if="${session.user != null}"></div>
-            <div class="box" id="hot-rank">
-                <div class="cell">
-                    <span class="gray">今日热门文章</span>
-                </div>
-            </div>
-            <div class="sep20"></div>
-            <div class="box">
-                <div class="cell">
-                    <span class="gray">标签</span>
-                </div>
-                <div class="cell" id="tag-content"></div>
-            </div>
-            <div class="sep20"></div>
-            <div class="box">
-                <div class="cell">
-                    <span class="gray font-weight-bolder" id="active-user">在线</span>
-                </div>
-            </div>
-        </div>
+        <div th:insert="~{fragment/right :: right}"></div>
         <div class="box box-left">
             <div class="inner-title">
                 <span><i class="zi zi_list"></i>&nbsp;发现</span>
@@ -103,5 +75,8 @@
 </div>
 <div th:insert="~{fragment/bottom :: bottom}"></div>
 </body>
-
+<script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+<script src="/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/pagejs/index.js" type="application/javascript"></script>
+<script src="/pagejs/rightSide.js" type="application/javascript"></script>
 </html>

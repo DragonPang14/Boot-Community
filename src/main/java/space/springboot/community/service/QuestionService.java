@@ -17,6 +17,7 @@ import space.springboot.community.model.Question;
 import space.springboot.community.model.QuestionTags;
 import space.springboot.community.model.Tag;
 import space.springboot.community.model.User;
+import space.springboot.community.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,19 +37,8 @@ public class QuestionService {
     public PaginationDto<QuestionDto> getList(Integer userId, Integer page, Integer size,Integer tagId) {
 
         Integer totalCount = questionDao.totalCount(userId,tagId);
-        Integer totalPage ;
-        if (totalCount != 0){
-            totalPage = totalCount % 10 == 0 ? totalCount / 10 : (totalCount / 10) + 1;
-        }else {
-            totalPage = 1;
-        }
-        if (page < 1) {
-            page = 1;
-        } else if (page > totalPage) {
-            page = totalPage;
-        }
-//        偏移量
-        Integer offset = size * (page - 1);
+        Integer totalPage = CommonUtils.calculateTotalPage(totalCount);
+        Integer offset = CommonUtils.calculatePageOffset(totalPage,page,size);
         PaginationDto<QuestionDto> pagination = new PaginationDto<>();
         List<QuestionDto> questionDtos = questionDao.getQuestionList(userId,offset,size,tagId);
         /*改为使用xml一次性查询出文章，和标签

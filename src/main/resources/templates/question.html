@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/zico.min.css">
     <link rel="stylesheet" href="/css/editormd.preview.min.css">
-    <script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
-    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+
 </head>
 <body>
 <div th:insert="~{fragment/nav :: nav}">
@@ -16,16 +15,7 @@
 <div id="wrapper">
     <div class="sep20"></div>
     <div class="container">
-        <div class="box box-right">
-            <div class="cell">
-                <div class="media">
-                    <img class="mr-3 rounded avatar-nav" th:src="${questionDto.user.avatarUrl}">
-                    <div class="media-body">
-                        <h5 class="mt-0" th:text="${questionDto.user.name}"></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div th:insert="~{fragment/right :: right}"></div>
         <div class="box-left">
             <div class="box">
                 <div class="question-header">
@@ -120,9 +110,11 @@
 </div>
 <div th:insert="~{fragment/bottom :: bottom}"></div>
 </body>
+<script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+<script src="/js/bootstrap.min.js" type="application/javascript"></script>
 <script src="/js/editormd.min.js" type="application/javascript"></script>
 <script src="/js/lib/marked.min.js" type="application/javascript"></script>
 <script src="/js/lib/prettify.min.js" type="application/javascript"></script>
 <script src="/pagejs/question.js" type="application/javascript"></script>
-
+<script src="/pagejs/rightSide.js" type="application/javascript"></script>
 </html>

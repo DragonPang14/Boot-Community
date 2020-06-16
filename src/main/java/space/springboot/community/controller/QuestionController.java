@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import space.springboot.community.aspect.HyperLogInc;
 import space.springboot.community.dto.CommentDto;
 import space.springboot.community.dto.QuestionDto;
-import space.springboot.community.enums.CommentTypeEnum;
+import space.springboot.community.enums.TargetTypeEnum;
 import space.springboot.community.service.CommentService;
 import space.springboot.community.service.QuestionService;
 
@@ -29,7 +29,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id") Integer id,
                            Model model){
         QuestionDto questionDto = questionService.findQuestionById(id);
-        List<CommentDto> commentDtoList = commentService.getComments(id, CommentTypeEnum.QUESTION_TYPE.getType());
+        List<CommentDto> commentDtoList = commentService.getComments(id, TargetTypeEnum.QUESTION_TYPE.getType());
         model.addAttribute("questionDto",questionDto);
         model.addAttribute("commentDtoList",commentDtoList);
         return "question";

@@ -4,11 +4,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import space.springboot.community.dto.AvatarDto;
-import space.springboot.community.dto.UserDto;
+import space.springboot.community.dao.UserDao;
+import space.springboot.community.dto.*;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
+import space.springboot.community.utils.CommonUtils;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -19,6 +21,9 @@ public class UserService {
 
     @Value("${DEFAULT_AVATAR}")
     private String DEFAULT_AVATAR;
+
+    @Autowired
+    private UserDao userDao;
     /**
      * @desc 用户登录，更新
      * @param user
@@ -89,5 +94,19 @@ public class UserService {
 
     public int modifyAvatar(AvatarDto avatarDto) {
         return userMapper.modifyAvatar(avatarDto);
+    }
+
+
+    public PaginationDto<NotificationDto> notificationsList(Integer userId,Integer page) {
+        Integer totalCount = userDao.totalNotification(userId);
+        //计算总页数
+        Integer totalPage = CommonUtils.calculateTotalPage(totalCount);
+        //计算偏移量
+        Integer offset = CommonUtils.calculatePageOffset(totalPage, page, 10);
+        PaginationDto<NotificationDto> pagination = new PaginationDto<>();
+        List<NotificationDto> notificationsDto = userDao.getNotifications(userId,offset,10);
+        pagination.setPageList(notificationsDto);
+        pagination.setPagination(totalPage, page);
+        return pagination;
     }
 }

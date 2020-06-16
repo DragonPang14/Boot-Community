@@ -6,13 +6,16 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import space.springboot.community.model.Comment;
 import space.springboot.community.utils.DateUtils;
 import space.springboot.community.utils.IPUtils;
 import space.springboot.community.utils.RedisUtils;
 
 @Aspect
 @Component
+@Order(1)
 public class HyperLogAspect {
 
     @Autowired
@@ -49,12 +52,13 @@ public class HyperLogAspect {
         try {
             String ip = IPUtils.getIpAddr();
             if (joinPoint.getSignature().toString().contains("insertComment")){
-               if (redisUtils.zScore(redisZkey,questionId.toString()) == null){
-                   redisUtils.zAdd(redisZkey,questionId.toString(),3);
+                Comment comment = (Comment)questionId;
+               if (redisUtils.zScore(redisZkey,comment.getQuestionId().toString()) == null){
+                   redisUtils.zAdd(redisZkey,comment.getQuestionId().toString(),3);
                }else {
-                   redisUtils.zInc(redisZkey,questionId.toString(),3);
+                   redisUtils.zInc(redisZkey,comment.getQuestionId().toString(),3);
                }
-                redisKey = COMMENTS_COUNT_KEY + ":" + questionId;
+                redisKey = COMMENTS_COUNT_KEY + ":" + comment.getQuestionId();
             }else {
                 if (redisUtils.zScore(redisZkey,questionId.toString()) == null){
                     redisUtils.zAdd(redisZkey,questionId.toString(),1);

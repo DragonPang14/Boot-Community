@@ -9,10 +9,13 @@ import lombok.Data;
 public class Notification {
     private Integer id;
     private Integer targetId;
-    private String notiContent;
+    private Integer targetType;
     private Integer senderId;
-    private int type;
+    private Integer receiveId;
+    private String notiContent;
+    private int action;
     private int status;
+    private long gmtCreate;
     private int delFlag;
 
 }

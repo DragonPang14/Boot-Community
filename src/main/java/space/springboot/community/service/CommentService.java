@@ -7,11 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import space.springboot.community.aspect.HyperLogInc;
 import space.springboot.community.dto.CommentDto;
 import space.springboot.community.dto.ResultDto;
-import space.springboot.community.enums.CommentTypeEnum;
+import space.springboot.community.enums.TargetTypeEnum;
+import space.springboot.community.enums.NotificationTypeEnum;
 import space.springboot.community.mapper.CommentMapper;
 import space.springboot.community.mapper.QuestionMapper;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.Comment;
+import space.springboot.community.model.Notification;
+import space.springboot.community.model.Question;
 import space.springboot.community.model.User;
 
 import java.util.ArrayList;
@@ -34,21 +37,26 @@ public class CommentService {
 
     @HyperLogInc(description = "评论数增加")
     @Transactional
-    public ResultDto insertComment(Integer questionId, Comment comment) {
+    public ResultDto insertComment(Comment comment) {
         ResultDto resultDto = new ResultDto();
-        if(!CommentTypeEnum.isExist(comment.getType())){
+        Notification notification = null;
+        if(!TargetTypeEnum.isExist(comment.getType())){
             resultDto.setCode(2001);
             resultDto.setMsg("回复类型错误");
             return resultDto;
         }
         boolean haveFlag = false;
         CommentDto commentDto = new CommentDto();
-        if(comment.getType() == CommentTypeEnum.QUESTION_TYPE.getType() ){
+        if(comment.getType() == TargetTypeEnum.QUESTION_TYPE.getType() ){
             //判断是否找得到评论的主题
-            haveFlag = questionMapper.findQuestionById(comment.getParentId()) != null;
+            Question questionById = questionMapper.findQuestionById(comment.getParentId());
+            haveFlag = questionById != null;
+            notification = this.createNotify(comment, questionById.getCreator());
         }else {
             //判断是否招的到回复的评论
-            haveFlag = commentMapper.findCommentByCommentId(comment.getParentId(),CommentTypeEnum.QUESTION_TYPE.getType()) != null;
+            Comment commentByCommentId = commentMapper.findCommentByCommentId(comment.getParentId(), TargetTypeEnum.QUESTION_TYPE.getType());
+            haveFlag =commentByCommentId != null;
+            notification = this.createNotify(comment, commentByCommentId.getCreator());
         }
         if (haveFlag){
             commentMapper.insert(comment);
@@ -56,8 +64,9 @@ public class CommentService {
             commentDto.setUser(userMapper.findById(comment.getCreator()));
             resultDto.setCode(100);
             resultDto.setObj(commentDto);
+            userMapper.insertNotification(notification);
         }else {
-            if (comment.getType() == CommentTypeEnum.QUESTION_TYPE.getType()){
+            if (comment.getType() == TargetTypeEnum.QUESTION_TYPE.getType()){
                 resultDto.setCode(2002);
                 resultDto.setMsg("回复主题未找到");
             }else {
@@ -67,6 +76,19 @@ public class CommentService {
             return resultDto;
         }
         return resultDto;
+    }
+
+    //构建通知信息
+    private Notification createNotify(Comment comment,Integer reveiveId){
+        Notification notification = new Notification();
+        notification.setReceiveId(reveiveId);
+        notification.setSenderId(comment.getCreator());
+        notification.setTargetId(comment.getParentId());
+        notification.setTargetType(comment.getType());  //通知目标类型  --文章 ：评论
+        notification.setAction(NotificationTypeEnum.COMMENT_ACTION.getCode());
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setNotiContent(comment.getContent());  //评论内容
+        return notification;
     }
 
 

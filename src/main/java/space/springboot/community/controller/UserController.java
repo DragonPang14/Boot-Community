@@ -6,9 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import space.springboot.community.dto.AvatarDto;
-import space.springboot.community.dto.ResultDto;
-import space.springboot.community.dto.UserDto;
+import space.springboot.community.dto.*;
 import space.springboot.community.enums.CustomizeStatusEnum;
 import space.springboot.community.exception.CustomizeErrorCode;
 import space.springboot.community.exception.CustomizeException;
@@ -110,6 +108,18 @@ public class UserController {
         }else {
             return new ResultDto(CustomizeStatusEnum.CODE_ERROR);
         }
+    }
+
+    @GetMapping("/notifications")
+    public String notifications(@CookieValue(value = "token")String token,
+                                @RequestParam(value = "page",required = false,defaultValue = "1")Integer page, Model model){
+        User user = userService.findByToken(token);
+        if (user == null){
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_FOUND);
+        }
+        PaginationDto<NotificationDto> pagination = userService.notificationsList(user.getId(),page);
+        model.addAttribute("pagination", pagination);
+        return "notifications";
     }
 
 }
