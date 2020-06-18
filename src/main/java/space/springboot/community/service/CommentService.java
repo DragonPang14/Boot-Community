@@ -40,11 +40,6 @@ public class CommentService {
     public ResultDto insertComment(Comment comment) {
         ResultDto resultDto = new ResultDto();
         Notification notification = null;
-        if(!TargetTypeEnum.isExist(comment.getType())){
-            resultDto.setCode(2001);
-            resultDto.setMsg("回复类型错误");
-            return resultDto;
-        }
         boolean haveFlag = false;
         CommentDto commentDto = new CommentDto();
         if(comment.getType() == TargetTypeEnum.QUESTION_TYPE.getType() ){

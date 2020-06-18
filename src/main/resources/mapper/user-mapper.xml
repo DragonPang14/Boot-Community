@@ -26,13 +26,19 @@
     </resultMap>
 
     <select id="totalNotification" resultType="integer">
-        select count(1) from notification where receive_id = #{userId}
+        select count(1) from notification where 1 = 1
+        and
+        receive_id = #{userId}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        and del_flag = 0
     </select>
     
     <select id="getNotifications" resultMap="notifications">
         select n.id,n.target_id,n.target_type,q.title target_content,n.noti_content,n.action,n.status,n.gmt_create,
-        sender.id suid,sender.user_name sender_user_name,sender.avatar_url sender_avatar_url,
-        receiver.id ruid,receiver.user_name receiver_user_name,receiver.avatar_url receiver_avatar_url
+        sender.id suid,sender.name sender_name,sender.avatar_url sender_avatar_url,
+        receiver.id ruid,receiver.name receiver_name,receiver.avatar_url receiver_avatar_url
         from (select * from notification where receive_id = #{userId} order by gmt_create desc limit #{offset},#{size}) n
         left join question q on n.target_id = q.id
         left join user sender on n.sender_id = sender.id

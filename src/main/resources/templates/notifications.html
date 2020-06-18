@@ -20,19 +20,52 @@
                 <div class="cell">
                     <span class="gray">提醒</span>
                 </div>
-                <div class="cell">
                     <ul class="list-unstyled">
                         <li class="media question-list-item" th:each="notification : ${pagination.pageList}">
                             <img class="mr-3 avatar-side rounded" th:src="${notification.sender.avatarUrl}"
                                  alt="avater image">
                             <div class="media-body">
-                                <span class="mt-0 mb-1 question-list-title">
+                                <span class="inline font-weight-bolder d-gray" th:text="${notification.sender.name}"></span>
+                                <span th:text="${notification.actionStr + '你的' + notification.targetTypeStr}" class="l-gray"></span>
+                                <span class="mt-0 mb-1 gray">
                                     <a th:href="@{'/question/' + ${notification.targetId}}"
                                        th:text="${notification.targetContent}"></a>
                                 </span>
+                                <div class="sep5"></div>
+                                <div class="bg-l-gray inline notify-content">
+                                    <span class="reply-content" th:text="${notification.notiContent}"></span>
+                                </div>
                             </div>
                         </li>
                     </ul>
+                <!--分页-->
+                <div class="cell" style="background-image: url('/img/shadow_light.png'); background-size: 20px 20px; background-repeat: repeat-x;">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tbody><tr>
+                            <td width="92%" align="left">
+                                <div class="inline" th:each="page : ${pagination.pages}">
+                                    <a th:class="${pagination.currentPage == page}?'page_current':'page_normal'"
+                                       th:href="@{~/(page=${page})}" th:text="${page}"></a>
+                                    &nbsp;
+                                </div>
+                                <input type="number" class="page_input" autocomplete="off" th:value="${pagination.currentPage}" min="1" th:max="${pagination.totalPage}"
+                                    onkeydown="if (event.keyCode == 13)
+                                location.href = '/notifications?page=' + this.value">
+                            </td>
+                            <td width="8%" align="right">
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tbody><tr>
+                                        <td width="50%" height="50%" align="center" class="btn btn-light btn-sm" th:if="${pagination.showPre}">
+                                            <a th:href="@{~/notifications/(page=${pagination.currentPage - 1})}">❮</a>
+                                        </td>
+                                        <td width="50%" height="50%" align="center" class="btn btn-light btn-sm" th:if="${pagination.showNext}">
+                                            <a th:href="@{~/notifications/(page=${pagination.currentPage + 1})}">❯</a>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            </td>
+                        </tr>
+                        </tbody></table>
                 </div>
             </div>
         </div>
@@ -41,4 +74,7 @@
 </div>
 <div th:insert="~{fragment/bottom :: bottom}"></div>
 </body>
+<script src="/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+<script src="/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/pagejs/rightSide.js" type="application/javascript"></script>
 </html>

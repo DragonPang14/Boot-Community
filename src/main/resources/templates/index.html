@@ -37,38 +37,34 @@
                     </div>
                 </li>
             </ul>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" th:if="${pagination.showFirst}">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item" th:if="${pagination.showPre}">
-                        <a class="page-link" th:href="@{/(page=${pagination.currentPage - 1})}" aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item" th:each="page : ${pagination.pages}"
-                        th:class="${pagination.currentPage == page}?'page-item active':'page-item'">
-                        <a class="page-link" th:href="@{/(page=${page})}" th:text="${page}"></a>
-                    </li>
-                    <li class="page-item" th:if="${pagination.showNext}">
-                        <a class="page-link" th:href="@{/(page=${pagination.currentPage + 1})}" aria-label="Next">
-                            <span aria-hidden="true">&gt;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                    <li class="page-item" th:if="${pagination.showLast}">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="cell" style="background-image: url('/img/shadow_light.png'); background-size: 20px 20px; background-repeat: repeat-x;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tbody><tr>
+                        <td width="92%" align="left">
+                            <div class="inline" th:each="page : ${pagination.pages}">
+                                <a th:class="${pagination.currentPage == page}?'page_current':'page_normal'"
+                                   th:href="@{~/(page=${page})}" th:text="${page}"></a>
+                                &nbsp;
+                            </div>
+                            <input type="number" class="page_input" autocomplete="off" th:value="${pagination.currentPage}" min="1" th:max="${pagination.totalPage}"
+                                   onkeydown="if (event.keyCode == 13)
+                                location.href = '/?page=' + this.value">
+                        </td>
+                        <td width="8%" align="right">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tbody><tr>
+                                    <td width="50%" height="50%" align="center" class="btn btn-light btn-sm" th:if="${pagination.showPre}">
+                                        <a th:href="@{~/(page=${pagination.currentPage - 1})}">❮</a>
+                                    </td>
+                                    <td width="50%" height="50%" align="center" class="btn btn-light btn-sm" th:if="${pagination.showNext}">
+                                        <a th:href="@{~/(page=${pagination.currentPage + 1})}">❯</a>
+                                    </td>
+                                </tr>
+                                </tbody></table>
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>
         </div>
     </div>
     <div class="sep20"></div>

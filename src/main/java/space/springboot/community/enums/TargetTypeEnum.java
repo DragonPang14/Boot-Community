@@ -6,25 +6,34 @@ package space.springboot.community.enums;
  */
 public enum TargetTypeEnum {
     //问题评论
-    QUESTION_TYPE(1),
+    QUESTION_TYPE(1,"文章"),
     //评论回复
-    COMMENT_TYPE(2);
+    COMMENT_TYPE(2,"评论")
+    ;
     private Integer type;
+    private String remark;
 
-    TargetTypeEnum(Integer type) {
+    TargetTypeEnum(Integer type,String remark)
+    {
         this.type = type;
+        this.remark = remark;
     }
 
     public Integer getType() {
         return type;
     }
+    public String getRemark() {
+        return remark;
+    }
 
-    public static boolean isExist(Integer type){
+    public static String getRemark(Integer type){
         for (TargetTypeEnum value : TargetTypeEnum.values()) {
             if(value.getType() == type){
-                return true;
+                return value.getRemark();
             }
         }
-        return false;
+        return null;
     }
+
+
 }

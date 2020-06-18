@@ -4,8 +4,8 @@
 <div th:fragment="right" id="right">
     <div class="box-right">
         <div class="box " th:if="${session.user != null}">
-            <div class="cell" >
-                <span class="gray">无未读消息</span>
+            <div class="cell" id="notifications">
+                <span class="gray"><a href="/notifications">无未读消息</a></span>
             </div>
         </div>
         <div class="sep20" th:if="${session.user != null}"></div>

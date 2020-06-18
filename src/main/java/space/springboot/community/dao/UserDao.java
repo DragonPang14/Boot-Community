@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public interface UserDao {
 
-    Integer totalNotification(Integer userId);
+    Integer totalNotification(Integer userId,Integer status);
 
     List<NotificationDto> getNotifications(Integer userId, Integer offset, int size);
 }

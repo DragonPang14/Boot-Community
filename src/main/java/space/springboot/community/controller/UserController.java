@@ -122,4 +122,13 @@ public class UserController {
         return "notifications";
     }
 
+    @PostMapping("/unReadNotifications")
+    public @ResponseBody ResultDto unReadNotifications(@CookieValue(value = "token")String token){
+        User user = userService.findByToken(token);
+        if (user == null){
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_FOUND);
+        }
+        return ResultDto.okOf(userService.totalNotifications(user.getId(),0));
+    }
+
 }

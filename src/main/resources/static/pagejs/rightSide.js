@@ -1,9 +1,25 @@
 window.onload = function () {
+    unReadNotifications();
+
     getTags();
 
     getHotRank();
 
     getActiveUser();
+}
+
+function unReadNotifications() {
+    $.post({
+        url:"/unReadNotifications",
+        dataType:"json",
+        success:function (data) {
+            if (data.code == 100 && data.obj > 0){
+                $("#notifications").find("a").text("有" + data.obj + "条未读消息");
+            }else {
+                $("#notifications").find("a").text("无未读消息");
+            }
+        }
+    })
 }
 
 

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import space.springboot.community.dao.UserDao;
 import space.springboot.community.dto.*;
+import space.springboot.community.enums.NotificationTypeEnum;
+import space.springboot.community.enums.TargetTypeEnum;
 import space.springboot.community.mapper.UserMapper;
 import space.springboot.community.model.User;
 import space.springboot.community.utils.CommonUtils;
@@ -98,15 +100,23 @@ public class UserService {
 
 
     public PaginationDto<NotificationDto> notificationsList(Integer userId,Integer page) {
-        Integer totalCount = userDao.totalNotification(userId);
+        Integer totalCount = this.totalNotifications(userId,null);
         //计算总页数
         Integer totalPage = CommonUtils.calculateTotalPage(totalCount);
         //计算偏移量
         Integer offset = CommonUtils.calculatePageOffset(totalPage, page, 10);
         PaginationDto<NotificationDto> pagination = new PaginationDto<>();
         List<NotificationDto> notificationsDto = userDao.getNotifications(userId,offset,10);
+        notificationsDto.forEach(notificationDto -> {
+            notificationDto.setActionStr(NotificationTypeEnum.getRemark(notificationDto.getAction()));
+            notificationDto.setTargetTypeStr(TargetTypeEnum.getRemark(notificationDto.getTargetType()));
+        });
         pagination.setPageList(notificationsDto);
         pagination.setPagination(totalPage, page);
         return pagination;
+    }
+
+    public Integer totalNotifications(Integer userId,Integer status){
+        return userDao.totalNotification(userId,status);
     }
 }
