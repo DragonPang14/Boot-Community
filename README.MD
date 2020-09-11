@@ -1,6 +1,6 @@
 ## 现有功能
 - 注册，登陆，修改头像
-- 支持github的OAuth登陆（请看官方使用文档[这里](https://docs.github.com/en/developers/apps/authorizing-oauth-apps)）
+- 支持github的OAuth登陆（请看官方使用[文档](https://docs.github.com/en/developers/apps/authorizing-oauth-apps)）
 - 发布帖子，以普通文字形式或markdown形式，markdown编辑器使用[editor.md](https://github.com/pandao/editor.md)
 - 回复帖子，二级回复，多级回复未完成
 - 在线人数显示
