@@ -14,8 +14,8 @@
 }
 
 .avatar-big {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
 }
 
 .avatar-side {
@@ -266,7 +266,7 @@ a:hover{
     padding: .25rem .5rem;
     font-size: .875rem;
     line-height: 1.5;
-    border-radius: .2rem;
+    border-radius: 2rem;
 }
 
 .tag {
